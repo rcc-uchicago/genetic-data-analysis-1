@@ -1,1 +1,6 @@
- 
+All data downloaded from the original sources should be stored here.
+Ideally, these data should not have been modified in any way, or only
+minimally modified. Large data files should not be commited to the git
+repository. If small data files are committed, make sure that data
+usage conditions are being correctly followed (e.g., sometimes data
+files cannot be made publicly available).
