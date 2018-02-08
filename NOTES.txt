@@ -1,5 +1,21 @@
+Set up your cluster computing environment
+=========================================
+1. Connect to midway2 (see https://rcc.uchicago.edu/docs/connecting).
+2. Request X CPU and Y GB memory on a midway2 compute node:
+     sinteractive --partition=broadwl --time=3:00:00 --cpus-per-task=X \
+       --mem=YG
+3. Make sure that you can display graphics, e.g.
+     module load R/3.4.3
+     R
+     plot(cars$dist,cars$speed)
+   You should see a scatterplot. If not, then you need to use a
+   different method to connect to midway2.
+
 Download data
 =============
+* Commands to download 1000 Genomes data:
+    cd data
+    wget ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/supporting/hd_genotype_chip/ALL.chip.omni_broad_sanger_combined.20140818.snps.genotypes.vcf.g
 
 Preprocess data
 ===============
