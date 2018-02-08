@@ -1,4 +1,4 @@
-# Analysis of Genetic Data 1: inferring population structure
+# Analysis of Genetic Data 1: Inferring Population Structure
 
 During this short workshop, we will apply simple numeric techniques to
 investigate human genetic diversity and population structure from

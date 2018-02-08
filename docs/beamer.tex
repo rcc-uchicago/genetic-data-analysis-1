@@ -2,38 +2,18 @@
 $if(theme)$
 \usetheme{$theme$}
 $endif$
-$if(colortheme)$
-\usecolortheme{$colortheme$}
-$endif$
-$if(fonttheme)$
-\usefonttheme{$fonttheme$}
-$endif$
-$if(mainfont)$
-\usefonttheme{serif} % use mainfont rather than sansfont for slide text
-$endif$
-$if(innertheme)$
-\useinnertheme{$innertheme$}
-$endif$
-$if(outertheme)$
-\useoutertheme{$outertheme$}
-$endif$
+\usefonttheme{structurebold}
 \setbeamertemplate{caption}[numbered]
 \setbeamertemplate{caption label separator}{: }
 \setbeamercolor{caption name}{fg=normal text.fg}
-$if(fontfamily)$
-\usepackage[$fontfamilyoptions$]{$fontfamily$}
-$else$
+% \usepackage[$fontfamilyoptions$]{$fontfamily$}
 \usepackage{lmodern}
-$endif$
 \usepackage{amssymb,amsmath}
 \usepackage{ifxetex,ifluatex}
 \usepackage{fixltx2e} % provides \textsubscript
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
-  \usepackage[$if(fontenc)$$fontenc$$else$T1$endif$]{fontenc}
+  \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
-$if(euro)$
-  \usepackage{eurosym}
-$endif$
 \else % if luatex or xelatex
   \ifxetex
     \usepackage{mathspec}
@@ -210,9 +190,8 @@ $endfor$
 %----------------------------------------------------------------------------------
 $if(institute)$\institute{$institute$}$endif$
 
-% \titlegraphic{\includegraphics[width=0.3\paperwidth]{\string~/Dropbox/teaching/clemson-academic.png}} % <-- if you want to know what this looks like without it as a Markdown field. 
 % -----------------------------------------------------------------------------------------------------
-$if(titlegraphic)$\titlegraphic{\includegraphics[width=0.3\paperwidth]{\string~$titlegraphic$}}$endif$
+$if(titlegraphic)$\titlegraphic{\includegraphics[width=0.1\paperwidth]{\string $titlegraphic$}}$endif$
 
 % Some additional title page adjustments.
 %----------------------------------------
@@ -225,11 +204,10 @@ $if(titlegraphic)$\titlegraphic{\includegraphics[width=0.3\paperwidth]{\string~$
 % Some optional colors. Change or add as you see fit.
 %---------------------------------------------------
 \definecolor{clemsonpurple}{HTML}{522D80}
-% \definecolor{clemsonorange}{HTML}{EA6A20}
- \definecolor{clemsonorange}{HTML}{F66733}
+\definecolor{clemsonorange}{HTML}{EA6A20}
+\definecolor{clemsonorange}{HTML}{F66733}
 \definecolor{uiucblue}{HTML}{003C7D}
 \definecolor{uiucorange}{HTML}{F47F24}
-
 
 % Some optional color adjustments to Beamer. Change as you see fit.
 %------------------------------------------------------------------
@@ -275,8 +253,8 @@ $if(titlegraphic)$\titlegraphic{\includegraphics[width=0.3\paperwidth]{\string~$
 		\vspace*{1pt}%
             \insertframenumber/\inserttotalframenumber \hspace*{0.1cm}%
             \newline%
-            \color{clemsonpurple}{\rule{\paperwidth}{0.4mm}}\newline%
-            \color{clemsonorange}{\rule{\paperwidth}{.4mm}}%
+            \color{white}{\rule{\paperwidth}{0.4mm}}\newline%
+            \color{white}{\rule{\paperwidth}{.4mm}}%
         }%
     \fi%
 }
@@ -315,8 +293,8 @@ $if(titlegraphic)$\titlegraphic{\includegraphics[width=0.3\paperwidth]{\string~$
 % I could customize/generalize this more but the truth is it works for my circumstances.
 
 \ifxetex
-\setbeamerfont{title}{family=\fontspec{$if(titlefont)$$titlefont$$else$serif$endif$}}
-\setbeamerfont{frametitle}{family=\fontspec{$if(titlefont)$$titlefont$$else$serif$endif$}}
+\setbeamerfont{title}{family=\fontspec{$if(titlefont)$$titlefont$$else$structurebold$endif$}}
+\setbeamerfont{frametitle}{family=\fontspec{$if(titlefont)$$titlefont$$else$structurebold$endif$}}
 \usepackage[font=small,skip=0pt]{caption}
  \else
  \fi
@@ -366,7 +344,4 @@ $include-after$
 
 $endfor$
 
-\section[]{}
-\frame{\small \frametitle{Table of Contents}
-\tableofcontents}
 \end{document}

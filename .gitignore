@@ -6,3 +6,4 @@ data/*.ped
 data/*.bed
 data/*.bim
 data/*.fam
+docs/slides.pdf
