@@ -70,6 +70,13 @@ Explore PLINK file
     less -S 1kg.map
     wc -l -w 1kg.ped
 
-Develop reference panel for SGDP data
+Prepare reference panel for SGDP data
 =====================================
-* Convert to PLINK binary format:
+* Convert to PLINK binary format. This should create3 new files:
+  1kg.bed, 1kg.bim, 1kg.fam:
+    ../bin/plink --file 1kg --make-bed --out 1kg
+* Remove 31 related samples:
+    cut -f 1 20140625_related_individuals.txt > temp.txt
+    paste temp.txt temp.txt > samples.txt
+    plink --bfile 1kg --make-bed --remove samples.txt --out 1kg_unrelated
+

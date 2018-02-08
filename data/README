@@ -5,8 +5,14 @@ repository. If small data files are committed, make sure that data
 usage conditions are being correctly followed (e.g., sometimes data
 files cannot be made publicly available).
 
-Sources of smaller data files included in git repository:
+NOTES
 
-1. http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/20140625_related_individuals.txt
+* omni_samples.20141118.panel was downloaded from this FTP location:
+  ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/supporting/hd_genotype_chip.
 
-2. 
+* 20140625_related_individuals.txt was downloaded from this FTP
+location: ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502. This
+file gives information about the 31 genotype samples that were found
+to be closely related. The columns in the file from left to right are:
+(1) sample; (2) population; (3) gender; and (4) reason for exclusion.
+
