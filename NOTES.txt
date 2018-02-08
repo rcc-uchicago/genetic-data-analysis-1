@@ -86,3 +86,9 @@ Prepare reference panel for SGDP data
 
 Run ADMIXTURE on 1000 Genomes reference panel
 =============================================
+*TO DO*
+
+Visualize & interpret ADMIXTURE results
+========================================
+*TO DO*
+
