@@ -11,11 +11,21 @@ Set up your cluster computing environment
    You should see a scatterplot. If not, then you need to use a
    different method to connect to midway2.
 
-Download data
-=============
+Download 1000 Genomes data
+==========================
+* Download URL for 1000 Genomes data (European Bioinformatics Institute):
+  ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/supporting/hd_genotype_chip
+* File to download from FTP site: 
+  ALL.chip.omni_broad_sanger_combined.20140818.snps.genotypes.vcf.gz
+* Downloading should take a few minutes.
 * Commands to download 1000 Genomes data:
     cd data
-    wget ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/supporting/hd_genotype_chip/ALL.chip.omni_broad_sanger_combined.20140818.snps.genotypes.vcf.g
+    wget http://bit.ly/2C617oO -O 1kg.vcf.gz
+
+Explore 1000 Genomes data
+=========================
+* Commands to explore the 1000 Genomes data:
+    ls -lh 1kg.vcf.gz  
 
 Preprocess data
 ===============
