@@ -38,7 +38,7 @@ Download PLINK
     unzip plink.zip                         // Uncompress ZIP file.
 
 Explore VCF file
-================
+=======>=========
 * http://www.cog-genomics.org/plink2/formats#vcf
 * Commands to explore the 1000 Genomes data:
     ls -lh 1kg.vcf.gz         // 22 GB uncompressed.
@@ -72,11 +72,17 @@ Explore PLINK file
 
 Prepare reference panel for SGDP data
 =====================================
-* Convert to PLINK binary format. This should create3 new files:
+* Convert to PLINK binary format. This should create 3 new files:
   1kg.bed, 1kg.bim, 1kg.fam:
     ../bin/plink --file 1kg --make-bed --out 1kg
-* Remove 31 related samples:
+* Remove 29 of 31 related samples:
     cut -f 1 20140625_related_individuals.txt > temp.txt
     paste temp.txt temp.txt > samples.txt
-    plink --bfile 1kg --make-bed --remove samples.txt --out 1kg_unrelated
+    ../bin/plink --bfile 1kg --make-bed --remove samples.txt --out 1kg_unrelated
+* Retain only SNP common to SGDP data:
+  (TO DO)
+* "Prune" SNPs in LD:
+  (TO DO)
 
+Run ADMIXTURE on 1000 Genomes reference panel
+=============================================
