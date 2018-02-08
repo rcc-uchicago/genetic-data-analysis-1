@@ -18,12 +18,11 @@ license terms.
 Under the following terms:
 
 * **Attribution**---You must give appropriate credit (mentioning that
-  your work is derived from work that is Copyright (c) Peter
-  Carbonetto and, where practical, linking to
-  [this repository](https://github.com/rcc-uchicago/genetic-data-analysis-1),
-  provide a [link to the license][cc-by-human], and indicate if
-  changes were made. You may do so in any reasonable manner, but not
-  in any way that suggests the licensor endorses you or your use.
+your work is derived from work that is Copyright (c) Peter Carbonetto
+and, where practical, linking to [this repository](github-repo),
+provide a [link to the license][cc-by-human], and indicate if changes
+were made. You may do so in any reasonable manner, but not in any way
+that suggests the licensor endorses you or your use.
 
 **No additional restrictions**---You may not apply legal terms or
 technological measures that legally restrict others from doing
@@ -42,9 +41,9 @@ Notices:
 
 ## Software
 
-Except where otherwise noted, the example programs and other software
-provided by Software Carpentry and Data Carpentry are made available
-under the [OSI][osi]-approved [MIT license][mit-license].
+Except where otherwise noted, the example programs and other source
+code included in this repository are made available under the
+[OSI][osi]-approved [MIT license][mit-license].
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -70,3 +69,4 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 [mit-license]: http://opensource.org/licenses/mit-license.html
 [numfocus]: http://numfocus.org/
 [osi]: http://opensource.org
+[github-repo]: https://github.com/rcc-uchicago/genetic-data-analysis-1
