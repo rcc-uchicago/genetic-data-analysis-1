@@ -3,3 +3,6 @@ bin/admixture
 data/1kg.vcf.gz
 data/1kg.map
 data/1kg.ped
+data/1kg.bed
+data/1kg.bim
+data/1kg.fam
