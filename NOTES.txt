@@ -1,9 +1,13 @@
+Download github repo
+====================
+https://github.com/rcc-uchicago/genetic-data-analysis-1
+
 Set up your cluster computing environment
 =========================================
 1. Connect to midway2 (see https://rcc.uchicago.edu/docs/connecting).
-2. Request X CPU and Y GB memory on a midway2 compute node:
+2. Request X CPU and 4 GB memory on a midway2 compute node:
      sinteractive --partition=broadwl --time=3:00:00 --cpus-per-task=X \
-       --mem=YG
+       --mem=4G
 3. Make sure that you can display graphics, e.g.
      module load R/3.4.3
      R
@@ -22,24 +26,46 @@ Download 1000 Genomes data
     cd data
     wget http://bit.ly/2C617oO -O 1kg.vcf.gz
 
-Explore 1000 Genomes data
-=========================
-* Commands to explore the 1000 Genomes data:
-    ls -lh 1kg.vcf.gz  
-
-Preprocess data
-===============
+Download PLINK
+==============
 * Download URL for PLINK: http://www.cog-genomics.org/plink2
 * Commands to set up PLINK 1.9b5.2:
     cd bin
     wget http://bit.ly/2nUxOQX -O plink.zip // Download 64-bit Linux binary.
     unzip plink.zip                         // Uncompress ZIP file.
 
-Admixture analysis
+Explore VCF file
+================
+* http://www.cog-genomics.org/plink2/formats#vcf
+* Commands to explore the 1000 Genomes data:
+    ls -lh 1kg.vcf.gz         // 22 GB uncompressed.
+    zcat 1kg.vcf.gz | less -S // gzcat on Mac.
+
+Convert VCF to PLINK
+====================
+* We convert the from VCF to PLINK (.bed/.bim/.bam) format, retaining
+  only SNPs on autosomal chromosomes 1-22. Also, remove any SNPs in
+  which the proportion of missing genotypes is unusually high (>5%),
+  or in which the frequency of the minor allele is less than 1%. These
+  steps are taken to simplify the analyses of these data, perhaps at
+  the expense of removing some genetic markers that might expose more
+  subtle patterns in the data.
+* Command to convert from VCF to PLINK text format:
+    ../bin/plink --vcf 1kg.vcf.gz --recode --chr 1-22 \
+       --allow-extra-chr --geno 0.05 --maf 0.01 --out 1kg
+
+Explore PLINK file
 ==================
-* Download URL: https://www.genetics.ucla.edu/software/admixture
-* Commands to set up ADMIXTURE 1.3.0 on midway2:
-    cd bin
-    wget http://bit.ly/2BNrPa8 -O admixture.tar.gz // Download Linux binary.
-    tar zxvf admixture.tar.gz                      // Unpack archive.
-    mv admixture_linux-1.3.0/admixture .
+* .map format: (1) chromosome, (2) marker id, (3) genetic distance on
+  chromosome (cM), base-pair position on chromosome.
+
+* .ped format: (1) family id, (2) individual id, (3) father id, (4)
+  mother id, (5) gender, (6) phenotype, (7-) genotypes
+
+* Commands to explore the genetic data:
+    ls -lh 1kg.map 1kg.ped
+    head 1kg.map
+    tail 1kg.map
+    wc -l 1kg.map
+    less -S 1kg.map
+    wc -l -w 1kg.ped
