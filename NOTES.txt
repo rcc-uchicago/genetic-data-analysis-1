@@ -15,6 +15,9 @@ Set up your cluster computing environment
    You should see a scatterplot. If not, then you need to use a
    different method to connect to midway2.
 
+Download SGDP data
+==================
+
 Download 1000 Genomes data
 ==========================
 * Download URL for 1000 Genomes data (European Bioinformatics Institute):
@@ -43,25 +46,22 @@ Explore VCF file
 
 Convert VCF to PLINK
 ====================
+
 * We convert the from VCF to PLINK (.bed/.bim/.bam) format, retaining
   only SNPs on autosomal chromosomes 1-22. Also, remove any SNPs in
-  which the proportion of missing genotypes is unusually high (>5%),
-  or in which the frequency of the minor allele is less than 1%. These
-  steps are taken to simplify the analyses of these data, perhaps at
-  the expense of removing some genetic markers that might expose more
-  subtle patterns in the data.
+  which the proportion of missing genotypes is greater than negligible
+  (>1%). These steps are taken to simplify the analyses of these data.
+
 * Command to convert from VCF to PLINK text format:
     ../bin/plink --vcf 1kg.vcf.gz --recode --chr 1-22 \
-       --allow-extra-chr --geno 0.05 --maf 0.01 --out 1kg
+       --allow-extra-chr --geno 0.01 --out 1kg
 
 Explore PLINK file
 ==================
 * .map format: (1) chromosome, (2) marker id, (3) genetic distance on
   chromosome (cM), base-pair position on chromosome.
-
 * .ped format: (1) family id, (2) individual id, (3) father id, (4)
   mother id, (5) gender, (6) phenotype, (7-) genotypes
-
 * Commands to explore the genetic data:
     ls -lh 1kg.map 1kg.ped
     head 1kg.map
@@ -69,3 +69,7 @@ Explore PLINK file
     wc -l 1kg.map
     less -S 1kg.map
     wc -l -w 1kg.ped
+
+Develop reference panel for SGDP data
+=====================================
+* Convert to PLINK binary format:

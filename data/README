@@ -4,3 +4,9 @@ minimally modified. Large data files should not be commited to the git
 repository. If small data files are committed, make sure that data
 usage conditions are being correctly followed (e.g., sometimes data
 files cannot be made publicly available).
+
+Sources of smaller data files included in git repository:
+
+1. http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/20140625_related_individuals.txt
+
+2. 
