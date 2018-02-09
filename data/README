@@ -22,6 +22,12 @@ NOTES
   exclusion.
 
 * affymetrix-human-origins.ind contains population and gender
-  information about the samples included in the Affymetrix Human
+  information about all 1,963 samples included in the Affymetrix Human
   Origins fully public data set (Lazaridis et al, Nature, 2014). This
   file was retrieved from https://reich.hms.harvard.edu/datasets.
+
+* origins.bed (and accompanying files origins.bim and origin.fam)
+  contain genotypes for 6 individuals in the AffyMetrix Human Origins
+  data set. These data were converted from the original EIGENSTRAT
+  format to the binary PLINK format. (Additional steps were taken to
+  retrieve "rs" dbSNP identifiers for the SNPs.)
