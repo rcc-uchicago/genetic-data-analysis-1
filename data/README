@@ -21,7 +21,7 @@ NOTES
   are: (1) sample; (2) population; (3) gender; and (4) reason for
   exclusion.
 
-* SGDP_metadata.279public.21signedLetter.samples.txt was downloaded
-  from http://reichdata.hms.harvard.edu/pub/datasets/sgdp. It contains
-  information about the 279 publicly available samples from the Simons
-  Genome Diversity Project.
+* affymetrix-human-origins.ind contains population and gender
+  information about the samples included in the Affymetrix Human
+  Origins fully public data set (Lazaridis et al, Nature, 2014). This
+  file was retrieved from https://reich.hms.harvard.edu/datasets.

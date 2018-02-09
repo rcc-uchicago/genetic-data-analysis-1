@@ -15,10 +15,6 @@ Set up your cluster computing environment
    You should see a scatterplot. If not, then you need to use a
    different method to connect to midway2.
 
-Download SGDP data
-==================
-Source: http://reichdata.hms.harvard.edu/pub/datasets/sgdp
-
 Download 1000 Genomes data
 ==========================
 * Download URL for 1000 Genomes data (European Bioinformatics Institute):
@@ -39,7 +35,7 @@ Download PLINK
     unzip plink.zip                         // Uncompress ZIP file.
 
 Explore VCF file
-=======>=========
+================
 * http://www.cog-genomics.org/plink2/formats#vcf
 * Commands to explore the 1000 Genomes data:
     ls -lh 1kg.vcf.gz         // 22 GB uncompressed.
@@ -47,12 +43,10 @@ Explore VCF file
 
 Convert VCF to PLINK
 ====================
-
 * We convert the from VCF to PLINK (.bed/.bim/.bam) format, retaining
   only SNPs on autosomal chromosomes 1-22. Also, remove any SNPs in
   which the proportion of missing genotypes is greater than negligible
   (>1%). These steps are taken to simplify the analyses of these data.
-
 * Command to convert from VCF to PLINK text format:
     ../bin/plink --vcf 1kg.vcf.gz --recode --chr 1-22 \
        --allow-extra-chr --geno 0.01 --out 1kg
@@ -71,25 +65,35 @@ Explore PLINK file
     less -S 1kg.map
     wc -l -w 1kg.ped
 
-Prepare reference panel for SGDP data
-=====================================
+Prepare 1000 Genomes data
+=========================
 * Convert to PLINK binary format. This should create 3 new files:
   1kg.bed, 1kg.bim, 1kg.fam:
     ../bin/plink --file 1kg --make-bed --out 1kg
 * Remove 29 of 31 related samples:
     cut -f 1 20140625_related_individuals.txt > temp.txt
     paste temp.txt temp.txt > samples.txt
-    ../bin/plink --bfile 1kg --make-bed --remove samples.txt --out 1kg_unrelated
-* Retain only SNP common to SGDP data:
+    ../bin/plink --bfile 1kg --make-bed --remove samples.txt \
+      --out 1kg_unrelated
+
+Merge with Affymetric Human Origins data
+========================================
+
   (TO DO)
 * "Prune" SNPs in LD:
   (TO DO)
 
-Run ADMIXTURE on 1000 Genomes reference panel
-=============================================
+Run PCA on 1000 Genomes reference panel
+=======================================
 *TO DO*
 
-Visualize & interpret ADMIXTURE results
+Visualize & interpret PCA results
 ========================================
 *TO DO*
 
+Project SGDP samples onto PCs
+=============================
+*TO DO*
+
+Visualize & interpret projection onto PCs
+=========================================

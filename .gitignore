@@ -1,9 +1,7 @@
 bin/plink
 bin/admixture
-data/*.vcf.gz
-data/*.map
-data/*.ped
-data/*.bed
-data/*.bim
-data/*.fam
 docs/slides.pdf
+data/1kg.vcf.gz
+data/1kg_unrelated.bed
+data/1kg_unrelated.bim
+data/1kg_unrelated.fam
