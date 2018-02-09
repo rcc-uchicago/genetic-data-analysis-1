@@ -158,3 +158,4 @@ Visualize & interpret PCA results
   these 5 samples so that we can interpret their projection onto the
   top 2 PCs. I've created a third (slightly more complicated) plotting
   function to accomplish this.
+* TO DO: Save third & final plot.

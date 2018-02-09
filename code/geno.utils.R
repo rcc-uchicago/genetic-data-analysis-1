@@ -36,7 +36,11 @@ basic.pc.plot <- function (dat, x = "PC1", y = "PC2")
     theme_cowplot() +
     theme(axis.line = element_blank())
 
-labeled.pc.plot <- function (dat, x = "PC1", y = "PC2",label = "label") {
+# This is a labeled PC plot---it shows the project of the samples onto
+# 2 selected PCs, and varies the color and shape of the points
+# according to their labels (this should be a factor, i.e. a
+# categorical variable).
+labeled.pc.plot <- function (dat, x = "PC1", y = "PC2", label = "label") {
   colors <- c(rep(c("#E69F00","#56B4E9","#009E73","#F0E442","#0072B2",
                     "#D55E00","#CC79A7"),length.out = 21),"black")
   shapes <- c(rep(c(19,17,8,1,3),length.out = 21),19)
@@ -48,4 +52,8 @@ labeled.pc.plot <- function (dat, x = "PC1", y = "PC2",label = "label") {
          theme_cowplot() +
          theme(axis.line = element_blank()))
 }
-  
+
+# TO DO: Explain here what this function does.
+labeled.pc.plot2 <- functino (dat, x = "PC1", y = "PC2", label = "label") {
+
+}
