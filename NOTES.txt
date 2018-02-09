@@ -17,6 +17,7 @@ Set up your cluster computing environment
 
 Download SGDP data
 ==================
+Source: http://reichdata.hms.harvard.edu/pub/datasets/sgdp
 
 Download 1000 Genomes data
 ==========================
