@@ -4,12 +4,11 @@
 # about this file format.
 read.geno.raw <- function (geno.file) {
   geno <- fread(geno.file,sep = " ",header = TRUE,stringsAsFactors = FALSE)
-  class(geno) <- "data.frame"
-  ids <- geno[["IID"]]
-      markers <- geno$SNP
-      geno    <- t(as.matrix(geno[-(1:6)]))
-      rownames(geno) <- ids
-      colnames(geno) <- markers
-      mode(geno)     <- "double"
-      return(geno)
-  }
+  class(geno)    <- "data.frame"
+  ids            <- with(geno,paste(FID,IID,sep = "_"))
+  geno           <- geno[-(1:6)]
+  rownames(geno) <- ids
+  geno           <- as.matrix(geno)
+  storage.mode(geno) <- "double"
+  return(geno)
+}

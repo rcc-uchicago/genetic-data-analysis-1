@@ -5,8 +5,9 @@ https://github.com/rcc-uchicago/genetic-data-analysis-1
 Set up your cluster computing environment
 =========================================
 1. Connect to midway2 (see https://rcc.uchicago.edu/docs/connecting).
-2. Request 4 GB memory on a midway2 compute node:
-     sinteractive --partition=broadwl --time=3:00:00 --mem=4G
+2. Request 4 CPUs and 10 GB memory on a midway2 compute node:
+     sinteractive --partition=broadwl --time=3:00:00 --mem=10G \
+       --cpus-per-task=4
 3. Make sure that you can display graphics, e.g.
      module load R/3.4.3
      R
@@ -99,10 +100,35 @@ Run PCA on combined data set
 * Move to the repository root, and start up R:
     cd ..
     module load R/3.4.3
-    R
-* 
+    export OPENBLAS_NUM_THREADS=4
+    R --no-save
+* Load the genotype data into R: 
+    library(data.table)
+    source("code/geno.utils.R")
+    geno <- read.geno.raw("data/1kg_origins_recoded.raw")
+    class(geno)
+    dim(geno)
+    geno[1:5,1:5]
+* We need to fill in the missing genotypes:
+    100*mean(is.na(geno))
+    p <- ncol(geno)
+    x <- colMeans(geno,na.rm = TRUE)
+    for (j in 1:p) {
+      i         <- which(is.na(geno[,j]))
+      geno[i,j] <- x[j]
+    }
+    sum(is.na(geno))
+* Compute the first 10 PCs (components explaining the most variation
+  in the genotypes):
+    library(rsvd)
+    out.pca <- rpca(geno,k = 10,center = TRUE,scale = FALSE,retx = TRUE)
+    summary(out.pca)
+    head(out.pca$x)
+    pcs <- as.data.frame(out.pca$x)
+    names(pcs) <- paste0("PC",1:10)
+* Let's save the results of our analysis.
+    save(file = "output/1kg_origins_pca.RData",
+         list = c("out.pca","pcs"))
 
 Visualize & interpret PCA results
 =================================
-
-
