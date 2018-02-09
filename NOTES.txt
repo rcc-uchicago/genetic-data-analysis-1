@@ -100,11 +100,12 @@ Run PCA on combined data set
 * Move to the repository root, and start up R:
     cd ..
     module load R/3.4.3
-    export OPENBLAS_NUM_THREADS=4
+    export OPENBLAS_NUM_THREADS=4 (optional)
     R --no-save
 * Load the genotype data into R: 
     library(data.table)
     source("code/geno.utils.R")
+    getwd()
     geno <- read.geno.raw("data/1kg_origins_recoded.raw")
     class(geno)
     dim(geno)
@@ -124,11 +125,36 @@ Run PCA on combined data set
     out.pca <- rpca(geno,k = 10,center = TRUE,scale = FALSE,retx = TRUE)
     summary(out.pca)
     head(out.pca$x)
-    pcs <- as.data.frame(out.pca$x)
-    names(pcs) <- paste0("PC",1:10)
+    pcs <- out.pca$x
+    colnames(pcs) <- paste0("PC",1:10)
 * Let's save the results of our analysis.
     save(file = "output/1kg_origins_pca.RData",
          list = c("out.pca","pcs"))
 
 Visualize & interpret PCA results
 =================================
+* Load the ggplot2 package and load the PC results just in case you
+  don't already have them loaded:
+    library(ggplot2)
+    library(cowplot)
+    source("code/geno.utils.R")
+    load("output/1kg_origins_pca.RData")
+* Let's plot all samples projected onto the first 2 PCs:
+    p <- basic.pc.plot(pcs,x = "PC1",y = "PC2")
+    print(p)
+* There is definitely structure, but it is difficult to
+  interpret---let's visualize the samples with their population
+  labels. To do so, let's load the population labels assigned to the
+  1000 Genomes samples:
+    labels.1kg <- read.table("data/omni_samples.20141118.panel",
+                             sep = " ",header = TRUE,as.is = "id")
+    pcs <- add.poplabels(pcs,labels.1kg)
+    head(pcs)
+    p2 <- labeled.pc.plot(pcs,x = "PC1",y = "PC2",label = "label")
+* Take time to discuss interesting insights from this plot. Make use
+  of the 1kg.pop to interpret labels.
+* One missing element here is the labels for the 5 samples from the
+  Human Origins data set. It would be good to show the sample ids for
+  these 5 samples so that we can interpret their projection onto the
+  top 2 PCs. I've created a third (slightly more complicated) plotting
+  function to accomplish this.
