@@ -2,6 +2,9 @@ bin/plink
 bin/admixture
 docs/slides.pdf
 data/1kg.vcf.gz
-data/1kg_unrelated.bed
-data/1kg_unrelated.bim
-data/1kg_unrelated.fam
+data/1kg_unrelated.*
+data/1kg_unrelated_reduced.*
+data/origins_reduced.*
+data/1kg_origins_combined.*
+data/1kg_origins_pruned.*
+data/1kg_origins_recoded.raw
