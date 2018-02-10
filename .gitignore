@@ -9,3 +9,4 @@ data/1kg_origins_combined.*
 data/1kg_origins_pruned.*
 data/1kg_origins_recoded.raw
 output/*.RData
+output/*.pdf
