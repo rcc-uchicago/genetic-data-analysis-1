@@ -56,7 +56,8 @@ labeled.pc.plot <- function (dat, x = "PC1", y = "PC2", label = "label")
     theme_cowplot() +
     theme(axis.line = element_blank())
 
-# TO DO: Explain here what this function does.
+# This does the same thing as labeled.pc.plot, but also shows the ids
+# of the unlabeled samples.
 labeled.pc.plot2 <- function (dat, x = "PC1", y = "PC2", label = "label") {
   dat  <- as.data.frame(dat)
   ids  <- sapply(strsplit(rownames(pcs),"_"),function (x) x[2])
