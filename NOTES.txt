@@ -133,8 +133,13 @@ Run PCA on combined data set
 
 Visualize & interpret PCA results
 =================================
+* At this point, we have finished all the computationally intensive
+  aspects of our analysis.
+* module load R/3.4.3
+* R --no-save
 * Load the ggplot2 package and load the PC results just in case you
   don't already have them loaded:
+    getwd()
     library(ggplot2)
     library(cowplot)
     source("code/geno.utils.R")
@@ -151,11 +156,16 @@ Visualize & interpret PCA results
     pcs <- add.poplabels(pcs,labels.1kg)
     head(pcs)
     p2 <- labeled.pc.plot(pcs,x = "PC1",y = "PC2",label = "label")
+    print(p2)
 * Take time to discuss interesting insights from this plot. Make use
   of the 1kg.pop to interpret labels.
+* We can also zoom in on a portion of the scatterplot, e.g.,
+    p2 + xlim(c(-30,10)) + ylim(c(10,50))
 * One missing element here is the labels for the 5 samples from the
   Human Origins data set. It would be good to show the sample ids for
   these 5 samples so that we can interpret their projection onto the
   top 2 PCs. I've created a third (slightly more complicated) plotting
   function to accomplish this.
-* TO DO: Save third & final plot.
+    p3 <- labeled.pc.plot2(pcs,x = "PC1",y = "PC2",label = "label")
+    print(p3)
+* ggsave("output/1kg_origins_pcs1+2.pdf",p3)

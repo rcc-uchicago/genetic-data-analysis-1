@@ -1,3 +1,8 @@
+# Colors and shapes used in the PC plots.
+colors <- c(rep(c("#E69F00","#56B4E9","#009E73","#F0E442","#0072B2",
+                  "#D55E00","#CC79A7"),length.out = 21),"black")
+shapes <- c(rep(c(19,17,8,1,3),length.out = 21),19)
+
 # Read an n x p genotype matrix from a .raw file, where n is the
 # number of samples and p is the number of genetic markers (SNPs). See
 # http://www.cog-genomics.org/plink2/formats#raw for more information
@@ -21,7 +26,7 @@ read.geno.raw <- function (geno.file) {
 add.poplabels <- function (pcs, labels) {
   pcs    <- as.data.frame(pcs)
   pcs    <- cbind(label = "none",pcs,stringsAsFactors = FALSE)
-  ids    <- sapply(strsplit(rownames(pcs),"_"),function (x) x[1])
+  ids    <- sapply(strsplit(rownames(pcs),"_"),function (x) x[2])
   labels <- subset(labels,is.element(labels$id,ids))
   rows   <- match(labels$id,ids)
   pcs[rows,"label"] <- as.character(labels$pop)
@@ -31,7 +36,8 @@ add.poplabels <- function (pcs, labels) {
 # This is a basic PC plot---it shows the projection of the samples
 # onto 2 selected PCs.
 basic.pc.plot <- function (dat, x = "PC1", y = "PC2")
-  ggplot(as.data.frame(dat),aes_string(x = x,y = y)) +
+  ggplot(as.data.frame(dat),aes_string(x = x,y = y),
+         environment = environment()) +
     geom_point(color = "royalblue",shape = 20,size = 2.5) +
     theme_cowplot() +
     theme(axis.line = element_blank())
@@ -40,20 +46,35 @@ basic.pc.plot <- function (dat, x = "PC1", y = "PC2")
 # 2 selected PCs, and varies the color and shape of the points
 # according to their labels (this should be a factor, i.e. a
 # categorical variable).
-labeled.pc.plot <- function (dat, x = "PC1", y = "PC2", label = "label") {
-  colors <- c(rep(c("#E69F00","#56B4E9","#009E73","#F0E442","#0072B2",
-                    "#D55E00","#CC79A7"),length.out = 21),"black")
-  shapes <- c(rep(c(19,17,8,1,3),length.out = 21),19)
-  return(ggplot(as.data.frame(dat),
-                aes_string(x = x,y = y,color = "label",shape = "label")) +
-         geom_point(size = 3) +
-         scale_color_manual(values = colors) +
-         scale_shape_manual(values = shapes) +
-         theme_cowplot() +
-         theme(axis.line = element_blank()))
-}
+labeled.pc.plot <- function (dat, x = "PC1", y = "PC2", label = "label")
+  ggplot(as.data.frame(dat),
+         aes_string(x = x,y = y,color = "label",shape = "label"),
+         environment = environment()) +
+    geom_point(size = 3) +
+    scale_color_manual(values = colors) +
+    scale_shape_manual(values = shapes) +
+    theme_cowplot() +
+    theme(axis.line = element_blank())
 
 # TO DO: Explain here what this function does.
-labeled.pc.plot2 <- functino (dat, x = "PC1", y = "PC2", label = "label") {
-
+labeled.pc.plot2 <- function (dat, x = "PC1", y = "PC2", label = "label") {
+  dat  <- as.data.frame(dat)
+  ids  <- sapply(strsplit(rownames(pcs),"_"),function (x) x[2])
+  dat  <- cbind(dat,data.frame(id = paste(" ",ids)))
+  rows <- which(dat[[label]] != "none")
+  dat1 <- dat[rows,]
+  dat2 <- dat[-rows,]
+  return(ggplot(environment = environment()) +
+         geom_point(data = dat1,size = 3,
+                    mapping = aes_string(x = x,y = y,color = "label",
+                                         shape = "label")) +
+         scale_color_manual(values = colors) +
+         scale_shape_manual(values = shapes) +
+         geom_point(data = dat2,mapping = aes_string(x = x,y = y),
+                    color = "black",shape = 19, size = 3,show.legend = FALSE) +
+         geom_text(data = dat2,mapping = aes_string(x = x,y = y,label = "id"),
+                   color = "black",size = 3,hjust = 0,vjust = 1,
+                   show.legend = FALSE) +
+         theme_cowplot() +
+         theme(axis.line = element_blank()))
 }
