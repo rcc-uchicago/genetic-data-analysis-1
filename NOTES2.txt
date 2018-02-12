@@ -1,8 +1,0 @@
-Admixture analysis
-==================
-* Download URL: https://www.genetics.ucla.edu/software/admixture
-* Commands to set up ADMIXTURE 1.3.0 on midway2:
-    cd bin
-    wget http://bit.ly/2BNrPa8 -O admixture.tar.gz // Download Linux binary.
-    tar zxvf admixture.tar.gz                      // Unpack archive.
-    mv admixture_linux-1.3.0/admixture .
