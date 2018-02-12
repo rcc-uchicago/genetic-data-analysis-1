@@ -15,45 +15,6 @@ Set up your cluster computing environment
    You should see a scatterplot. If not, then you need to use a
    different method to connect to midway2.
 
-Download PLINK
-==============
-* Download URL for PLINK: http://www.cog-genomics.org/plink2
-* Commands to set up PLINK 1.9b5.2:
-    cd bin
-    wget http://bit.ly/2nUxOQX -O plink.zip // Download 64-bit Linux binary.
-    unzip plink.zip                         // Uncompress ZIP file.
-
-Explore VCF file
-================
-* http://www.cog-genomics.org/plink2/formats#vcf
-* Commands to explore the 1000 Genomes data:
-    ls -lh 1kg.vcf.gz         // 22 GB uncompressed.
-    zcat 1kg.vcf.gz | less -S // gzcat on Mac.
-
-Convert VCF to PLINK
-====================
-* We convert the from VCF to PLINK (.bed/.bim/.bam) format, retaining
-  only SNPs on autosomal chromosomes 1-22. Also, remove any SNPs in
-  which the proportion of missing genotypes is greater than negligible
-  (>1%). These steps are taken to simplify the analyses of these data.
-* Command to convert from VCF to PLINK text format:
-    ../bin/plink --vcf 1kg.vcf.gz --recode --chr 1-22 \
-       --allow-extra-chr --geno 0.01 --out 1kg
-
-Explore PLINK file
-==================
-* .map format: (1) chromosome, (2) marker id, (3) genetic distance on
-  chromosome (cM), base-pair position on chromosome.
-* .ped format: (1) family id, (2) individual id, (3) father id, (4)
-  mother id, (5) gender, (6) phenotype, (7-) genotypes
-* Commands to explore the genetic data:
-    ls -lh 1kg.map 1kg.ped
-    head 1kg.map
-    tail 1kg.map
-    wc -l 1kg.map
-    less -S 1kg.map
-    wc -l -w 1kg.ped
-
 Prepare 1000 Genomes data
 =========================
 * Convert to PLINK binary format. This should create 3 new files:

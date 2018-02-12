@@ -8,7 +8,7 @@ output:
 ---
 
 Download 1000 Genomes data
---------------------------
+==========================
 
 We download the 1000 Genomes data from the European Bioinformatics
 Institute. Downloading may take 10--20 minutes.
@@ -28,22 +28,95 @@ cd data
 wget http://bit.ly/2C617oO -O 1kg.vcf.gz
 ```
 
-## Download PLINK
+Explore the VCF file
+====================
 
-We download PLINK software.
+Let's run some simple shell commands to expore the genotype data
+stored in the VCF file.
+
+```{bash eval=FALSE}
+cd data
+ls -lh 1kg.vcf.gz
+zcat 1kg.vcf.gz | less -S // On Mac, use gzcat.
+```
+
++ VCF reference: http://www.cog-genomics.org/plink2/formats#vcf
+
+VCF files: concepts
+===================
+
++ The Variant Call Format (VCF) is a text format for storing many
+types of DNA variant data (e.g., SNPs, deletions, insertions), and
+for annotating these variants.
+
++ It is one of the most commonly used data formats in genetics.
+
++ It is an inefficient way to store genotype data (this is why we
+have compressed it).
+
++ See also:
+    - https://vcftools.github.io 
+    - https://samtools.github.io/hts-specs 
+    - doi:10.1093/bioinformatics/btr330
+
+Download PLINK
+==============
+
+We download the stable version of the PLINK software in the `bin
+folder`.
 
 + URL: http://www.cog-genomics.org/plink2
 
-On the RCC cluster, you can run these commands to download and
-uncompress the 64-bit Linux binary for PLINK 1.9b5.2:
+On the RCC cluster, you can run these commands to download and test
+the 64-bit Linux binary for PLINK 1.9b5.2:
 
 ```{bash, eval=FALSE}
 cd bin
 wget http://bit.ly/2nUxOQX -O plink.zip
 unzip plink.zip
+./plink --version
 ```
 
-## Rick Astley's Re-election Platform
+Convert VCF to PLINK
+====================
+
+Run this command to convert the genotypes from VCF to the PLINK text
+format:
+
+```{bash, eval=FALSE}
+cd data
+../bin/plink --vcf 1kg.vcf.gz --recode \
+  --chr 1-22 --allow-extra-chr \
+  --geno 0.01 --out 1kg
+```
+
+Command details:
+    - Creates files `1kg.map` and `1kg.ped`.
+    - Retains only SNPs on (autosomal) chromosomes 1-22.
+    - Removes any SNPs in which the proportion of missing genotypes is >1%.
+    - These steps are taken to simplify the analyses.
+
+Explore PLINK files
+===================
+
+Let's run some simple shell commands to expore the genotype data
+stored in the PLINK files.
+
+    ls -lh 1kg.map 1kg.ped
+    head 1kg.map
+    tail 1kg.map
+    wc -l 1kg.map
+    less -S 1kg.map
+    wc -l -w 1kg.ped
+
+* .map format: (1) chromosome, (2) marker id, (3) genetic distance on
+  chromosome (cM), base-pair position on chromosome.
+* .ped format: (1) family id, (2) individual id, (3) father id, (4)
+  mother id, (5) gender, (6) phenotype, (7-) genotypes
+
+
+
+# Rick Astley's Re-election Platform
 
 Rick Astley's campaign promises:
 
@@ -56,7 +129,7 @@ Rick Astley's campaign promises:
 
 Whereas these pledges conform to the preferences of the **median voter**, we expect Congressman Astley to secure re-election.
 
-## Caribbean Queen and Operation Urgent Fury
+# Caribbean Queen and Operation Urgent Fury
 
 Billy Ocean released "Caribbean Queen" in 1984.
 
@@ -71,7 +144,7 @@ Billy Ocean is advocating for what became the Goldwater-Nichols Act.
 
 - Wanted to take advantage of **economies of scale**, resolve **coordination problems** in U.S. military.
 
-## The Good Day Hypothesis
+# The Good Day Hypothesis
 
 We know the following about Ice Cube's day.
 
@@ -88,19 +161,19 @@ This leads to two different hypotheses:
 These hypotheses are tested using archival data of Ice Cube's life.
 
 # Example R code
-## Example R stuff
+# Example R stuff
 
 ```{r cars, echo = TRUE}
 summary(cars)
 ```
 
-## Slide with Plot
+# Slide with Plot
 
 ```{r pressure}
 plot(pressure)
 ```
 
-## ggplot code
+# ggplot code
 
 ```{r createdata, echo=TRUE, eval=FALSE}
 df <- data.frame(x = rnorm(1000))
@@ -110,7 +183,7 @@ base + stat_function(fun = dnorm, colour = "red")
 ```
 
 
-## Another Plot
+# Another Plot
 
 ```{r plotit, echo=FALSE}
 library(ggplot2)
