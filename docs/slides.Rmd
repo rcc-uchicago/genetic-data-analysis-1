@@ -203,10 +203,21 @@ the SNPs are in the same order.
 Prune SNPs in LD
 ================
 
-* "Prune" SNPs in LD (typically you will want to be more aggressive):
-    ../bin/plink --bfile 1kg_origins_combined --indep-pairwise 1000 500 0.8
-    ../bin/plink --bfile 1kg_origins_combined --make-bed \
-      --extract plink.prune.in --out 1kg_origins_pruned
+Many basic population structure analyses (e.g., PCA) assume that the
+SNPs are independent. A common step is to "prune" SNPs that are
+strongly correlated with each other (*i.e.*, in linkage
+disequibilirium, or LD) to make analysis better supported.
+
+```{bash, eval=FALSE}
+cd data
+../bin/plink --bfile 1kg_origins_combined \
+  --indep-pairwise 1000 500 0.8
+../bin/plink --bfile 1kg_origins_combined \
+  --make-bed --extract plink.prune.in \
+  --out 1kg_origins_pruned
+```
+
+Typically you will want to be more aggressive in pruning SNPs in LD.
 
 Data preparation: take-home points
 ==================================
@@ -216,6 +227,8 @@ Data preparation: take-home points
 + It is very common to introduce errors when merging multiple data sets
 
 + PLINK will correct some errors, but not all of them.
+
++ I was conservative in selecting SNP common to both data sets.
 
 # Rick Astley's Re-election Platform
 

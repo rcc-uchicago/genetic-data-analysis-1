@@ -13,5 +13,7 @@ data/origins_common.*
 data/1kg_origins_combined.*
 data/1kg_origins_pruned.*
 data/1kg_origins_recoded.raw
+data/plink.prune.in
+data/plink.prune.out
 output/*.RData
 output/*.pdf
