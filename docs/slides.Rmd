@@ -23,7 +23,7 @@ Institute. Downloading may take 10--20 minutes.
 
 On the RCC cluster, you can run these commands:
 
-```{bash, eval=FALSE}
+```{bash get-1kg-data, eval=FALSE}
 cd data
 wget http://bit.ly/2C617oO -O 1kg.vcf.gz
 ```
@@ -34,7 +34,7 @@ Explore the VCF file
 Let's run some simple shell commands to inspect the genotype data
 stored in the VCF file.
 
-```{bash eval=FALSE}
+```{bash inspect-1kg-vcf, eval=FALSE}
 cd data
 ls -lh 1kg.vcf.gz
 zcat 1kg.vcf.gz | less -S // On Mac, use gzcat.
@@ -70,7 +70,7 @@ folder`.
 On the RCC cluster, you can run these commands to download and test
 the 64-bit Linux binary for PLINK 1.9b5.2:
 
-```{bash, eval=FALSE}
+```{bash get-plink, eval=FALSE}
 cd bin
 wget http://bit.ly/2nUxOQX -O plink.zip
 unzip plink.zip
@@ -83,7 +83,7 @@ Convert VCF to PLINK
 Run this command to convert the genotypes from VCF to the PLINK text
 format. This may take a few minutes to complete.
 
-```{bash, eval=FALSE}
+```{bash vcf2plink, eval=FALSE}
 cd data
 ../bin/plink --vcf 1kg.vcf.gz --recode \
   --chr 1-22 --allow-extra-chr \
@@ -102,7 +102,7 @@ Explore PLINK files
 Let's run some simple shell commands to inspect the 1000 Genomes
 genotype data stored in the PLINK files.
 
-```{bash, eval=FALSE}
+```{bash inspect-1kg-plink, eval=FALSE}
 head 1kg.map
 tail 1kg.map
 wc -l 1kg.map
@@ -208,7 +208,7 @@ SNPs are independent. A common step is to "prune" SNPs that are
 strongly correlated with each other (*i.e.*, in linkage
 disequibilirium, or LD) to make analysis better supported.
 
-```{bash, eval=FALSE}
+```{bash ld-prune-plink, eval=FALSE}
 cd data
 ../bin/plink --bfile 1kg_origins_combined \
   --indep-pairwise 1000 500 0.8
@@ -242,53 +242,85 @@ of them.
 avoid introducing errors. As a result, we lost a lot of data after
 merging.
 
-+ *Important:* Record your data processing steps.
++ *Important:* Record all your data processing steps.
 
-# Rick Astley's Re-election Platform
+Run PCA on combined data set
+============================
 
-Rick Astley's campaign promises:
+Outline of the PCA analysis:
 
-- Never gonna give you up.
-- Never gonna let you down.
-- Never gonna run around and desert you.
-- Never gonna make you cry.
-- Never gonna say goodbye.
-- Never gonna tell a lie and hurt you.
+1. Convert genotype data to a (numeric) matrix.
 
-Whereas these pledges conform to the preferences of the **median voter**, we expect Congressman Astley to secure re-election.
+2. Start up interative R environment.
 
-# Caribbean Queen and Operation Urgent Fury
+3. Load genotype matrix into R.
 
-Billy Ocean released "Caribbean Queen" in 1984.
+4. Fill in missing genotypes.
 
-- Emphasized sharing the same dream
-- Hearts beating as one
+5. Compute PCs in R using the {\tt rsvd} package.
 
-"Caribbean Queen" is about the poor execution of Operation Urgent Fury.
+Convert genotype data to a matrix
+=================================
 
-- Echoed JCS chairman David Jones' frustrations with military establishment.
+The input to PCA must be an $n \times p$ matrix, where $n$ is the
+number of samples and $p$ is the number of SNPs.
 
-Billy Ocean is advocating for what became the Goldwater-Nichols Act.
+```{bash plink2matrix, eval=FALSE}
+cd data
+../bin/plink --bfile 1kg_origins_pruned \
+  --recode A --out 1kg_origins_recoded
+```
 
-- Wanted to take advantage of **economies of scale**, resolve **coordination problems** in U.S. military.
+This command creates a new file `1kg_origins_recoded.raw`:
 
-# The Good Day Hypothesis
+Start up R interactive environment
+==================================
 
-We know the following about Ice Cube's day.
+Move to the repository root, and start up R. On the RCC cluster, run
+these commands:
 
-1. The Lakers beat the Supersonics.
-2. No helicopter looked for a murder.
-3. Consumed Fatburger at 2 a.m.
-4. Goodyear blimp: "Ice Cube's a pimp."
+```{bash load-R, eval=FALSE}
+pwd  // Should be ... genetic-data-analysis-1
+module load R/3.4.3
+export OPENBLAS_NUM_THREADS=4  // Optional.
+R --no-save
+```
 
-This leads to two different hypotheses:
+The third command will dramatically speed up the PCA calculations
+by using multithreaded matrix operations from the OpenBLAS library.
 
-- $H_0$: Ice Cube's day is statistically indistinguishable from a typical day.
-- $H_1$: Ice Cube is having a good (i.e. greater than average) day.
+Load genotype matrix into R
+===========================
 
-These hypotheses are tested using archival data of Ice Cube's life.
+* Load the genotype data into R: 
+    library(data.table)
+    source("code/geno.utils.R")
+    getwd()
+    geno <- read.geno.raw("data/1kg_origins_recoded.raw")
+    class(geno)
+    dim(geno)
+    geno[1:5,1:5]
+* We need to fill in the missing genotypes:
+    100*mean(is.na(geno))
+    p <- ncol(geno)
+    x <- colMeans(geno,na.rm = TRUE)
+    for (j in 1:p) {
+      i         <- which(is.na(geno[,j]))
+      geno[i,j] <- x[j]
+    }
+    sum(is.na(geno))
+* Compute the first 10 PCs (components explaining the most variation
+  in the genotypes):
+    library(rsvd)
+    out.pca <- rpca(geno,k = 10,center = TRUE,scale = FALSE,retx = TRUE)
+    summary(out.pca)
+    head(out.pca$x)
+    pcs <- out.pca$x
+    colnames(pcs) <- paste0("PC",1:10)
+* Let's save the results of our analysis.
+    save(file = "output/1kg_origins_pca.RData",
+         list = c("out.pca","pcs"))
 
-# Example R code
 # Example R stuff
 
 ```{r cars, echo = TRUE}
