@@ -22,7 +22,7 @@
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \IfFileExists{microtype.sty}{%
 \usepackage{microtype}
-\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+\UseMicrotypeSet[protrusion]{basicmath}
 }{}
 $if(listings)$
 \usepackage{listings}
@@ -115,7 +115,7 @@ $endfor$
 \usepackage{wasysym}
 
 % Get rid of navigation symbols.
-%-------------------------------
+% ------------------------------
 \setbeamertemplate{navigation symbols}{}
 
 \institute{Research Computing Center and the Dept. of Human Genetics \\
@@ -139,8 +139,8 @@ $endfor$
 
 \let\Tiny=\tiny
 
-% Sections and subsections should not get their damn slide.
-%----------------------------------------------------------
+% Sections and subsections should not get their own slide.
+%---------------------------------------------------------
 \AtBeginPart{}
 \AtBeginSection{}
 \AtBeginSubsection{}
@@ -148,7 +148,7 @@ $endfor$
 
 % Suppress some of Markdown's weird default vertical spacing.
 %------------------------------------------------------------
-\setlength{\emergencystretch}{0em}  % prevent overfull lines
+\setlength{\emergencystretch}{0em}
 \setlength{\parskip}{0pt}
 
 % Allow for those simple two-tone footlines I like. 
@@ -158,7 +158,6 @@ $endfor$
     \ifnum\insertpagenumber=1
     \hbox{%
         \begin{beamercolorbox}[wd=\paperwidth,ht=1em,dp=1em,center]{}%
-      % empty environment to raise height
         \end{beamercolorbox}%
     }%
     \vskip0pt%
@@ -184,7 +183,7 @@ $endfor$
 % Adjust some item elements. More cosmetic things.
 %-------------------------------------------------
 \setbeamertemplate{itemize item}{\color{black}$$\bullet$$}
-\setbeamertemplate{itemize subitem}{\color{black}\scriptsize{$$\bullet$$}}
+\setbeamertemplate{itemize subitem}{\color{black}\scriptsize{$$\rhd$$}}
 \setbeamertemplate{itemize/enumerate body end}{\vspace{.6\baselineskip}}
 
 % Automatically center images
@@ -210,8 +209,8 @@ $endfor$
 \setbeamerfont{title}{family=\fontspec{$if(titlefont)$$titlefont$$else$structurebold$endif$}}
 \setbeamerfont{frametitle}{family=\fontspec{$if(titlefont)$$titlefont$$else$structurebold$endif$}}
 \usepackage[font=small,skip=0pt]{caption}
- \else
- \fi
+\else
+\fi
 
 % Begin the actual document.
 \begin{document}
