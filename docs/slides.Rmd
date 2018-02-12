@@ -31,7 +31,7 @@ wget http://bit.ly/2C617oO -O 1kg.vcf.gz
 Explore the VCF file
 ====================
 
-Let's run some simple shell commands to expore the genotype data
+Let's run some simple shell commands to inspect the genotype data
 stored in the VCF file.
 
 ```{bash eval=FALSE}
@@ -81,7 +81,7 @@ Convert VCF to PLINK
 ====================
 
 Run this command to convert the genotypes from VCF to the PLINK text
-format:
+format. This may take a few minutes to complete.
 
 ```{bash, eval=FALSE}
 cd data
@@ -90,31 +90,47 @@ cd data
   --geno 0.01 --out 1kg
 ```
 
-Command details:
-    - Creates files `1kg.map` and `1kg.ped`.
-    - Retains only SNPs on (autosomal) chromosomes 1-22.
-    - Removes any SNPs in which the proportion of missing genotypes is >1%.
++ Command details:
+    - Creates two new files: `1kg.map` and `1kg.ped`.
+    - We retain only SNPs on (autosomal) chromosomes 1--22.
+    - We remove any SNPs with >1% missing genotypes.
     - These steps are taken to simplify the analyses.
 
 Explore PLINK files
 ===================
 
-Let's run some simple shell commands to expore the genotype data
+Let's run some simple shell commands to inspect the genotype data
 stored in the PLINK files.
 
-    ls -lh 1kg.map 1kg.ped
-    head 1kg.map
-    tail 1kg.map
-    wc -l 1kg.map
-    less -S 1kg.map
-    wc -l -w 1kg.ped
+```{bash, eval=FALSE}
+ls -lh 1kg.map 1kg.ped
+head 1kg.map
+tail 1kg.map
+wc -l 1kg.map
+less -S 1kg.ped
+wc -l -w 1kg.ped
+```
 
-* .map format: (1) chromosome, (2) marker id, (3) genetic distance on
-  chromosome (cM), base-pair position on chromosome.
-* .ped format: (1) family id, (2) individual id, (3) father id, (4)
-  mother id, (5) gender, (6) phenotype, (7-) genotypes
++ Columns in the `.map` file: (1) chromosome; (2) marker id; (3)
+genetic distance on chromosome, in cM; (4) base-pair position on
+chromosome.
+  
++ Columns in `.ped` file: (1) family id, (2) individual id, (3) father
+id, (4) mother id, (5) gender, (6) phenotype measurement, (7---) SNP
+genotypes.
 
+PLINK files: concepts
+=====================
 
++ The most commonly used format for storing human genoytpe data.
+
++ The PLINK text format is easy to inspect and manipulate with simple
+shell commands (e.g., `wc`, `grep`, `cat`, `cut`, `paste`).
+
++ The PLINK binary format (`.bed`) is a much more efficient way to
+store genotype data (but is not human readable).
+
++ See: http://www.cog-genomics.org/plink/1.9/formats#ped
 
 # Rick Astley's Re-election Platform
 
