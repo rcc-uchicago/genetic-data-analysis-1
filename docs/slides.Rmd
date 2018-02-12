@@ -1,36 +1,32 @@
 ---
 title: "Analysis of Genetic Data 1: Inferring Population Structure"
-subtitle: (A Subtitle Would Go Here if This Were a Class)
 author: Peter Carbonetto
-institute: "Research Computing Center and 
-   the Dept. of Human Genetics,
-   University of Chicago"
-titlegraphic: uchicago.png
 fontsize: 12pt
 output:
  beamer_presentation:
    template: beamer.tex
    keep_tex: false
- ioslides_presentation:
-   smaller: false
-make149: false
 ---
 
-# Pop Songs and Political Science
+Download 1000 Genomes data
+--------------------------
 
-## Sheena Easton and Game Theory
+We download the 1000 Genomes data from the European Bioinformatics
+Institute. Downloading should take a few minutes.
 
-Sheena Easton describes the following scenario for her baby:
+* Long URL: ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/supporting/hd_genotype_chip
 
-1. Takes the morning train
-2. Works from nine 'til five
-3. Takes another train home again
-4. Finds Sheena Easton waiting for him
+* Short URL: http://bit.ly/2G7ZWYu
+  
+* Download this file into the `data` folder: 
+  `ALL.chip.omni_broad_sanger_combined.20140818.snps.genotypes.vcf.gz`
 
-Sheena Easton and her baby are playing a **zero-sum (total conflict) game**.
+On the cluster, you can run these commands:
 
-- Akin to Holmes-Moriarty game (see: von Neumann and Morgenstern)
-- Solution: **mixed strategy**
+```{bash, eval=FALSE}
+cd data
+wget http://bit.ly/2C617oO -O 1kg.vcf.gz
+```
 
 ## Rick Astley's Re-election Platform
 

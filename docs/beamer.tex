@@ -1,12 +1,8 @@
-\documentclass[$if(fontsize)$$fontsize$,$endif$$if(lang)$$babel-lang$,$endif$$if(handout)$handout,$endif$$if(beamer)$ignorenonframetext,$endif$$for(classoption)$$classoption$$sep$,$endfor$$if(make149)$,aspectratio=149$endif$]{$documentclass$}
-$if(theme)$
-\usetheme{$theme$}
-$endif$
+\documentclass[ignorenonframetext]{$documentclass$}
 \usefonttheme{structurebold}
 \setbeamertemplate{caption}[numbered]
 \setbeamertemplate{caption label separator}{: }
 \setbeamercolor{caption name}{fg=normal text.fg}
-% \usepackage[$fontfamilyoptions$]{$fontfamily$}
 \usepackage{lmodern}
 \usepackage{amssymb,amsmath}
 \usepackage{ifxetex,ifluatex}
@@ -22,22 +18,6 @@ $endif$
   \fi
   \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
   \newcommand{\euro}{€}
-$if(mainfont)$
-    \setmainfont[$mainfontoptions$]{$mainfont$}
-$endif$
-$if(sansfont)$
-    \setsansfont[$sansfontoptions$]{$sansfont$}
-$endif$
-$if(monofont)$
-    \setmonofont[Mapping=tex-ansi$if(monofontoptions)$,$monofontoptions$$endif$]{$monofont$}
-$endif$
-$if(mathfont)$
-    \setmathfont(Digits,Latin,Greek)[$mathfontoptions$]{$mathfont$}
-$endif$
-$if(CJKmainfont)$
-    \usepackage{xeCJK}
-    \setCJKmainfont[$CJKoptions$]{$CJKmainfont$}
-$endif$
 \fi
 % use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
@@ -46,27 +26,6 @@ $endif$
 \usepackage{microtype}
 \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
 }{}
-$if(lang)$
-\ifxetex
-  \usepackage{polyglossia}
-  \setmainlanguage[$polyglossia-lang.options$]{$polyglossia-lang.name$}
-$for(polyglossia-otherlangs)$
-  \setotherlanguage[$polyglossia-otherlangs.options$]{$polyglossia-otherlangs.name$}
-$endfor$
-\else
-  \usepackage[shorthands=off,$babel-lang$]{babel}
-\fi
-$endif$
-$if(natbib)$
-\usepackage{natbib}
-\bibliographystyle{$if(biblio-style)$$biblio-style$$else$plainnat$endif$}
-$endif$
-$if(biblatex)$
-\usepackage{biblatex}
-$for(bibliography)$
-\addbibresource{$bibliography$}
-$endfor$
-$endif$
 $if(listings)$
 \usepackage{listings}
 $endif$
@@ -99,6 +58,7 @@ $if(graphics)$
 % using explicit options in \includegraphics[width, height, ...]{}
 \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
 $endif$
+\usepackage{times}
 
 % Comment these out if you don't want a slide with just the
 % part/section/subsection/subsubsection title:
@@ -167,61 +127,37 @@ $for(header-includes)$
 $header-includes$
 $endfor$
 
-%% Here's everything I added.
-%%--------------------------
-
 \usepackage{graphicx}
 \usepackage{rotating}
-%\setbeamertemplate{caption}[numbered]
 \usepackage{hyperref}
 \usepackage{caption}
 \usepackage[normalem]{ulem}
-%\mode<presentation>
 \usepackage{wasysym}
-%\usepackage{amsmath}
-
 
 % Get rid of navigation symbols.
 %-------------------------------
 \setbeamertemplate{navigation symbols}{}
 
-% Optional institute tags and titlegraphic.
-% Do feel free to change the titlegraphic if you don't want it as a Markdown field.
-%----------------------------------------------------------------------------------
-$if(institute)$\institute{$institute$}$endif$
+\institute{Research Computing Center and the Dept. of Human Genetics \\
+ University of Chicago}
 
-% -----------------------------------------------------------------------------------------------------
-$if(titlegraphic)$\titlegraphic{\includegraphics[width=0.1\paperwidth]{\string $titlegraphic$}}$endif$
+\titlegraphic{\vspace*{-0.75cm}\includegraphics[width=300pt]{auton-2015.png}}
 
 % Some additional title page adjustments.
 %----------------------------------------
 \setbeamertemplate{title page}[empty]
-%\date{}
 \setbeamerfont{subtitle}{size=\small}
-
-\setbeamercovered{transparent}
-
-% Some optional colors. Change or add as you see fit.
-%---------------------------------------------------
-\definecolor{clemsonpurple}{HTML}{522D80}
-\definecolor{clemsonorange}{HTML}{EA6A20}
-\definecolor{clemsonorange}{HTML}{F66733}
-\definecolor{uiucblue}{HTML}{003C7D}
-\definecolor{uiucorange}{HTML}{F47F24}
 
 % Some optional color adjustments to Beamer. Change as you see fit.
 %------------------------------------------------------------------
-\setbeamercolor{frametitle}{fg=clemsonpurple,bg=white}
-\setbeamercolor{title}{fg=clemsonpurple,bg=white}
-\setbeamercolor{local structure}{fg=clemsonpurple}
-\setbeamercolor{section in toc}{fg=clemsonpurple,bg=white}
-% \setbeamercolor{subsection in toc}{fg=clemsonorange,bg=white}
-\setbeamercolor{footline}{fg=clemsonpurple!50, bg=white}
-\setbeamercolor{block title}{fg=clemsonorange,bg=white}
-
+\setbeamercolor{frametitle}{fg=black,bg=white}
+\setbeamercolor{title}{fg=black,bg=white}
+\setbeamercolor{local structure}{fg=black}
+\setbeamercolor{section in toc}{fg=black,bg=white}
+\setbeamercolor{footline}{fg=black, bg=white}
+\setbeamercolor{block title}{fg=black,bg=white}
 
 \let\Tiny=\tiny
-
 
 % Sections and subsections should not get their own damn slide.
 %--------------------------------------------------------------
@@ -263,14 +199,14 @@ $if(titlegraphic)$\titlegraphic{\includegraphics[width=0.1\paperwidth]{\string $
 %-------------------------------------------------------------------------------------------------------
 \setbeamercolor{structure}{fg=blue}
 \setbeamercolor{local structure}{parent=structure}
-\setbeamercolor{item projected}{parent=item,use=item,fg=clemsonpurple,bg=white}
+\setbeamercolor{item projected}{parent=item,use=item,fg=black,bg=white}
 \setbeamercolor{enumerate item}{parent=item}
 
 % Adjust some item elements. More cosmetic things.
 %-------------------------------------------------
-\setbeamertemplate{itemize item}{\color{clemsonpurple}$$\bullet$$}
-\setbeamertemplate{itemize subitem}{\color{clemsonpurple}\scriptsize{$$\bullet$$}}
-\setbeamertemplate{itemize/enumerate body end}{\vspace{.6\baselineskip}} % So I'm less inclined to use \medskip and \bigskip in Markdown.
+\setbeamertemplate{itemize item}{\color{black}$$\bullet$$}
+\setbeamertemplate{itemize subitem}{\color{black}\scriptsize{$$\bullet$$}}
+\setbeamertemplate{itemize/enumerate body end}{\vspace{.6\baselineskip}}
 
 % Automatically center images
 % ---------------------------
@@ -306,42 +242,6 @@ $if(title)$
 \frame{\titlepage}
 $endif$
 
-$for(include-before)$
-$include-before$
-
-$endfor$
-$if(toc)$
-\begin{frame}
-\tableofcontents[hideallsubsections]
-\end{frame}
-
-$endif$
 $body$
-
-$if(natbib)$
-$if(bibliography)$
-$if(biblio-title)$
-$if(book-class)$
-\renewcommand\bibname{$biblio-title$}
-$else$
-\renewcommand\refname{$biblio-title$}
-$endif$
-$endif$
-\begin{frame}[allowframebreaks]{$biblio-title$}
-\bibliography{$for(bibliography)$$bibliography$$sep$,$endfor$}
-\end{frame}
-
-$endif$
-$endif$
-$if(biblatex)$
-\begin{frame}[allowframebreaks]{$biblio-title$}
-\printbibliography[heading=none]
-\end{frame}
-
-$endif$
-$for(include-after)$
-$include-after$
-
-$endfor$
 
 \end{document}
