@@ -37,7 +37,7 @@ stored in the VCF file.
 ```{bash inspect-1kg-vcf, eval=FALSE}
 cd data
 ls -lh 1kg.vcf.gz
-zcat 1kg.vcf.gz | less -S // On Mac, use gzcat.
+zcat 1kg.vcf.gz | less -S # On Mac, use gzcat.
 ```
 
 + VCF reference: http://www.cog-genomics.org/plink2/formats#vcf
@@ -280,26 +280,50 @@ Move to the repository root, and start up R. On the RCC cluster, run
 these commands:
 
 ```{bash load-R, eval=FALSE}
-pwd  // Should be ... genetic-data-analysis-1
+pwd # Should be ... genetic-data-analysis-1
 module load R/3.4.3
-export OPENBLAS_NUM_THREADS=4  // Optional.
+export OPENBLAS_NUM_THREADS=4 # Optional.
 R --no-save
 ```
 
-The third command will dramatically speed up the PCA calculations
-by using multithreaded matrix operations from the OpenBLAS library.
+The third command dramatically speeds up the PCA using OpenBLAS
+multithreaded matrix operations.
 
 Load genotype matrix into R
 ===========================
 
-* Load the genotype data into R: 
-    library(data.table)
-    source("code/geno.utils.R")
-    getwd()
-    geno <- read.geno.raw("data/1kg_origins_recoded.raw")
-    class(geno)
-    dim(geno)
-    geno[1:5,1:5]
+Before continuing, check your working directory:
+
+```{r getwd, eval=FALSE}
+getwd() # Should be ... genetic-data-analysis-1
+```
+
+I wrote a function to rapidly load the genotype matrix using function
+`fread` from the `data.table` package.
+
+```{r load-pkgs, eval=FALSE}
+library(data.table)
+source("code/geno.utils.R")
+```
+
+Load the genotype matrix into R: 
+
+```{r load-geno, eval=FALSE}
+geno <-
+  read.geno.raw("data/1kg_origins_recoded.raw")
+```
+
+Run a few commands to inspect the genoytpe data:
+
+```{r inspect-geno, eval=FALSE}
+class(geno)
+dim(geno)
+geno[1:5,1:5]
+```
+
+Fill in missing genotypes
+=========================
+
 * We need to fill in the missing genotypes:
     100*mean(is.na(geno))
     p <- ncol(geno)
