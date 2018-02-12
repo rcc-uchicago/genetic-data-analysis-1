@@ -6,7 +6,7 @@
 \usepackage{lmodern}
 \usepackage{amssymb,amsmath}
 \usepackage{ifxetex,ifluatex}
-\usepackage{fixltx2e} % provides \textsubscript
+\usepackage{fixltx2e}
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
@@ -19,9 +19,7 @@
   \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
   \newcommand{\euro}{€}
 \fi
-% use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
-% use microtype if available
 \IfFileExists{microtype.sty}{%
 \usepackage{microtype}
 \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
@@ -95,27 +93,9 @@ $if(numbersections)$
 $else$
 \setcounter{secnumdepth}{0}
 $endif$
-$if(dir)$
-\ifxetex
-  % load bidi as late as possible as it modifies e.g. graphicx
-  $if(latex-dir-rtl)$
-  \usepackage[RTLdocument]{bidi}
-  $else$
-  \usepackage{bidi}
-  $endif$
-\fi
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
-  \TeXXeTstate=1
-  \newcommand{\RL}[1]{\beginR #1\endR}
-  \newcommand{\LR}[1]{\beginL #1\endL}
-  \newenvironment{RTL}{\beginR}{\endR}
-  \newenvironment{LTR}{\beginL}{\endL}
-\fi
-$endif$
 
-$if(title)$
-\title{$title$}
-$endif$
+\title{Analysis of Genetic Data 1: \\
+  Inferring Population Structure}
 $if(subtitle)$
 \subtitle{$subtitle$}
 $endif$
@@ -159,8 +139,8 @@ $endfor$
 
 \let\Tiny=\tiny
 
-% Sections and subsections should not get their own damn slide.
-%--------------------------------------------------------------
+% Sections and subsections should not get their damn slide.
+%----------------------------------------------------------
 \AtBeginPart{}
 \AtBeginSection{}
 \AtBeginSubsection{}
@@ -170,7 +150,6 @@ $endfor$
 %------------------------------------------------------------
 \setlength{\emergencystretch}{0em}  % prevent overfull lines
 \setlength{\parskip}{0pt}
-
 
 % Allow for those simple two-tone footlines I like. 
 % Edit the colors as you see fit.
@@ -195,8 +174,8 @@ $endfor$
     \fi%
 }
 
-% Various cosmetic things, though I must confess I forget what exactly these do and why I included them.
-%-------------------------------------------------------------------------------------------------------
+% Various cosmetic things.
+%-------------------------
 \setbeamercolor{structure}{fg=blue}
 \setbeamercolor{local structure}{parent=structure}
 \setbeamercolor{item projected}{parent=item,use=item,fg=black,bg=white}
@@ -212,7 +191,6 @@ $endfor$
 % ---------------------------
 % Note: this is for ![](image.png) images
 % Use "fig.align = "center" for R chunks
-
 \usepackage{etoolbox}
 
 \AtBeginDocument{%
@@ -226,8 +204,8 @@ $endfor$
 
 % I think I've moved to xelatex now. Here's some stuff for that.
 % --------------------------------------------------------------
-% I could customize/generalize this more but the truth is it works for my circumstances.
-
+% I could customize/generalize this more but the truth is it works for
+% my circumstances.
 \ifxetex
 \setbeamerfont{title}{family=\fontspec{$if(titlefont)$$titlefont$$else$structurebold$endif$}}
 \setbeamerfont{frametitle}{family=\fontspec{$if(titlefont)$$titlefont$$else$structurebold$endif$}}
@@ -235,8 +213,7 @@ $endfor$
  \else
  \fi
 
-% Okay, and begin the actual document...
-
+% Begin the actual document.
 \begin{document}
 $if(title)$
 \frame{\titlepage}

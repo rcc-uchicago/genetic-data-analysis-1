@@ -1,7 +1,6 @@
 ---
 title: "Analysis of Genetic Data 1: Inferring Population Structure"
 author: Peter Carbonetto
-fontsize: 12pt
 output:
  beamer_presentation:
    template: beamer.tex
