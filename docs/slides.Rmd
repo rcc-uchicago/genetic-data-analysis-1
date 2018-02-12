@@ -11,13 +11,13 @@ Download 1000 Genomes data
 --------------------------
 
 We download the 1000 Genomes data from the European Bioinformatics
-Institute. Downloading should take a few minutes.
+Institute. Downloading may take 10--20 minutes.
 
-* Long URL: ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/supporting/hd_genotype_chip
++ Long URL: ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/supporting/hd_genotype_chip
 
-* Short URL: http://bit.ly/2G7ZWYu
++ Short URL: http://bit.ly/2G7ZWYu
   
-* Download this file into the `data` folder: 
++ Download this file into the `data` folder: 
   `ALL.chip.omni_broad_sanger_combined.
    20140818.snps.genotypes.vcf.gz`
 
@@ -26,6 +26,21 @@ On the RCC cluster, you can run these commands:
 ```{bash, eval=FALSE}
 cd data
 wget http://bit.ly/2C617oO -O 1kg.vcf.gz
+```
+
+## Download PLINK
+
+We download PLINK software.
+
++ URL: http://www.cog-genomics.org/plink2
+
+On the RCC cluster, you can run these commands to download and
+uncompress the 64-bit Linux binary for PLINK 1.9b5.2:
+
+```{bash, eval=FALSE}
+cd bin
+wget http://bit.ly/2nUxOQX -O plink.zip
+unzip plink.zip
 ```
 
 ## Rick Astley's Re-election Platform
