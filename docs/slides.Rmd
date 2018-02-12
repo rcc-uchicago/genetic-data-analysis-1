@@ -146,6 +146,7 @@ structure analyses are not designed to handle).
 
 1. Convert to PLINK binary format:
 ```
+cd data
 ../bin/plink --file 1kg --make-bed --out 1kg
 ```
 
@@ -160,21 +161,61 @@ paste temp.txt temp.txt > samples.txt
    --remove samples.txt --out 1kg_unrelated
 ```
 
-Merge with Affymetrix Human Origins data
-========================================
+Merge with Affymetrix Human Origins data (part 1)
+=================================================
 
-* Commands to merge the two data sets:
-    ../bin/plink --bfile 1kg_unrelated --extract 1kg_origins_markers.txt \
-      --make-bed --out 1kg_unrelated_reduced
-    ../bin/plink --bfile origins --extract 1kg_origins_markers.txt \
-      --remove dupids.txt --make-bed --out origins_reduced
-    ../bin/plink --bfile 1kg_unrelated_reduced --bmerge origins_reduced \
-      --out 1kg_origins_combined
+In order to merge the data sets, we need to identify a set of SNPs
+that is common to both data sets (see below for details), and
+extract the genotypes for the common SNPs only.
+
+1. Extract common SNPs from 1000 Genomes data:
+```
+cd data
+../bin/plink --bfile 1kg_unrelated \
+  --extract 1kg_origins_markers.txt \
+  --make-bed --out 1kg_common
+```
+
+2. Extract common SNPs from Human Origins data, and remove 2 samples
+that are included in both data sets:
+```
+../bin/plink --file origins \
+  --extract 1kg_origins_markers.txt \
+  --remove dupids.txt --make-bed \
+  --out origins_common
+```
+
+Merge with Affymetrix Human Origins data (part 2)
+=================================================
+
+3. Merge the two data sets:
+```
+../bin/plink --bfile 1kg_common \
+  --bmerge origins_common \
+  --out 1kg_origins_combined
+```
+
+*Optional exercise:* It is good practice to double-check the output
+after each processing step. Use the `cut` and `diff` commands to
+compare the SNPs in `1kg_common` and `origins_common` and check that
+the SNPs are in the same order.
+
+Prune SNPs in LD
+================
+
 * "Prune" SNPs in LD (typically you will want to be more aggressive):
     ../bin/plink --bfile 1kg_origins_combined --indep-pairwise 1000 500 0.8
     ../bin/plink --bfile 1kg_origins_combined --make-bed \
       --extract plink.prune.in --out 1kg_origins_pruned
 
+Data preparation: take-home points
+==================================
+
++ Usually the majority of the effort goes toward data processing.
+
++ It is very common to introduce errors when merging multiple data sets
+
++ PLINK will correct some errors, but not all of them.
 
 # Rick Astley's Re-election Platform
 
