@@ -222,13 +222,22 @@ Typically you will want to be more aggressive in pruning SNPs in LD.
 Data preparation: take-home points
 ==================================
 
-+ Usually the majority of the effort goes toward data processing.
++ Often the majority of the effort goes toward data processing.
+Careless data processing (or no data processing) can lead to a poor
+quality analysis.
 
-+ It is very common to introduce errors when merging multiple data sets
++ It is very common to introduce errors when merging multiple data
+sets. Errors can be due to different genome assemblies, different
+allele encodings, different genotyping error rates, *etc.*
 
-+ PLINK will correct some errors, but not all of them.
++ PLINK merge command will correct some of these errors, but not all
+of them.
 
-+ I was conservative in selecting SNP common to both data sets.
++ I was conservative in selecting SNP common to both data sets to
+avoid introducing errors. As a result, we lost a lot of data after
+merging.
+
++ *Make sure to record your data processing steps.*
 
 # Rick Astley's Re-election Platform
 
