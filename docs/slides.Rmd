@@ -137,20 +137,44 @@ more efficient, but is not human readable.
 
 + See: http://www.cog-genomics.org/plink/1.9/formats#ped
 
-Explore the AffyMetrix Human Origins data
-=========================================
-
 Prepare the 1000 Genomes data
 =============================
 
-1. Convert to PLINK binary format. This should create 3 new files:
-    ../bin/plink --file 1kg --make-bed --out 1kg
-  1kg.bed, 1kg.bim, 1kg.fam:
-* Remove 29 of 31 related samples:
-    cut -f 1 20140625_related_individuals.txt > temp.txt
-    paste temp.txt temp.txt > samples.txt
-    ../bin/plink --bfile 1kg --make-bed --remove samples.txt \
-      --out 1kg_unrelated
+To speed up the data processing steps, we convert to binary PLINK
+format, then we remove related samples (which standard population
+structure analyses are not designed to handle).
+
+1. Convert to PLINK binary format:
+```
+../bin/plink --file 1kg --make-bed --out 1kg
+```
+
+2. Inspect the 3 new files: `1kg.bed`, `1kg.bim`, `1kg.fam`.
+
+3. Remove 29 of 31 related samples:
+```
+cut -f 1 20140625_related_individuals.txt \
+  > temp.txt
+paste temp.txt temp.txt > samples.txt
+../bin/plink --bfile 1kg --make-bed \
+   --remove samples.txt --out 1kg_unrelated
+```
+
+Merge with Affymetrix Human Origins data
+========================================
+
+* Commands to merge the two data sets:
+    ../bin/plink --bfile 1kg_unrelated --extract 1kg_origins_markers.txt \
+      --make-bed --out 1kg_unrelated_reduced
+    ../bin/plink --bfile origins --extract 1kg_origins_markers.txt \
+      --remove dupids.txt --make-bed --out origins_reduced
+    ../bin/plink --bfile 1kg_unrelated_reduced --bmerge origins_reduced \
+      --out 1kg_origins_combined
+* "Prune" SNPs in LD (typically you will want to be more aggressive):
+    ../bin/plink --bfile 1kg_origins_combined --indep-pairwise 1000 500 0.8
+    ../bin/plink --bfile 1kg_origins_combined --make-bed \
+      --extract plink.prune.in --out 1kg_origins_pruned
+
 
 # Rick Astley's Re-election Platform
 

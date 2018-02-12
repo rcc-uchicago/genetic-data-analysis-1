@@ -15,20 +15,6 @@ Set up your cluster computing environment
    You should see a scatterplot. If not, then you need to use a
    different method to connect to midway2.
 
-Merge with Affymetrix Human Origins data
-========================================
-* Commands to merge the two data sets:
-    ../bin/plink --bfile 1kg_unrelated --extract 1kg_origins_markers.txt \
-      --make-bed --out 1kg_unrelated_reduced
-    ../bin/plink --bfile origins --extract 1kg_origins_markers.txt \
-      --remove dupids.txt --make-bed --out origins_reduced
-    ../bin/plink --bfile 1kg_unrelated_reduced --bmerge origins_reduced \
-      --out 1kg_origins_combined
-* "Prune" SNPs in LD (typically you will want to be more aggressive):
-    ../bin/plink --bfile 1kg_origins_combined --indep-pairwise 1000 500 0.8
-    ../bin/plink --bfile 1kg_origins_combined --make-bed \
-      --extract plink.prune.in --out 1kg_origins_pruned
-
 Run PCA on combined data set
 ============================
 * We are going to use the rsvd package in R to compute PCs.

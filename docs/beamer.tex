@@ -157,19 +157,19 @@ $endfor$
 \defbeamertemplate*{footline}{my footline}{%
     \ifnum\insertpagenumber=1
     \hbox{%
-        \begin{beamercolorbox}[wd=\paperwidth,ht=.8ex,dp=1ex,center]{}%
+        \begin{beamercolorbox}[wd=\paperwidth,ht=1em,dp=1em,center]{}%
       % empty environment to raise height
         \end{beamercolorbox}%
     }%
     \vskip0pt%
     \else%
-        \Tiny{%
+        \small{%
             \hfill%
 		\vspace*{1pt}%
-            \insertframenumber/\inserttotalframenumber \hspace*{0.1cm}%
+            \sf \insertframenumber/\inserttotalframenumber \hspace*{0.25cm}%
             \newline%
-            \color{white}{\rule{\paperwidth}{0.4mm}}\newline%
-            \color{white}{\rule{\paperwidth}{.4mm}}%
+            \color{white}{\rule{\paperwidth}{1mm}}\newline%
+            \color{white}{\rule{\paperwidth}{1mm}}%
         }%
     \fi%
 }
