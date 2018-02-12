@@ -18,9 +18,10 @@ Institute. Downloading should take a few minutes.
 * Short URL: http://bit.ly/2G7ZWYu
   
 * Download this file into the `data` folder: 
-  `ALL.chip.omni_broad_sanger_combined.20140818.snps.genotypes.vcf.gz`
+  `ALL.chip.omni_broad_sanger_combined.
+   20140818.snps.genotypes.vcf.gz`
 
-On the cluster, you can run these commands:
+On the RCC cluster, you can run these commands:
 
 ```{bash, eval=FALSE}
 cd data
