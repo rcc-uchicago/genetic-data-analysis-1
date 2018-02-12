@@ -99,11 +99,10 @@ cd data
 Explore PLINK files
 ===================
 
-Let's run some simple shell commands to inspect the genotype data
-stored in the PLINK files.
+Let's run some simple shell commands to inspect the 1000 Genomes
+genotype data stored in the PLINK files.
 
 ```{bash, eval=FALSE}
-ls -lh 1kg.map 1kg.ped
 head 1kg.map
 tail 1kg.map
 wc -l 1kg.map
@@ -111,7 +110,11 @@ less -S 1kg.ped
 wc -l -w 1kg.ped
 ```
 
-+ Columns in the `.map` file: (1) chromosome; (2) marker id; (3)
+Next, use these same commands to inspect the AffyMetrix Human Origins
+data stored in `origins.map` and `origins.ped` (they are already
+included in the git repository).
+
++ Columns in `.map` file: (1) chromosome; (2) marker id; (3)
 genetic distance on chromosome, in cM; (4) base-pair position on
 chromosome.
   
@@ -124,13 +127,30 @@ PLINK files: concepts
 
 + The most commonly used format for storing human genoytpe data.
 
-+ The PLINK text format is easy to inspect and manipulate with simple
++ Less flexible than VCF.
+
++ The PLINK text format is easy to view and manipulate with simple
 shell commands (e.g., `wc`, `grep`, `cat`, `cut`, `paste`).
 
-+ The PLINK binary format (`.bed`) is a much more efficient way to
-store genotype data (but is not human readable).
++ For long-term storage, use PLINK binary (`.bed`) format. It is much
+more efficient, but is not human readable.
 
 + See: http://www.cog-genomics.org/plink/1.9/formats#ped
+
+Explore the AffyMetrix Human Origins data
+=========================================
+
+Prepare the 1000 Genomes data
+=============================
+
+1. Convert to PLINK binary format. This should create 3 new files:
+    ../bin/plink --file 1kg --make-bed --out 1kg
+  1kg.bed, 1kg.bim, 1kg.fam:
+* Remove 29 of 31 related samples:
+    cut -f 1 20140625_related_individuals.txt > temp.txt
+    paste temp.txt temp.txt > samples.txt
+    ../bin/plink --bfile 1kg --make-bed --remove samples.txt \
+      --out 1kg_unrelated
 
 # Rick Astley's Re-election Platform
 
