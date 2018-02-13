@@ -257,7 +257,7 @@ Outline of the PCA analysis:
 
 4. Fill in missing genotypes.
 
-5. Compute PCs in R using the {\tt rsvd} package.
+5. Compute PCs in R using the `rsvd` package.
 
 Convert genotype data to a matrix
 =================================
@@ -271,16 +271,16 @@ cd data
   --recode A --out 1kg_origins_recoded
 ```
 
-This command creates a new file `1kg_origins_recoded.raw`:
+This command creates a new file, `1kg_origins_recoded.raw`.
 
 Start up interactive R environment
 ==================================
 
-Move to the repository root, and start up R. On the RCC cluster, run
+Move to the `code` folder, and start up R. On the RCC cluster, run
 these commands:
 
 ```{bash load-R, eval=FALSE}
-pwd # Should be ... genetic-data-analysis-1
+pwd # Should be ... /code
 module load R/3.4.3
 export OPENBLAS_NUM_THREADS=4 # Optional.
 R --no-save
@@ -299,20 +299,20 @@ getwd() # Should be ... genetic-data-analysis-1
 ```
 
 I wrote a function to rapidly load the genotype matrix using function
-`fread` from the `data.table` package. If you are **not** on the RCC
+`fread` from the `data.table` package. If you are not using the RCC
 cluster, you may need to install this package.
 
-```{r load-pkgs, eval=FALSE}
+```{r load-data-table-pkg, eval=FALSE}
 install.packages("data.table")
 library(data.table)
-source("code/geno.utils.R")
+source("geno.utils.R")
 ```
 
 Load the genotype matrix into R: 
 
 ```{r load-geno, eval=FALSE}
 geno <-
-  read.geno.raw("data/1kg_origins_recoded.raw")
+read.geno.raw("../data/1kg_origins_recoded.raw")
 ```
 
 Load genotype matrix into R (part 2)
@@ -329,26 +329,78 @@ geno[1:5,1:5]
 Fill in missing genotypes
 =========================
 
-* We need to fill in the missing genotypes:
-    100*mean(is.na(geno))
-    p <- ncol(geno)
-    x <- colMeans(geno,na.rm = TRUE)
-    for (j in 1:p) {
-      i         <- which(is.na(geno[,j]))
-      geno[i,j] <- x[j]
-    }
-    sum(is.na(geno))
-* Compute the first 10 PCs (components explaining the most variation
-  in the genotypes):
-    library(rsvd)
-    out.pca <- rpca(geno,k = 10,center = TRUE,scale = FALSE,retx = TRUE)
-    summary(out.pca)
-    head(out.pca$x)
-    pcs <- out.pca$x
-    colnames(pcs) <- paste0("PC",1:10)
-* Let's save the results of our analysis.
-    save(file = "output/1kg_origins_pca.RData",
-         list = c("out.pca","pcs"))
+*Problem:* <1% of the genotypes are missing:
+
+```{r missing-genotypes, eval=FALSE}
+100*mean(is.na(geno))
+```
+
+We need to fill in the small number of missing genotypes. Here, a
+reasonable choice is the mean genotype:
+
+```{r fill-missing-genotypes, eval=FALSE}
+p <- ncol(geno)
+for (j in 1:p) {
+  i         <- which(is.na(geno[,j]))
+  geno[i,j] <- mean(geno[,j],na.rm = TRUE)
+}
+```
+
+Check that there are no missing genotypes:
+
+```{r check-missing-genotypes, eval=FALSE}
+sum(is.na(geno))
+```
+
+Compute PCs using rsvd package (part 1)
+=======================================
+
+If you are not using the RCC cluster, you may need to install the rsvd
+package.
+
+```{r load-rsvd-pkg, eval=FALSE)
+install.packages("rsvd")
+library(rsvd)
+```
+
+Use the `rpca` function to compute the first 10 PCs---that is, the 10
+components that explain the most variation in the genotypes:
+
+```{r run-rpca, eval=FALSE}
+out.pca <- rpca(geno,k = 10,center = TRUE,scale = FALSE,retx = TRUE)
+```
+
+Compute PCs using rsvd package (part 2)
+=======================================
+
+Let's take a quick look at the PCA results:
+
+```{r inspect-pca, eval=FALSE}
+summary(out.pca)
+pcs <- out.pca$x
+colnames(pcs) <- paste0("PC",1:10)
+head(pcs)
+```
+
+Assuming we didn't encounter any problems, let's save the results of
+our analysis in the `output` folder.
+
+```{r save-pca, eval=FALSE}
+save(file = "../output/1kg_origins_pca.RData",
+     list = c("out.pca","pcs"))
+```
+
+PCA analysis: take-home points
+==============================
+
++ Needs to be encoded as a numeric matrix.
+
++ Give more details `rpca` arguments.
+
++ Other software deals more elegantly with missing data; here is does
+not matter much.
+
++ Point to sbatch script, and give instructions on how to use it.
 
 # Example R stuff
 
