@@ -764,7 +764,24 @@ Visualizing and interpreting PCA results: take-home points
 + PCA is the most common approach to infer population structure from
 genotype data.
 
-+ Difficulty of interpreting PCA results.
++ One reason PCA is so popular is that it can produce evocative
+visualizations of populations structure (see doi:10.1038/nature07566
+for a particularly famous example produced by University of Chicago
+researchers).
+
++ However, there are many well-known pitfalls in interpreting the
+results of a PCA analysis applied to genetic data---proceed with
+caution!
 
 Recap
 =====
+
++ An effective analysis of genetic data requires a variety of
+programmings skills.
+
++ We did not work with sequencing data in this workshop---genotype
+data from DNA sequence assays introduces many more complications!
+
++ Please email me (`pcarbo@uchicago.edu`) with questions, or for
+advice on your analysis of genetic data.
+
