@@ -504,14 +504,14 @@ geno[1:5,1:5]
 Fill in missing genotypes
 =========================
 
-*Problem:* <1% of the genotypes are missing:
+*A problem:* a small proportion (<1%) of the genotypes are missing:
 
 ```{r missing-genotypes}
 100*mean(is.na(geno))
 ```
 
-We need to fill in the small number of missing genotypes. Here, a
-reasonable choice is the mean genotype:
+We need to fill in these missing genotypes. In this case, a reasonable
+choice is the mean genotype:
 
 ```{r fill-missing-genotypes}
 p <- ncol(geno)
@@ -569,15 +569,17 @@ save(file = "../output/1kg_origins_pca.RData",
 PCA analysis: take-home points
 ==============================
 
-+ PCA requires a matrix, so the genotypes need to be encoded as
-numeric values.
++ PCA requires a matrix (with no missing values), so the genotypes
+need to be encoded as numeric values.
 
 + Other software deals more elegantly with missing data. Here it does
 not matter much.
 
++ Not everyone agrees on the best numeric encoding of genotypes for
+PCA.
+
 + See the `pca.sbatch` script in the `code` folder for an illustration
 of how to automate the steps of this analysis on the RCC cluster.
-
 
 Outline of workshop
 ===================
@@ -607,7 +609,7 @@ Outline of the PCA visualization:
 
 3. Create a PC plot with population labels.
 
-4. Add sample ids to unlabeled samples in PC plot.
+4. Add sample ids to the unlabeled samples in the PC plot.
 
 Set up R environment for plotting with ggplot2
 ==============================================
@@ -620,11 +622,11 @@ plot(cars$dist,cars$speed)
 ```
 
 You should see a scatterplot. If not, you should start a fresh R
-session in a new midway2 connection (using ThinLinc is the safest
+session in a new midway2 connection (**ThinLinc** is the safest
 approach). As a reminder, you will need to run these commands:
 
 ```{bash, eval=FALSE}
-pwd # Should be ... /code
+pwd # Should be .../code
 module load R/3.4.3
 R --no-save
 ```
@@ -633,7 +635,7 @@ Set up R environment for plotting with ggplot2
 ==============================================
 
 If you are not using the RCC cluster, you may need to install the
-`ggplot2` package (the `cowplot` package is recommended).
+`ggplot2` package (I also recommend the `cowplot` package).
 
 ```{r, load-ggplot2-pkg}
 # install.packages("gplot2")
@@ -662,10 +664,10 @@ print(p)
 ```
 
 + To learn how ggplot2 is used to generate the plot, see
-`geno.utils.R`.
+the code in `geno.utils.R`.
 
 This plot shows that there is clear structure in the data. But it is
-difficult to interpret this structure.
+difficult to interpret this structure without additional information.
 
 Create a PC plot with population labels (part 1)
 ================================================
