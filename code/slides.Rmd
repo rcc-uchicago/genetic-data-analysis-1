@@ -12,6 +12,22 @@ knitr::opts_chunk$set(comment = "#",collapse = TRUE,fig.align = "center",
                       results = "hide")
 ```
 
+Software we will use today
+==========================
+
+1. PLINK
+
+2. R
+
+3. R packages data.table, rsvd, ggplot2 and cowplot.
+
+4. Shell commands such as `less` and `wc`.
+
+Initial setup
+=============
+
+
+
 Download 1000 Genomes data
 ==========================
 

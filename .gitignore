@@ -1,6 +1,7 @@
 bin/plink
 bin/admixture
 docs/slides.pdf
+docs/slides_test.pdf
 data/1kg.vcf.gz
 data/1kg.ped
 data/1kg.map
