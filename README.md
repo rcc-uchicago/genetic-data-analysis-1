@@ -3,13 +3,10 @@
 Materials for the RCC workshop, "Analysis of Genetic Data 1: Inferring
 Population Structure".
 
-**Date:** Tuesday, Feburary 13, 2018
-
-**Time:** 2:00 pm to 4:30 pm
-
+**Date:** Tuesday, Feburary 13, 2018<br>
+**Time:** 2:00 pm to 4:30 pm<br>
 **Location:** Zar Room, John Crerar Library
-([OpenStreetMap](https://www.openstreetmap.org/search?query=john%20crerar%20library#map=18/41.79053/-87.60282))
-
+([OpenStreetMap](https://www.openstreetmap.org/search?query=john%20crerar%20library#map=18/41.79053/-87.60282))<br>
 **Instructor:** Peter Carbonetto
 
 ## Introduction
@@ -36,12 +33,17 @@ Windows operating system that they have administrative privileges on.
 
 ## Other information
 
-This workshop attempts to apply elements of the
++ This workshop attempts to apply elements of the
 [Software Carpentry approach](http://software-carpentry.org/lessons).
 See also
 [this article](http://dx.doi.org/10.12688/f1000research.3-62.v2).
 Please also take a look at the [Code of Conduct](conduct.md), and
 the [license information](LICENSE.md).
+
++ Run `make` in the [docs](docs) directory to generate a PDF of the
+slides from the R Markdown source. To do this, you will need to to
+install the `rmarkdown` package in R, as well as the packages used in
+[slides.Rmd](code/slides.Rmd).
 
 ## Credits
 
