@@ -40,10 +40,10 @@ See also
 Please also take a look at the [Code of Conduct](conduct.md), and
 the [license information](LICENSE.md).
 
-+ Run `make` in the [docs](docs) directory to generate a PDF of the
-slides from the R Markdown source. To do this, you will need to to
-install the `rmarkdown` package in R, as well as the packages used in
-[slides.Rmd](code/slides.Rmd).
++ To generate PDFs of the slides and handout from the R Markdown
+source, run `make` in the [docs](docs) directory. For this to work,
+you will need to to install the `rmarkdown` package in R, as well as
+the packages used in [slides.Rmd](code/slides.Rmd).
 
 ## Credits
 

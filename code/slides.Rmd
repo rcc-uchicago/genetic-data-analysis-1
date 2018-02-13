@@ -31,13 +31,17 @@ Initial setup (part 1)
 Initial setup (part 2)
 ======================
 
-1. Download the git reposistory to your home directory. On the RCC
-cluster, run these commands:
+Download the git reposistory to your home directory.
+
+* URL: https://github.com/rcc-uchicago/genetic-data-analysis-1
+
+On the RCC cluster, run these commands to download the repository:
 
 ```{bash download-repo, eval=FALSE}
-
+cd ~
+git clone git@github.com:rcc-uchicago/genetic-data-analysis-1.git
 ```
-   
+
 What's in the git repository
 ============================
 
@@ -60,9 +64,10 @@ Institute. Downloading may take 10--20 minutes.
 
 + Short URL: http://bit.ly/2G7ZWYu
   
-+ Download this file into the `data` folder: 
-  `ALL.chip.omni_broad_sanger_combined.
-   20140818.snps.genotypes.vcf.gz`
++ Download this file into the `data` folder:
+
+    `ALL.chip.omni_broad_sanger_combined.
+     20140818.snps.genotypes.vcf.gz`
 
 On the RCC cluster, you can run these commands:
 
