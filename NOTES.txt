@@ -17,9 +17,6 @@ Set up your cluster computing environment
 
 Visualize & interpret PCA results
 =================================
-* Let's plot all samples projected onto the first 2 PCs:
-    p <- basic.pc.plot(pcs,x = "PC1",y = "PC2")
-    print(p)
 * There is definitely structure, but it is difficult to
   interpret---let's visualize the samples with their population
   labels. To do so, let's load the population labels assigned to the
