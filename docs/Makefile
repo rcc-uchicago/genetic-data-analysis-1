@@ -9,13 +9,17 @@
 
 # RULES
 # -----
-all: slides.pdf
+all: slides_test.pdf slides.pdf
 
-# Create the PDF file.
-slides.pdf : slides.Rmd
-	Rscript -e 'rmarkdown::render("slides.Rmd")'
+# Generate the slides while also testing the R code.
+slides_test.pdf : ../code/slides.Rmd
+	Rscript -e 'knitr::opts_chunk$$set(eval = TRUE); rmarkdown::render("../code/slides.Rmd",output_file = "../docs/slides_test.pdf")'
+
+# Create the slides.
+slides.pdf : ../code/slides.Rmd
+	Rscript -e 'knitr::opts_chunk$$set(eval = FALSE); rmarkdown::render("../code/slides.Rmd",output_file = "../docs/slides.pdf")'
 
 clean:
-	rm -f slides.tex slides.pdf
-	rm -Rf slides_files
+	rm -f slides.tex slides.pdf slides_test.pdf
+
 

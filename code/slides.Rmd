@@ -7,6 +7,11 @@ output:
    keep_tex: false
 ---
 
+```{r knitr-options, echo=FALSE}
+knitr::opts_chunk$set(comment = "#",collapse = TRUE,fig.align = "center",
+                      results = "hide")
+```
+
 Download 1000 Genomes data
 ==========================
 
@@ -294,7 +299,7 @@ Load genotype matrix into R (part 1)
 
 Before continuing, check your working directory:
 
-```{r getwd, eval=FALSE}
+```{r getwd}
 getwd() # Should be ... genetic-data-analysis-1
 ```
 
@@ -302,15 +307,15 @@ I wrote a function to rapidly load the genotype matrix using function
 `fread` from the `data.table` package. If you are not using the RCC
 cluster, you may need to install this package.
 
-```{r load-data-table-pkg, eval=FALSE}
-install.packages("data.table")
+```{r load-data-table-pkg}
+# install.packages("data.table")
 library(data.table)
 source("geno.utils.R")
 ```
 
 Load the genotype matrix into R: 
 
-```{r load-geno, eval=FALSE}
+```{r load-geno}
 geno <-
 read.geno.raw("../data/1kg_origins_recoded.raw")
 ```
@@ -320,7 +325,7 @@ Load genotype matrix into R (part 2)
 
 Run a few commands to inspect the genoytpe data, e.g.:
 
-```{r inspect-geno, eval=FALSE}
+```{r inspect-geno}
 class(geno)
 dim(geno)
 geno[1:5,1:5]
@@ -331,14 +336,14 @@ Fill in missing genotypes
 
 *Problem:* <1% of the genotypes are missing:
 
-```{r missing-genotypes, eval=FALSE}
+```{r missing-genotypes}
 100*mean(is.na(geno))
 ```
 
 We need to fill in the small number of missing genotypes. Here, a
 reasonable choice is the mean genotype:
 
-```{r fill-missing-genotypes, eval=FALSE}
+```{r fill-missing-genotypes}
 p <- ncol(geno)
 for (j in 1:p) {
   i         <- which(is.na(geno[,j]))
@@ -348,7 +353,7 @@ for (j in 1:p) {
 
 Check that there are no missing genotypes:
 
-```{r check-missing-genotypes, eval=FALSE}
+```{r check-missing-genotypes}
 sum(is.na(geno))
 ```
 
@@ -358,15 +363,15 @@ Compute PCs using rsvd package (part 1)
 If you are not using the RCC cluster, you may need to install the rsvd
 package.
 
-```{r load-rsvdpkg, eval=FALSE}
-install.packages("rsvd")
+```{r load-rsvdpkg}
+# install.packages("rsvd")
 library(rsvd)
 ```
 
 Use the `rpca` function to compute the first 10 PCs---that is, the 10
 components that explain the most variation in the genotypes:
 
-```{r run-rpca, eval=FALSE}
+```{r run-rpca}
 out.pca <- rpca(geno,k = 10,center = TRUE,
                 scale = FALSE,retx = TRUE)
 ```
@@ -376,7 +381,7 @@ Compute PCs using rsvd package (part 2)
 
 Let's take a quick look at the PCA results:
 
-```{r inspect-pca, eval=FALSE}
+```{r inspect-pca}
 summary(out.pca)
 pcs <- out.pca$x
 colnames(pcs) <- paste0("PC",1:10)
@@ -386,7 +391,7 @@ head(pcs)
 Assuming we didn't encounter problems in any of these steps, let's
 save the results of our analysis to the `output` folder.
 
-```{r save-pca, eval=FALSE}
+```{r save-pca}
 save(file = "../output/1kg_origins_pca.RData",
      list = c("out.pca","pcs"))
 ```
@@ -428,7 +433,7 @@ Set up R environment for plotting with ggplot2
 If you are using the RCC cluster, make sure you can display graphics
 in your current R session, e.g.,
 
-```{r plot-cars, eval=FALSE}
+```{r plot-cars}
 plot(cars$dist,cars$speed)
 ```
 
@@ -448,9 +453,9 @@ Set up R environment for plotting with ggplot2
 If you are not using the RCC cluster, you may need to install the
 `ggplot2` package (the `cowplot` package is recommended).
 
-```{r, load-ggplot2-pkg, eval=FALSE}
-install.packages("gplot2")
-install.packages("cowplot")
+```{r, load-ggplot2-pkg}
+# install.packages("gplot2")
+# install.packages("cowplot")
 library(ggplot2)
 library(cowplot)
 getwd() # Should be ../code
@@ -459,7 +464,7 @@ source("geno.utils.R")
 
 Load the PCA results in case you don't already have them loaded:
 
-```{r, load-pca-results, eval=FALSE}
+```{r, load-pca-results}
 load("../output/1kg_origins_pca.RData")
 ```
 
@@ -469,7 +474,7 @@ Create a basic PC plot
 Use function `basic.pc.plot` to plot all the samples projected onto
 the first 2 PCs:
 
-```{r, pc-plot-1, eval=FALSE}
+```{r, pc-plot-1}
 p <- basic.pc.plot(pcs,x = "PC1",y = "PC2")
 print(p)
 ```
@@ -486,7 +491,7 @@ Create a PC plot with population labels (part 1)
 To create this plot, we first need to load the population label
 assignments stored in `omni_samples.20141118.panel`:
 
-```{r, load-pop-labels, eval=FALSE}
+```{r, load-pop-labels}
 labels.1kg <-
 read.table("../data/omni_samples.20141118.panel",
            sep = " ",header = TRUE,as.is = "id")
@@ -494,7 +499,7 @@ read.table("../data/omni_samples.20141118.panel",
 
 Next, add a "label" column to the table of PC results:
 
-```{r, add-pop-labels, eval=FALSE}
+```{r, add-pop-labels}
 pcs <- add.poplabels(pcs,labels.1kg)
 head(pcs)
 ```
@@ -502,7 +507,7 @@ head(pcs)
 Use the `labeled.pc.plot` function (see `geno.utils.R`) to create the
 PC plot with labels:
 
-```{r pc-plot-2, eval=FALSE}
+```{r pc-plot-2}
 p2 <- labeled.pc.plot(pcs,x = "PC1",y = "PC2",
                       label = "label")
 print(p2)
@@ -519,7 +524,7 @@ In some parts of the plot, the samples are clustered closely together.
 To gain additional insight, it is helpful to zoom in on certain
 portion of the scatterplot. This is easily done with ggplot2, e.g.,
 
-```{r pc-plot-2b, eval=FALSE}
+```{r pc-plot-2b
 p2 + xlim(c(-30,10)) + ylim(c(10,50))
 ```
 
@@ -531,7 +536,7 @@ samples from the Human Origins data set (these are the 5 black circles
 in the plot). To interpret the PCA results for these 5 samples, we add
 sample ids to the 5 points.
 
-```{r pc-plot-3, eval=FALSE}
+```{r pc-plot-3}
 p3 <- labeled.pc.plot2(pcs,x = "PC1",y = "PC2",
                        label = "label")
 print(p3)
@@ -546,7 +551,15 @@ results expected based on the provided population labels?
 
 This is our final PC plot, so let's save our work to a PDF file:
 
-```{r save-pc-plot-3, eval=FALSE}
+```{r save-pc-plot-3}
 ggsave("../output/1kg_origins_pcs1+2.pdf",p3)
 ```
+
+Visualizing and interpreting PCA results: take-home points
+==========================================================
+
++ PCA is the most common approach to infer population structure from
+genotype data.
+
++ Difficulty of interpreting PCA results.
 
