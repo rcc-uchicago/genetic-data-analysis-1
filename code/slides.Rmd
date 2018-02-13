@@ -709,8 +709,8 @@ Several interesting insights can be drawn from this plot---*discuss.*
 + How would you explain in a concise, non-technical way the main
 demographic patterns captured by PCs 1 and 2?
 
-+ How well do these results agree with Supplementary Figure 4 of the
-[1000 Genomes paper](http://dx.doi.org/10.1038/nature11632)?
++ How well do these results agree with Supp. Fig. 4 of the 1000
+Genomes paper (`doi:10.1038/nature11632`)?
 
 + See `1kg.pop` in the `data` folder to help with interpreting these
 results.
@@ -740,14 +740,19 @@ p3 <- labeled.pc.plot2(pcs,x = "PC1",y = "PC2",
 print(p3)
 ```
 
-+ This creates a similar plot to before, but makes the 5 Human
-Origins samples more visible and interpretable.
++ This creates a similar plot to before, but annotates the 5 Human
+Origins samples with their ids.
 
-+ Compare these PCA results against the sample information provided
-the Human Origins data file `affymetrix-human-origins.ind`. Are these
-results expected based on the provided population labels? 
++ Compare this PC projection for these 5 samples results against the
+sample information provided the Human Origins data file
+`affymetrix-human-origins.ind`. Are these results expected or
+surprising based on the provided population labels?
 
-This is our final PC plot, so let's save our work to a PDF file:
+Save the PC plot
+================
+
+That was our final PC plot. Let's save our work as a PDF file using
+the `ggsave` function from the `ggplot2` package:
 
 ```{r save-pc-plot-3}
 ggsave("../output/1kg_origins_pcs1+2.pdf",p3)
