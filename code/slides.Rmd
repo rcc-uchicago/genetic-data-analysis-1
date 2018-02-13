@@ -17,20 +17,20 @@ Aims of workshop
 ================
 
 1. Work through the steps of a basic population structure analysis in
-human genetics, starting with the **original source data**, and ending
+human genetics, starting with the **"raw" source data**, and ending
 with a **visualization of population structure** estimated from the
 genetic data.
 
-2. Get familiar with standard file formats for genetic data (e.g.,
-VCF, PLINK).
+2. Understand how large genetic data sets are commonly represented in
+computer files.
 
-3. Learn basic elements of processing and analyzing genetic data.
+3. Use command-line tools to manipulate genetic data.
 
 4. Learn through “live coding”---this includes learning from our
 mistakes!
 
-What we will accomplish today
-=============================
+Our research task
+=================
 
 We will simulate a population structure analysis commonly done in
 human genetics research.
@@ -49,7 +49,18 @@ Analysis (PCA)---to infer population structure from the genetic data.
 It is your choice
 =================
 
-*Add notes here.*
+You may...
+
+1. Walk through the examples on the RCC cluster.
+
+2. Walk through the examples on your laptop.
+
+3. Pair with your neighbour.
+
+4. Follow what I do on the projector.
+
+*Note:* I can't guarantee that all steps will work exactly the same on
+ your laptop.
 
 Outline of workshop
 ===================
@@ -142,7 +153,7 @@ What's in the workshop packet
 genetic-data-analysis-1
   /bin     # All executables are stored here.
   /code    # Source code used in analyses.
-  /data    # All data--original and processed.
+  /data    # "Raw" and processed data.
   /docs    # Additional workshop materials.
   /output  # All results are stored here.
 ```
