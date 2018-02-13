@@ -14,28 +14,3 @@ Set up your cluster computing environment
      plot(cars$dist,cars$speed)
    You should see a scatterplot. If not, then you need to use a
    different method to connect to midway2.
-
-Visualize & interpret PCA results
-=================================
-* There is definitely structure, but it is difficult to
-  interpret---let's visualize the samples with their population
-  labels. To do so, let's load the population labels assigned to the
-  1000 Genomes samples:
-    labels.1kg <- read.table("data/omni_samples.20141118.panel",
-                             sep = " ",header = TRUE,as.is = "id")
-    pcs <- add.poplabels(pcs,labels.1kg)
-    head(pcs)
-    p2 <- labeled.pc.plot(pcs,x = "PC1",y = "PC2",label = "label")
-    print(p2)
-* Take time to discuss interesting insights from this plot. Make use
-  of the 1kg.pop to interpret labels.
-* We can also zoom in on a portion of the scatterplot, e.g.,
-    p2 + xlim(c(-30,10)) + ylim(c(10,50))
-* One missing element here is the labels for the 5 samples from the
-  Human Origins data set. It would be good to show the sample ids for
-  these 5 samples so that we can interpret their projection onto the
-  top 2 PCs. I've created a third (slightly more complicated) plotting
-  function to accomplish this.
-    p3 <- labeled.pc.plot2(pcs,x = "PC1",y = "PC2",label = "label")
-    print(p3)
-* ggsave("output/1kg_origins_pcs1+2.pdf",p3)
