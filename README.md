@@ -34,6 +34,14 @@ not required-temporary access to the RCC cluster will be available in
 class. All participants must bring a laptop with a Mac, Linux, or
 Windows operating system that they have administrative privileges on.
 
+## Other information
+
+This workshop attempts to apply elements of the
+[Software Carpentry approach](http://software-carpentry.org/lessons).
+See also
+[this article](http://dx.doi.org/10.12688/f1000research.3-62.v2).
+Please also take a look at the [Code of Conduct](conduct.md), and
+the [license information](LICENSE.md).
 
 ## Credits
 
