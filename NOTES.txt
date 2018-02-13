@@ -15,60 +15,8 @@ Set up your cluster computing environment
    You should see a scatterplot. If not, then you need to use a
    different method to connect to midway2.
 
-Run PCA on combined data set
-============================
-* We are going to use the rsvd package in R to compute PCs.
-* Convert genotypes to a numeric format that will be more convenient
-  for analysis in R:
-    ../bin/plink --bfile 1kg_origins_pruned --recode A \
-      --out 1kg_origins_recoded
-* Move to the repository root, and start up R:
-    cd ..
-    module load R/3.4.3
-    export OPENBLAS_NUM_THREADS=4 (optional)
-    R --no-save
-* Load the genotype data into R: 
-    library(data.table)
-    source("code/geno.utils.R")
-    getwd()
-    geno <- read.geno.raw("data/1kg_origins_recoded.raw")
-    class(geno)
-    dim(geno)
-    geno[1:5,1:5]
-* We need to fill in the missing genotypes:
-    100*mean(is.na(geno))
-    p <- ncol(geno)
-    x <- colMeans(geno,na.rm = TRUE)
-    for (j in 1:p) {
-      i         <- which(is.na(geno[,j]))
-      geno[i,j] <- x[j]
-    }
-    sum(is.na(geno))
-* Compute the first 10 PCs (components explaining the most variation
-  in the genotypes):
-    library(rsvd)
-    out.pca <- rpca(geno,k = 10,center = TRUE,scale = FALSE,retx = TRUE)
-    summary(out.pca)
-    head(out.pca$x)
-    pcs <- out.pca$x
-    colnames(pcs) <- paste0("PC",1:10)
-* Let's save the results of our analysis.
-    save(file = "output/1kg_origins_pca.RData",
-         list = c("out.pca","pcs"))
-
 Visualize & interpret PCA results
 =================================
-* At this point, we have finished all the computationally intensive
-  aspects of our analysis.
-* module load R/3.4.3
-* R --no-save
-* Load the ggplot2 package and load the PC results just in case you
-  don't already have them loaded:
-    getwd()
-    library(ggplot2)
-    library(cowplot)
-    source("code/geno.utils.R")
-    load("output/1kg_origins_pca.RData")
 * Let's plot all samples projected onto the first 2 PCs:
     p <- basic.pc.plot(pcs,x = "PC1",y = "PC2")
     print(p)

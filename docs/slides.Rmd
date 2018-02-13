@@ -402,3 +402,79 @@ not matter much.
 
 + See the `pca.sbatch` script in the `code` folder for an illustration
 of how to automate the steps of this analysis on the RCC cluster.
+
+Visualize and interpret PCA results
+===================================
+
+*We have now finished all the computationally intensive aspects of our
+analysis.*
+
++ Our final step is to create plots from the PCA results to gain insight
+into the genetic data.
+
+Outline of the PCA visualization:
+
+1. Set up R environment for plotting with `ggplot2`.
+
+2. Create a basic PC plot.
+
+3. 
+
+Set up R environment for plotting with ggplot2
+==============================================
+
+If you are using the RCC cluster, make sure you can display graphics
+in your current R session, e.g.,
+
+```{r plot-cars, eval=FALSE}
+plot(cars$dist,cars$speed)
+```
+
+You should see a scatterplot. If not, you should start a fresh R
+session in a new midway2 connection (using ThinLinc is the safest
+approach). As a reminder, you will need to run these commands:
+
+```{bash, eval=FALSE}
+pwd # Should be ... /code
+module load R/3.4.3
+R --no-save
+```
+
+Set up R environment for plotting with ggplot2
+==============================================
+
+If you are not using the RCC cluster, you may need to install the
+`ggplot2` package (the `cowplot` package is recommended).
+
+```{r, load-ggplot2-pkg, eval=FALSE}
+install.packages("gplot2")
+install.packages("cowplot")
+library(ggplot2)
+library(cowplot)
+getwd() # Should be ../code
+source("geno.utils.R")
+```
+
+Load the PCA results in case you don't already have them loaded:
+
+```{r, load-pca-results, eval=FALSE}
+load("../output/1kg_origins_pca.RData")
+```
+
+Create a basic PC plot
+======================
+
+Use function `basic.pc.plot` to plot all the samples projected onto
+the first 2 PCs:
+
+```{r, pc-plot-1, eval=FALSE}
+p <- basic.pc.plot(pcs,x = "PC1",y = "PC2")
+print(p)
+```
+
+See the code for this function in `geno.utils.R`. It uses ggplot2 to
+create the plot.
+
+This plot shows structure in the adta, but it is difficult to
+interpret. Next, let's create a similar plot with the samples drawn
+according to their assigned population labels.
