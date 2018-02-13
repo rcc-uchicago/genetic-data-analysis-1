@@ -251,7 +251,7 @@ Outline of the PCA analysis:
 
 1. Convert genotype data to a (numeric) matrix.
 
-2. Start up interative R environment.
+2. Start up interactive R environment.
 
 3. Load genotype matrix into R.
 
@@ -273,7 +273,7 @@ cd data
 
 This command creates a new file `1kg_origins_recoded.raw`:
 
-Start up R interactive environment
+Start up interactive R environment
 ==================================
 
 Move to the repository root, and start up R. On the RCC cluster, run
@@ -289,8 +289,8 @@ R --no-save
 The third command dramatically speeds up the PCA using OpenBLAS
 multithreaded matrix operations.
 
-Load genotype matrix into R
-===========================
+Load genotype matrix into R (part 1)
+====================================
 
 Before continuing, check your working directory:
 
@@ -299,9 +299,11 @@ getwd() # Should be ... genetic-data-analysis-1
 ```
 
 I wrote a function to rapidly load the genotype matrix using function
-`fread` from the `data.table` package.
+`fread` from the `data.table` package. If you are **not** on the RCC
+cluster, you may need to install this package.
 
 ```{r load-pkgs, eval=FALSE}
+install.packages("data.table")
 library(data.table)
 source("code/geno.utils.R")
 ```
@@ -313,7 +315,10 @@ geno <-
   read.geno.raw("data/1kg_origins_recoded.raw")
 ```
 
-Run a few commands to inspect the genoytpe data:
+Load genotype matrix into R (part 2)
+====================================
+
+Run a few commands to inspect the genoytpe data, e.g.:
 
 ```{r inspect-geno, eval=FALSE}
 class(geno)
