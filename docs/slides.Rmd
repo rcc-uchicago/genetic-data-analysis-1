@@ -358,7 +358,7 @@ Compute PCs using rsvd package (part 1)
 If you are not using the RCC cluster, you may need to install the rsvd
 package.
 
-```{r load-rsvd-pkg, eval=FALSE)
+```{r load-rsvdpkg, eval=FALSE}
 install.packages("rsvd")
 library(rsvd)
 ```
@@ -367,7 +367,8 @@ Use the `rpca` function to compute the first 10 PCs---that is, the 10
 components that explain the most variation in the genotypes:
 
 ```{r run-rpca, eval=FALSE}
-out.pca <- rpca(geno,k = 10,center = TRUE,scale = FALSE,retx = TRUE)
+out.pca <- rpca(geno,k = 10,center = TRUE,
+                scale = FALSE,retx = TRUE)
 ```
 
 Compute PCs using rsvd package (part 2)
@@ -382,8 +383,8 @@ colnames(pcs) <- paste0("PC",1:10)
 head(pcs)
 ```
 
-Assuming we didn't encounter any problems, let's save the results of
-our analysis in the `output` folder.
+Assuming we didn't encounter problems in any of these steps, let's
+save the results of our analysis to the `output` folder.
 
 ```{r save-pca, eval=FALSE}
 save(file = "../output/1kg_origins_pca.RData",
@@ -393,43 +394,11 @@ save(file = "../output/1kg_origins_pca.RData",
 PCA analysis: take-home points
 ==============================
 
-+ Needs to be encoded as a numeric matrix.
++ PCA requires a matrix, so the genotypes need to be encoded as
+numeric values.
 
-+ Give more details `rpca` arguments.
-
-+ Other software deals more elegantly with missing data; here is does
++ Other software deals more elegantly with missing data. Here it does
 not matter much.
 
-+ Point to sbatch script, and give instructions on how to use it.
-
-# Example R stuff
-
-```{r cars, echo = TRUE}
-summary(cars)
-```
-
-# Slide with Plot
-
-```{r pressure}
-plot(pressure)
-```
-
-# ggplot code
-
-```{r createdata, echo=TRUE, eval=FALSE}
-df <- data.frame(x = rnorm(1000))
-x <- df$x
-base <- ggplot(df, aes(x)) + geom_density()  + scale_x_continuous(limits = c(-5, 5))
-base + stat_function(fun = dnorm, colour = "red")
-```
-
-
-# Another Plot
-
-```{r plotit, echo=FALSE}
-library(ggplot2)
-df <- data.frame(x = rnorm(1000))
-x <- df$x
-base <- ggplot(df, aes(x)) + geom_density()  + scale_x_continuous(limits = c(-5, 5))
-base + stat_function(fun = dnorm, colour = "red")
-```
++ See the `pca.sbatch` script in the `code` folder for an illustration
+of how to automate the steps of this analysis on the RCC cluster.
