@@ -16,15 +16,47 @@ knitr::opts_chunk$set(comment = "#",collapse = TRUE,fig.align = "center",
 Aims of workshop
 ================
 
-*Add aims here.*
+1. Work through the steps of a basic population structure analysis in
+human genetics, starting with the **original source data**, and ending
+with a **visualization of population structure** estimated from the
+genetic data.
+
+2. Get familiar with standard file formats for genetic data (e.g.,
+VCF, PLINK).
+
+3. Learn basic elements of processing and analyzing genetic data.
+
+4. Learn through “live coding”---this includes learning from our
+mistakes!
+
+What we will accomplish today
+=============================
+
+We will simulate a population structure analysis commonly done in
+human genetics research.
+
+1. We have a small genetic data set (5 genotype samples).
+
+2. We would like to uncover population structure in this small sample.
+
+3. To do so, we infer population structure relative to a
+community-accepted reference. We use the publicly available 1000
+Genomes data as a reference.
+
+4. We will use the most common technique---Principal Components
+Analysis (PCA)---to infer population structure.
 
 Outline of workshop
 ===================
 
-*Add outline here.*
+1. Initial setup.
 
-Software we will use today
-==========================
+2. Download and prepare the genotype data.
+
+
+
+Software tools we will use today
+================================
 
 1. PLINK
 
@@ -32,12 +64,26 @@ Software we will use today
 
 3. R packages `data.table`, `rsvd`, `ggplot2` and `cowplot`.
 
-4. Shell commands such as `less` and `wc`.
+4. Basic shell commands such as `less` and `wc`.
 
 Initial setup (part 1)
 ======================
 
-If you are using the RCC cluster, set up your cluster computing environment:
++ WiFi
+
++ Power outlets
+
++ YubiKeys
+
++ Helper(s)
+
++ Pace, questions (e.g., keyboard shortcuts).
+
+Initial setup (part 2)
+======================
+
+If you are using the RCC cluster, set up your cluster computing
+environment:
 
 1. Connect to midway2.
 
@@ -51,15 +97,15 @@ If you are using the RCC cluster, set up your cluster computing environment:
       --cpus-per-task=4
     ```
      
-Initial setup (part 2)
+Initial setup (part 3)
 ======================
 
-Download the git repository.
+Download the workshop packet from GitHub.
 
 * URL: https://github.com/rcc-uchicago/genetic-data-analysis-1
 
 If you are using the RCC cluster, you can run these commands to
-download the repository:
+download the workshop packet:
 
 ```{bash download-repo, eval=FALSE}
 cd ~
@@ -67,12 +113,12 @@ git clone https://github.com/rcc-uchicago/
   genetic-data-analysis-1.git
 ```
 
-If you are using the RCC cluster, also download the git repository
+If you are using the RCC cluster, also download the workshop packet
 onto your laptop, and open **handout.pdf** using your favourite PDF
 viewer.
 
-What's in the git repository
-============================
+What's in the workshop packet
+=============================
 
 ```
 genetic-data-analysis-1
@@ -87,7 +133,8 @@ Download 1000 Genomes data
 ==========================
 
 We download the 1000 Genomes data from the European Bioinformatics
-Institute. Downloading may take 10--20 minutes.
+Institute. Downloading may take 10--20 minutes---**hopefully you did
+this before the workshop!**
 
 + Long URL: ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/supporting/hd_genotype_chip
 
@@ -635,3 +682,5 @@ genotype data.
 
 + Difficulty of interpreting PCA results.
 
+Recap
+=====
