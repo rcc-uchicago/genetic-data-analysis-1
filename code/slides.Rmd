@@ -43,8 +43,9 @@ human genetics research.
 community-accepted reference*. We use the publicly available 1000
 Genomes data as a reference.
 
-4. We will use the most common technique---Principal Components
-Analysis (PCA)---to infer population structure from the genetic data.
+4. We will use the most common statistical technique---Principal
+Components Analysis (PCA)---to expose, or "infer", population
+structure from the genetic data.
 
 It is your choice
 =================
@@ -659,9 +660,12 @@ Use function `basic.pc.plot` to plot all the samples projected onto
 the first 2 PCs:
 
 ```{r, pc-plot-1}
-p <- basic.pc.plot(pcs,x = "PC1",y = "PC2")
+p <- basic.pc.plot(pcs,x = "PC1",y = "PC2",
+                   size = 2)
 print(p)
 ```
+
++ You may want to adjust the `size` argument.
 
 + To learn how ggplot2 is used to generate the plot, see
 the code in `geno.utils.R`.
@@ -672,8 +676,8 @@ difficult to interpret this structure without additional information.
 Create a PC plot with population labels (part 1)
 ================================================
 
-To create this plot, we first need to load the population label
-assignments stored in `omni_samples.20141118.panel`:
+To create this plot, we first need to load the 1000 Genomes
+population labels stored in `omni_samples.20141118.panel`:
 
 ```{r, load-pop-labels}
 labels.1kg <-
@@ -693,24 +697,34 @@ PC plot with labels:
 
 ```{r pc-plot-2}
 p2 <- labeled.pc.plot(pcs,x = "PC1",y = "PC2",
-                      label = "label")
+                      label = "label",size = 2)
 print(p2)
 ```
 
 Create a PC plot with population labels (part 2)
 ================================================
 
-Several interesting insights can be drawn from this plot---discuss.
+Several interesting insights can be drawn from this plot---*discuss.*
 
-+ See `1kg.pop` in the `data` folder to help interpret these results.
++ How would you explain in a concise, non-technical way the main
+demographic patterns captured by PCs 1 and 2?
+
++ How well do these results agree with Supplementary Figure 4 of the
+[1000 Genomes paper](http://dx.doi.org/10.1038/nature11632)?
+
++ See `1kg.pop` in the `data` folder to help with interpreting these
+results.
 
 In some parts of the plot, the samples are clustered closely together.
-To gain additional insight, it is helpful to zoom in on certain
-portion of the scatterplot. This is easily done with ggplot2, e.g.,
+To gain additional insight, it is helpful to zoom on the denser parts.
+This is easily done with ggplot2, e.g.,
 
-```{r pc-plot-2b
+```{r pc-plot-2b}
 p2 + xlim(c(-30,10)) + ylim(c(10,50))
 ```
+
+*Optional exercise:* Investigate demographic patterns exposed by PCs 3
+and 4.
 
 Add sample ids to unlabeled samples in PC plot
 ==============================================
@@ -722,7 +736,7 @@ sample ids to the 5 points.
 
 ```{r pc-plot-3}
 p3 <- labeled.pc.plot2(pcs,x = "PC1",y = "PC2",
-                       label = "label")
+                       label = "label",size = 2)
 print(p3)
 ```
 

@@ -30,15 +30,17 @@ add.poplabels <- function (pcs, labels) {
   labels <- subset(labels,is.element(labels$id,ids))
   rows   <- match(labels$id,ids)
   pcs[rows,"label"] <- as.character(labels$pop)
-  return(transform(pcs,label = factor(label)))
+  pops   <- sort(unique(as.character(pcs$label)))
+  pops   <- c(setdiff(pops,"none"),"none")
+  return(transform(pcs,label = factor(label,pops)))
 }
 
 # This is a basic PC plot---it shows the projection of the samples
 # onto 2 selected PCs.
-basic.pc.plot <- function (dat, x = "PC1", y = "PC2")
+basic.pc.plot <- function (dat, x = "PC1", y = "PC2", size = 2)
   ggplot(as.data.frame(dat),aes_string(x = x,y = y),
          environment = environment()) +
-    geom_point(color = "royalblue",shape = 20,size = 2.5) +
+    geom_point(color = "royalblue",shape = 20,size = size) +
     theme_cowplot() +
     theme(axis.line = element_blank())
 
@@ -46,11 +48,12 @@ basic.pc.plot <- function (dat, x = "PC1", y = "PC2")
 # 2 selected PCs, and varies the color and shape of the points
 # according to their labels (this should be a factor, i.e. a
 # categorical variable).
-labeled.pc.plot <- function (dat, x = "PC1", y = "PC2", label = "label")
+labeled.pc.plot <- function (dat, x = "PC1", y = "PC2", label = "label",
+                             size = 2)
   ggplot(as.data.frame(dat),
          aes_string(x = x,y = y,color = "label",shape = "label"),
          environment = environment()) +
-    geom_point(size = 3) +
+    geom_point(size = size) +
     scale_color_manual(values = colors) +
     scale_shape_manual(values = shapes) +
     theme_cowplot() +
@@ -58,7 +61,8 @@ labeled.pc.plot <- function (dat, x = "PC1", y = "PC2", label = "label")
 
 # This does the same thing as labeled.pc.plot, but also shows the ids
 # of the unlabeled samples.
-labeled.pc.plot2 <- function (dat, x = "PC1", y = "PC2", label = "label") {
+labeled.pc.plot2 <- function (dat, x = "PC1", y = "PC2", label = "label",
+                              size = 2) {
   dat  <- as.data.frame(dat)
   ids  <- sapply(strsplit(rownames(pcs),"_"),function (x) x[2])
   dat  <- cbind(dat,data.frame(id = paste(" ",ids)))
@@ -66,15 +70,16 @@ labeled.pc.plot2 <- function (dat, x = "PC1", y = "PC2", label = "label") {
   dat1 <- dat[rows,]
   dat2 <- dat[-rows,]
   return(ggplot(environment = environment()) +
-         geom_point(data = dat1,size = 3,
+         geom_point(data = dat1,size = size,
                     mapping = aes_string(x = x,y = y,color = "label",
                                          shape = "label")) +
          scale_color_manual(values = colors) +
          scale_shape_manual(values = shapes) +
          geom_point(data = dat2,mapping = aes_string(x = x,y = y),
-                    color = "black",shape = 19, size = 3,show.legend = FALSE) +
+                    color = "black",shape = 19,size = size,
+                    show.legend = FALSE) +
          geom_text(data = dat2,mapping = aes_string(x = x,y = y,label = "id"),
-                   color = "black",size = 3,hjust = 0,vjust = 1,
+                   color = "black",size = size,hjust = 0,vjust = 1,
                    show.legend = FALSE) +
          theme_cowplot() +
          theme(axis.line = element_blank()))
