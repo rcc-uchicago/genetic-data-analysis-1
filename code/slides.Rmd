@@ -59,19 +59,8 @@ You may...
 
 4. Follow what I do on the projector.
 
-*Note:* I can't guarantee that all steps will work exactly the same on
- your laptop.
-
-Outline of workshop
-===================
-
-1. Initial setup.
-
-2. Download and prepare the genotype data.
-
-3. Run PCA on the processed genotype data.
-
-4. Visualize and interpret the PCA results.
+*I can't guarantee that all examples will work exactly the same on
+your laptop.*
 
 Software tools we will use today
 ================================
@@ -83,6 +72,17 @@ Software tools we will use today
 3. R packages `data.table`, `rsvd`, `ggplot2` and `cowplot`.
 
 4. Basic shell commands such as `less` and `wc`.
+
+Outline of workshop
+===================
+
+1. Initial setup.
+
+2. Download and prepare the genotype data.
+
+3. Run PCA on the processed genotype data.
+
+4. Visualize and interpret the PCA results.
 
 Outline of workshop
 ===================
@@ -143,7 +143,7 @@ git clone https://github.com/rcc-uchicago/
 ```
 
 If you are using the RCC cluster, also download the workshop packet
-onto your laptop, and open **handout.pdf** using your favourite PDF
+on to your laptop. Browse **handout.pdf** using your favourite PDF
 viewer.
 
 What's in the workshop packet
@@ -215,7 +215,7 @@ for annotating these variants.
 
 + It is one of the most commonly used data formats in genetics.
 
-+ It is an inefficient way to store genotype data (this is why we
++ It is not an efficient way to store genotype data (this is why we
 have compressed it).
 
 + See also:
@@ -386,20 +386,20 @@ Typically you will want to be more aggressive in pruning SNPs in LD.
 Data preparation: take-home points
 ==================================
 
-+ vcftools and PLINK have many commands for manipulating genotype data.
++ VCFtools and PLINK have many commands for manipulating genotype data.
 
-+ For more specialized edits, you can go for with basic shell
++ For more specialized edits, you can go far with basic shell
 commands (e.g., `awk`, `cut`, `head`, `cat`, `paste`).
 
 + Often the majority of the effort goes toward data processing.
-Careless data processing (or no data processing) can lead to a poor
+Careless data processing---or no data processing!---can lead to a poor
 quality analysis.
 
 + It is very common to introduce errors when merging multiple data
 sets. Errors can be due to different genome assemblies, different
 allele encodings, different genotyping error rates, *etc.*
 
-+ The PLINK merge command will correct some of these errors, but not all
++ The PLINK "merge" command will correct some of these errors, but not all
 of them.
 
 + I was conservative in selecting SNP common to both data sets to
@@ -424,7 +424,7 @@ Run PCA on combined data set
 
 Outline of the PCA analysis:
 
-1. Convert genotype data to a (numeric) matrix.
+1. Convert genotype data to a numeric representation---a matrix.
 
 2. Start up interactive R environment.
 
@@ -455,14 +455,14 @@ Move to the `code` folder, and start up R. On the RCC cluster, run
 these commands:
 
 ```{bash load-R, eval=FALSE}
-pwd # Should be ... /code
+pwd # Should be .../code
 module load R/3.4.3
 export OPENBLAS_NUM_THREADS=4 # Optional.
 R --no-save
 ```
 
 The third command dramatically speeds up the PCA using OpenBLAS
-multithreaded matrix operations.
+multithreaded matrix operations. This is optional.
 
 Load genotype matrix into R (part 1)
 ====================================
@@ -470,7 +470,7 @@ Load genotype matrix into R (part 1)
 Before continuing, check your working directory:
 
 ```{r getwd}
-getwd() # Should be ... genetic-data-analysis-1
+getwd() # Should be .../code
 ```
 
 I wrote a function to rapidly load the genotype matrix using function
@@ -640,7 +640,7 @@ If you are not using the RCC cluster, you may need to install the
 # install.packages("cowplot")
 library(ggplot2)
 library(cowplot)
-getwd() # Should be ../code
+getwd() # Should be .../code
 source("geno.utils.R")
 ```
 
