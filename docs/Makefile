@@ -6,9 +6,10 @@
 # * Type "make test" to generate a PDF of the slides that also runs
 #   the R code.
 #
-# * Type "make handout" to generate a PDF document that can be used as
-#   a handout to distribute to workshop participants. For improved
-#   layout, I recommend setting the YAML header in slides.Rmd to
+# * Optionally, type "make handout" to generate a PDF document that
+#   can be used as a handout to distribute to workshop
+#   participants. For improved layout, I recommend setting the YAML
+#   header in slides.Rmd to
 # 
 #     ---
 #     title: "Analysis of Genetic Data 1: Inferring Population Structure"

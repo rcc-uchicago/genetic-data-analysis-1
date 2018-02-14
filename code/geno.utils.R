@@ -40,7 +40,7 @@ add.poplabels <- function (pcs, labels) {
 basic.pc.plot <- function (dat, x = "PC1", y = "PC2", size = 2)
   ggplot(as.data.frame(dat),aes_string(x = x,y = y),
          environment = environment()) +
-    geom_point(color = "royalblue",shape = 20,size = size) +
+    geom_point(color = "royalblue",shape = 20,size = size,na.rm = TRUE) +
     theme_cowplot() +
     theme(axis.line = element_blank())
 
@@ -53,7 +53,7 @@ labeled.pc.plot <- function (dat, x = "PC1", y = "PC2", label = "label",
   ggplot(as.data.frame(dat),
          aes_string(x = x,y = y,color = "label",shape = "label"),
          environment = environment()) +
-    geom_point(size = size) +
+    geom_point(size = size,na.rm = TRUE) +
     scale_color_manual(values = colors) +
     scale_shape_manual(values = shapes) +
     theme_cowplot() +
@@ -70,17 +70,17 @@ labeled.pc.plot2 <- function (dat, x = "PC1", y = "PC2", label = "label",
   dat1 <- dat[rows,]
   dat2 <- dat[-rows,]
   return(ggplot(environment = environment()) +
-         geom_point(data = dat1,size = size,
+         geom_point(data = dat1,size = size,na.rm = TRUE,
                     mapping = aes_string(x = x,y = y,color = "label",
                                          shape = "label")) +
          scale_color_manual(values = colors) +
          scale_shape_manual(values = shapes) +
          geom_point(data = dat2,mapping = aes_string(x = x,y = y),
                     color = "black",shape = 19,size = size,
-                    show.legend = FALSE) +
+                    show.legend = FALSE,na.rm = TRUE) +
          geom_text(data = dat2,mapping = aes_string(x = x,y = y,label = "id"),
                    color = "black",size = size,hjust = 0,vjust = 1,
-                   show.legend = FALSE) +
+                   show.legend = FALSE,na.rm = TRUE) +
          theme_cowplot() +
          theme(axis.line = element_blank()))
 }
