@@ -26,7 +26,7 @@ computer files.
 
 3. Use command-line tools to manipulate genetic data.
 
-4. Learn through “live coding”---this includes learning from our
+4. Learn through "live coding"---this includes learning from our
 mistakes!
 
 Our research task
