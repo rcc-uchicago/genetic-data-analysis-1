@@ -33,15 +33,15 @@ Our research task
 =================
 
 We will simulate a population structure analysis commonly done in
-human genetics research.
+human genetics studies.
 
-1. We have a small genetic data set (5 genotype samples).
+1. We have collected 5 genotype samples as part of our study.
 
 2. We would like to uncover population structure in this small sample.
 
-3. To do so, we infer population structure *relative to a
-community-accepted reference*. We use the publicly available 1000
-Genomes data as a reference.
+3. To do so, we infer population structure *relative to a "reference"
+data set*. We use the publicly available 1000 Genomes data as a
+reference. 
 
 4. We will use the most common statistical technique---Principal
 Components Analysis (PCA)---to expose, or "infer", population
@@ -341,13 +341,11 @@ cd data
   --make-bed --out 1kg_common
 ```
 
-2. Extract common SNPs from Human Origins data, and remove 2 samples
-that are included in both data sets:
+2. Extract common SNPs from Human Origins data:
 ```
 ../bin/plink --file origins \
   --extract 1kg_origins_markers.txt \
-  --remove dupids.txt --make-bed \
-  --out origins_common
+  --make-bed --out origins_common
 ```
 
 Merge with Affymetrix Human Origins data (part 2)
