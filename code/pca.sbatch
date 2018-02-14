@@ -8,7 +8,7 @@
 #
 #   sbatch pca.sbatch
 # 
-l
+
 #SBATCH --partition=broadwl
 #SBATCH --mem=10G
 #SBATCH --nodes=1
