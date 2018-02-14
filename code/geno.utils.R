@@ -41,7 +41,6 @@ basic.pc.plot <- function (dat, x = "PC1", y = "PC2", size = 2)
   ggplot(as.data.frame(dat),aes_string(x = x,y = y),
          environment = environment()) +
     geom_point(color = "royalblue",shape = 20,size = size,na.rm = TRUE) +
-    theme_cowplot() +
     theme(axis.line = element_blank())
 
 # This is a labeled PC plot---it shows the project of the samples onto
@@ -56,13 +55,12 @@ labeled.pc.plot <- function (dat, x = "PC1", y = "PC2", label = "label",
     geom_point(size = size,na.rm = TRUE) +
     scale_color_manual(values = colors) +
     scale_shape_manual(values = shapes) +
-    theme_cowplot() +
     theme(axis.line = element_blank())
 
 # This does the same thing as labeled.pc.plot, but also shows the ids
 # of the unlabeled samples.
-labeled.pc.plot2 <- function (dat, x = "PC1", y = "PC2", label = "label",
-                              size = 2) {
+labeled.pc.plot.with.ids <-
+    function (dat, x = "PC1", y = "PC2", label = "label", size = 2) {
   dat  <- as.data.frame(dat)
   ids  <- sapply(strsplit(rownames(pcs),"_"),function (x) x[2])
   dat  <- cbind(dat,data.frame(id = paste(" ",ids)))
@@ -81,6 +79,5 @@ labeled.pc.plot2 <- function (dat, x = "PC1", y = "PC2", label = "label",
          geom_text(data = dat2,mapping = aes_string(x = x,y = y,label = "id"),
                    color = "black",size = size,hjust = 0,vjust = 1,
                    show.legend = FALSE,na.rm = TRUE) +
-         theme_cowplot() +
          theme(axis.line = element_blank()))
 }

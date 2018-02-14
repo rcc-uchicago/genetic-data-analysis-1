@@ -421,7 +421,8 @@ cd data
   --out 1kg_origins_pruned
 ```
 
-Typically you will want to be more aggressive in pruning SNPs in LD.
+Typically you will want to be more aggressive in pruning SNPs in LD
+(a LD threshold smaller than 0.8).
 
 Data preparation: take-home points
 ==================================
@@ -464,7 +465,7 @@ Run PCA on combined data set
 
 Outline of the PCA analysis:
 
-1. Convert genotype data to a numeric representation---a matrix.
+1. Convert genotype data to a numeric representation (a matrix).
 
 2. Start up interactive R environment.
 
@@ -497,12 +498,13 @@ these commands:
 ```{bash load-R, eval=FALSE}
 pwd # Should be .../code
 module load R/3.4.3
-export OPENBLAS_NUM_THREADS=4 # Optional.
-R --no-save
+R
 ```
 
-The third command dramatically speeds up the PCA using OpenBLAS
-multithreaded matrix operations. This is optional.
+*Note:* If you are not using the RCC cluster, make sure you have a
+recent version of R installed on your laptop, preferrably 3.4.0 or
+greater. You can check which version you have by typing
+`version$version.string` in R.
 
 Load genotype matrix into R (part 1)
 ====================================
@@ -544,10 +546,10 @@ geno[1:5,1:5]
 Fill in missing genotypes
 =========================
 
-*A problem:* a small proportion (<1%) of the genotypes are missing:
+*A problem:* <1% of the genotypes are missing:
 
 ```{r missing-genotypes}
-100*mean(is.na(geno))
+mean(is.na(geno))
 ```
 
 We need to fill in these missing genotypes. In this case, a reasonable
@@ -566,6 +568,9 @@ Check that there are no missing genotypes:
 ```{r check-missing-genotypes}
 sum(is.na(geno))
 ```
+
+Note that the genotypes are now not always 0, 1 or 2! e.g.,
+`geno[1200,1]`. How to interpret these "fractional" genotypes?
 
 Compute PCs using rsvd package (part 1)
 =======================================
@@ -647,9 +652,9 @@ Outline of the PCA visualization:
 
 2. Create a basic PC plot.
 
-3. Create a PC plot with population labels.
+3. Add population labels to the PC plot.
 
-4. Add sample ids to the unlabeled samples in the PC plot.
+4. Add sample ids to the unlabeled study samples in the PC plot.
 
 Set up R environment for plotting with ggplot2
 ==============================================
@@ -662,13 +667,13 @@ plot(cars$dist,cars$speed)
 ```
 
 You should see a scatterplot. If not, you should start a fresh R
-session in a new midway2 connection (**ThinLinc** is the safest
-approach). As a reminder, you will need to run these commands:
+session in a new midway2 connection (**ThinLinc is the most reliable
+approach**). As a reminder, you will need to run these commands:
 
 ```{bash, eval=FALSE}
 pwd # Should be .../code
 module load R/3.4.3
-R --no-save
+R
 ```
 
 Set up R environment for plotting with ggplot2
@@ -681,7 +686,7 @@ If you are not using the RCC cluster, you may need to install the
 # install.packages("gplot2")
 # install.packages("cowplot")
 library(ggplot2)
-library(cowplot)
+library(cowplot) # Optional.
 getwd() # Should be .../code
 source("geno.utils.R")
 ```
@@ -709,8 +714,9 @@ print(p)
 + To learn how ggplot2 is used to generate the plot, see
 the code in `geno.utils.R`.
 
-This plot shows that there is clear structure in the data. But it is
-difficult to interpret this structure without additional information.
+This plot shows that there is clear structure in the data. *But it is
+difficult to interpret this structure without additional
+information.*
 
 Create a PC plot with population labels (part 1)
 ================================================
@@ -724,15 +730,14 @@ read.table("../data/omni_samples.20141118.panel",
            sep = " ",header = TRUE,as.is = "id")
 ```
 
-Next, add a "label" column to the table of PC results:
+This adds a "label" column to the `pcs` table:
 
 ```{r, add-pop-labels}
 pcs <- add.poplabels(pcs,labels.1kg)
 head(pcs)
 ```
 
-Use the `labeled.pc.plot` function (see `geno.utils.R`) to create the
-PC plot with labels:
+Create the PC plot with labels:
 
 ```{r pc-plot-2}
 p2 <- labeled.pc.plot(pcs,x = "PC1",y = "PC2",
@@ -740,8 +745,8 @@ p2 <- labeled.pc.plot(pcs,x = "PC1",y = "PC2",
 print(p2)
 ```
 
-Create a PC plot with population labels (part 2)
-================================================
+Add population labels to PC plot (part 2)
+=========================================
 
 Several interesting insights can be drawn from this plot---*discuss.*
 
@@ -768,19 +773,15 @@ and 4.
 Add sample ids to unlabeled samples in PC plot
 ==============================================
 
-The previous plot does not show the population labels for the 5
-samples from the Human Origins data set (these are the 5 black circles
-in the plot). To interpret the PCA results for these 5 samples, we add
-sample ids to the 5 points.
+To interpret the PCA results for the 5 study samples, we add sample
+ids to the 5 points in the PC plot:
 
 ```{r pc-plot-3}
-p3 <- labeled.pc.plot2(pcs,x = "PC1",y = "PC2",
-                       label = "label",size = 2)
+p3 <-
+labeled.pc.plot.with.ids(pcs,x = "PC1",y = "PC2",
+                         label = "label",size = 2)
 print(p3)
 ```
-
-+ This creates a similar plot to before, but annotates the 5 Human
-Origins samples with their ids.
 
 + Compare this PC projection for these 5 samples results against the
 sample information provided the Human Origins data file
@@ -809,8 +810,8 @@ for a particularly famous example produced by University of Chicago
 researchers).
 
 + However, there are many well-known pitfalls in interpreting the
-results of a PCA analysis applied to genetic data---proceed with
-caution!
+results of a PCA analysis applied to genetic data---8proceed with
+caution*!
 
 Recap
 =====
@@ -822,5 +823,4 @@ programmings skills.
 data from DNA sequence assays introduces many more complications!
 
 + Please email me (`pcarbo@uchicago.edu`) with questions, or for
-advice on your analysis of genetic data.
-
+advice on analyzing your genetic data.
