@@ -623,8 +623,9 @@ not matter much.
 + Not everyone agrees on the best numeric encoding of genotypes for
 PCA.
 
-+ See the `pca.sbatch` script in the `code` folder for an illustration
-of how to automate the steps of this analysis on the RCC cluster.
++ *Optional:* See file `pca.sbatch` in the `code` folder for an
+illustration of how to automate the steps of the this analysis on the
+RCC cluster using the SLURM job engine.
 
 Outline of workshop
 ===================
