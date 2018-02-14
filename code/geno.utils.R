@@ -8,7 +8,8 @@ shapes <- c(rep(c(19,17,8,1,3),length.out = 21),19)
 # http://www.cog-genomics.org/plink2/formats#raw for more information
 # about this file format.
 read.geno.raw <- function (geno.file) {
-  geno <- fread(geno.file,sep = " ",header = TRUE,stringsAsFactors = FALSE)
+  geno <- fread(geno.file,sep = " ",header = TRUE,stringsAsFactors = FALSE,
+                showProgress = FALSE)
   class(geno)    <- "data.frame"
   ids            <- with(geno,paste(FID,IID,sep = "_"))
   geno           <- geno[-(1:6)]
