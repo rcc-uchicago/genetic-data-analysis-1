@@ -70,7 +70,7 @@ Software tools we will use today
 
 2. R
 
-3. R packages `data.table`, `rsvd`, `ggplot2` and `cowplot`.
+3. R packages `data.table`, `rsvd` and `ggplot2`.
 
 4. Basic shell commands such as `less` and `wc`.
 
@@ -105,8 +105,6 @@ Initial setup (part 1)
 
 + YubiKeys
 
-+ Helper(s)
-
 + Pace, questions (e.g., keyboard shortcuts).
 
 Initial setup (part 2)
@@ -119,12 +117,11 @@ environment:
 
     + See https://rcc.uchicago.edu/docs/connecting.
     
-2. Request 4 CPUs and 10 GB of memory on a midway2 compute node:
+2. Request 1 CPU and 10 GB of memory on a midway2 compute node:
 
     ```
     sinteractive --partition=broadwl \
-      --time=3:00:00 --mem=10G \
-      --cpus-per-task=4
+      --time=3:00:00 --mem=10G
     ```
      
 Initial setup (part 3)
@@ -143,9 +140,9 @@ git clone https://github.com/rcc-uchicago/
   genetic-data-analysis-1.git
 ```
 
-If you are using the RCC cluster, also download the workshop packet
-on to your laptop. Browse **handout.pdf** using your favourite PDF
-viewer.
+If you are using the RCC cluster, also download the workshop packet on
+to your laptop. Browse **slides.pdf** in the *docs* folder using your
+favourite PDF viewer. (You can also view slides.pdf on GitHub.)
 
 What's in the workshop packet
 =============================
@@ -170,6 +167,23 @@ Outline of workshop
 
 4. Visualize and interpret the PCA results.
 
+Download and prepare the genotype data
+======================================
+
+Outline of the data preparation steps:
+
+1. Download and inspect 1000 Genomes data.
+
+3. Install PLINK.
+
+4. Convert VCF file to PLINK format.
+
+5. Remove related 1000 Genomes samples.
+
+6. Merge 1000 Genomes with study data (`origins.ped`).
+
+7. Prune SNPs in LD.
+
 Download 1000 Genomes data
 ==========================
 
@@ -181,10 +195,12 @@ this before the workshop!**
 
 + Short URL: http://bit.ly/2G7ZWYu
   
-+ Download this file into the `data` folder:
++ Download this file:
 
     `ALL.chip.omni_broad_sanger_combined.
      20140818.snps.genotypes.vcf.gz`
+
++ Make sure you move the file to the `data` folder.
 
 On the RCC cluster, you can run these commands:
 
@@ -192,6 +208,31 @@ On the RCC cluster, you can run these commands:
 cd data
 wget http://bit.ly/2C617oO -O 1kg.vcf.gz
 ```
+
+The data we will use in our analyses
+====================================
+
+In the `data` folder:
+
++ **1kg.vcf.gz:** downloaded genotype data from 1000 Genomes project,
+in VCF format.
+
++ **20140625_related_individuals.txt:** list of 1000 Genomes samples
+previously identified as being closely related to other samples.
+
++ **omni_samples.20141118.panel:** Population labels assigned to 1000
+Genomes samples.
+
++ **1kg.pop**: Descriptions of 1000 Genomes population labels.
+
++ **origins.ped:** 5 samples from our small study, in PLINK text
+format. (Actual source is the Affymetric Human Origins data set.)
+
++ **affymetrix-human-origins.ind:** Information about samples from
+Affymetrix Human Origins data set.
+
++ **1kg_origins_markers.txt:** A set of SNPs that can be used to merge
+reference and study genotypes.
 
 Explore the VCF file
 ====================
@@ -224,8 +265,8 @@ have compressed it).
     - https://samtools.github.io/hts-specs 
     - doi:10.1093/bioinformatics/btr330
 
-Download PLINK
-==============
+Install PLINK
+=============
 
 We download the stable version of the PLINK software in the `bin
 folder`.

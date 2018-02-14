@@ -1,7 +1,7 @@
 # A Makefile for generating the PDFs from the R Markdown files.
 #
-# * Type "make" in this directory to generate a PDF of the slides from
-#   the R Markdown source.
+# * Type "make slides" in this directory to generate a PDF of the
+#   slides from the R Markdown source.
 #
 # * Type "make test" to generate a PDF of the slides that also runs
 #   the R code.
@@ -24,7 +24,9 @@
 
 # RULES
 # -----
-all: slides.pdf
+all: slides
+
+slides: slides.pdf
 
 test: slides_test.pdf
 
