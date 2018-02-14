@@ -1,15 +1,33 @@
 # A Makefile for generating the PDFs from the R Markdown files.
 #
-# Type "make" in this directory to generate the PDFs from the R
-# Markdown files.
+# * Type "make" in this directory to generate a PDF of the slides from
+#   the R Markdown source.
 #
-# Type "make clean" to discard the generated PDFs, and all accompanying
-# output.
+# * Type "make test" to generate a PDF of the slides that also runs
+#   the R code.
+#
+# * Type "make handout" to generate a PDF document that can be used as
+#   a handout to distribute to workshop participants. For improved
+#   layout, I recommend setting the YAML header in slides.Rmd to
+# 
+#     ---
+#     title: "Analysis of Genetic Data 1: Inferring Population Structure"
+#     author: Peter Carbonetto
+#     header-includes:
+#       - \usepackage{newcent}
+#     ---
+#
+# * Type "make clean" to discard the generated PDFs, and all accompanying
+#   output.
 #
 
 # RULES
 # -----
-all: slides_test.pdf slides.pdf handout.pdf
+all: slides.pdf
+
+test: slides_test.pdf
+
+handout: handout.pdf
 
 # Generate the slides while also testing the R code.
 slides_test.pdf : ../code/slides.Rmd
