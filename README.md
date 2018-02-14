@@ -40,10 +40,14 @@ See also
 Please also take a look at the [Code of Conduct](conduct.md), and
 the [license information](LICENSE.md).
 
-+ To generate PDFs of the slides and handout from the R Markdown
-source, run `make` in the [docs](docs) directory. For this to work,
-you will need to to install the `rmarkdown` package in R, as well as
-the packages used in [slides.Rmd](code/slides.Rmd).
++ To generate PDFs of the slides from the R Markdown source, run `make
+slides.pdf` in the [docs](docs) directory. For this to work, you will
+need to to install the
+[rmarkdown](https://cran.r-project.org/package=rmarkdown) package in
+R, as well as the packages used in [slides.Rmd](code/slides.Rmd). For
+more details, see the [Makefile](docs/Makefile).
+
++ See also the [instructor notes](NOTES.md).
 
 ## Credits
 
@@ -51,6 +55,7 @@ These materials were developed by
 [Peter Carbonetto](http://pcarbo.github.io) at the
 [University of Chicago](https://www.uchicago.edu). Thank you to
 [Matthew Stephens](http://stephenslab.uchicago.edu) for his support
-and guidance, and to [David Reich](http://reich.hms.harvard.edu) and
-the members of his lab for making a portion of the Affymetrix Human
-Origins data set available for public use.
+and guidance. Also thanks to
+[David Reich](http://reich.hms.harvard.edu) and his lab for making a
+portion of the Affymetrix Human Origins data set available for public
+use.
