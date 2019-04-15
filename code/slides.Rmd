@@ -268,8 +268,7 @@ have compressed it).
 Install PLINK
 =============
 
-We download the stable version of the PLINK software in the `bin
-folder`.
+We download the stable version of PLINK to the `bin` folder.
 
 + URL: http://www.cog-genomics.org/plink2
 
@@ -375,6 +374,7 @@ that is common to both data sets (see below for details), and
 extract the genotypes for the common SNPs only.
 
 1. Extract common SNPs from 1000 Genomes data:
+
 ```
 cd data
 ../bin/plink --bfile 1kg_unrelated \
