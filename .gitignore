@@ -1,4 +1,3 @@
-bin/plink
 bin/admixture
 docs/slides_test.pdf
 data/1kg.vcf.gz
