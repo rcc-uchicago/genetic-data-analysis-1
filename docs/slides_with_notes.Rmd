@@ -5,14 +5,16 @@ output:
   beamer_presentation:
     template: docs/beamer.tex
     keep_tex: false
+    fig_caption: false
+    pandoc_args: "--highlight-style=pygments"
 ---
 
 ```{r knitr-options, echo=FALSE}
 knitr::opts_chunk$set(comment = "#",collapse = TRUE,fig.align = "center",
                       results = "hide", fig.show = "hide", message = FALSE,
-		      warning = FALSE)
+		              warning = FALSE)
 ```
-
+					  
 Aims of workshop
 ================
 
@@ -77,35 +79,106 @@ Software tools we will use today
 Outline of workshop
 ===================
 
-1. Initial setup.
+*Workshop outline goes here.*
 
-2. Download and prepare the genotype data.
+Preliminaries
+=============
 
-3. Run PCA on the processed genotype data.
++ WiFi.
 
-4. Visualize and interpret the PCA results.
++ Power outlets.
+
++ Reading what I type.
+
++ Pace & questions (e.g., keyboard shortcuts).
+
++ Yubikeys.
+
++ What to do if you get stuck.
+
+Preliminaries
+=============
+
++ The workshop packet is a repository on GitHub. Go to:
+
+    - github.com/rcc-uchicago/genetic-data-analysis-1
+
++ Download the workshop packet to your computer.
 
 Outline of workshop
 ===================
 
-1. **Initial setup.**
+*Workshop outline goes here.*
 
-2. Download and prepare the genotype data.
+What's included in the workshop packet
+======================================
 
-3. Run PCA on the processed genotype data.
+*Give overview of contents here.*
 
-4. Visualize and interpret the PCA results.
+Challenge #1: Setting up your HPC environment
+=============================================
 
-Initial setup (part 1)
-======================
++ Aim: Configure your HPC environment for the next programming
+  challenges.
 
-+ WiFi
++ Steps:
 
-+ Power outlets
+    1. Connect to midway2.
 
-+ YubiKeys
+    2. Download workshop packet.
 
-+ Pace, questions (e.g., keyboard shortcuts).
+Connect to midway2
+==================
+
++ **If you have an RCC account:** I'm assuming you already know how to
+  connect to midway2. *ThinLinc is recommended if you do not know how
+  activate X11 forwarding in SSH.* See:
+  https://rcc.uchicago.edu/docs/connecting
+
++ **If you do not have an RCC account:** I can provide you with a
+  Yubikey. This will give you guest access to the RCC cluster (see the
+  next slide).
+
+Using the Yubikeys
+==================
+
++ Prerequisites:
+
+    1. SSH client
+
+    2. USB-A port
+
++ Steps:
+
+    1. Insert Yubikey into USB port.
+
+    2. Note your userid: `rccguestXXXX`, where `XXXX` is the
+       last four digits shown on Yubikey.
+
+    3. Follow instructions to connect to midway2 via SSH, replacing
+       the cnetid with your `rccguestXXXX` user name:
+       https://rcc.uchicago.edu/docs/connecting
+
+    4. When prompted for password, press lightly on metal disc.
+
++ Notes:
+
+    - Yubikeys do not work with ThinLinc.
+
+    - *Please return the Yubikey at the end of the workshop.*
+
+Download workshop packet
+========================
+
+Once you have connected to a midway2 login node, download the workshop
+packet to your home directory on the cluster (**note:** there are no
+spaces in the URL below):
+
+```bash
+cd $HOME
+git clone https://github.com/rcc-uchicago/
+  genetic-data-analysis-1.git
+```
 
 Initial setup (part 2)
 ======================

@@ -115,6 +115,71 @@ What's included in the workshop packet
 
 *Give overview of contents here.*
 
+Challenge #1: Setting up your HPC environment
+=============================================
+
++ Aim: Configure your HPC environment for the next programming
+  challenges.
+
++ Steps:
+
+    1. Connect to midway2.
+
+    2. Download workshop packet.
+
+Connect to midway2
+==================
+
++ **If you have an RCC account:** I'm assuming you already know how to
+  connect to midway2. *ThinLinc is recommended if you do not know how
+  activate X11 forwarding in SSH.* See:
+  https://rcc.uchicago.edu/docs/connecting
+
++ **If you do not have an RCC account:** I can provide you with a
+  Yubikey. This will give you guest access to the RCC cluster (see the
+  next slide).
+
+Using the Yubikeys
+==================
+
++ Prerequisites:
+
+    1. SSH client
+
+    2. USB-A port
+
++ Steps:
+
+    1. Insert Yubikey into USB port.
+
+    2. Note your userid: `rccguestXXXX`, where `XXXX` is the
+       last four digits shown on Yubikey.
+
+    3. Follow instructions to connect to midway2 via SSH, replacing
+       the cnetid with your `rccguestXXXX` user name:
+       https://rcc.uchicago.edu/docs/connecting
+
+    4. When prompted for password, press lightly on metal disc.
+
++ Notes:
+
+    - Yubikeys do not work with ThinLinc.
+
+    - *Please return the Yubikey at the end of the workshop.*
+
+Download workshop packet
+========================
+
+Once you have connected to a midway2 login node, download the workshop
+packet to your home directory on the cluster (**note:** there are no
+spaces in the URL below):
+
+```bash
+cd $HOME
+git clone https://github.com/rcc-uchicago/
+  genetic-data-analysis-1.git
+```
+
 Initial setup (part 2)
 ======================
 
