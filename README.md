@@ -1,24 +1,34 @@
 # Analysis of Genetic Data 1: Inferring Population Structure
 
-During this short workshop, we will apply simple numeric techniques to
-investigate human genetic diversity and population structure from
-large-scale genetic data sets. We will use popular software tools such
-as PLINK and ADMIXTURE to prepare and analyze the "raw" genetic data,
-and we will use R to visualize the results of our analyses. While
-anyone who is curious about the "genomics revolution" may attend, this
-workshop is mainly intended to develop practical computing skills for
-graduate students and other researchers working with genetic
-data-concepts such as "genotype" and "allele frequency" will not be
-explained. We will practice "live coding" throughout, so please bring
-your laptop!
+During this short workshop, we will apply simple numeric techniques
+such as principal components analysis (PCA) to investigate human
+genetic diversity and population structure from large-scale genetic
+data sets. We will investigate how large genetic data sets are
+commonly represented in computer files, and we will use popular
+command-line tools such as PLINK to prepare the "raw" genetic data for
+analysis. We will use R to compute principal components from the
+genetic data and visualize the results. This workshop is mainly
+intended to develop practical computing skills for researchers working
+with genetic data—concepts such as "genotype" and "allele frequency"
+will not be explained. This will be a hands-on workshop and we will do
+"live coding" throughout, so please bring your laptop!  Objectives:
+Attendees will: (1) work through the steps of a basic population
+structure analysis in human genetics, starting with the “raw” source
+data, and ending with a visualization of population structure
+estimated from the genetic data; (2) understand how large genetic data
+sets are commonly represented in computer files; (3) use command-line
+tools (e.g., PLINK) to manipulate genetic data; (4) use R to compute
+principal components, and visualize the results of PCA; (5) learn
+through "live coding."
 
 ## Prerequisites
 
-This workshop assumes participants are already familiar with R and a
-UNIX-like shell environment. An RCC user account is recommended, but
-not required-temporary access to the RCC cluster will be available in
-class. All participants must bring a laptop with a Mac, Linux, or
-Windows operating system that they have administrative privileges on.
+This hands-on workshop assumes participants are already familiar with
+R and a UNIX-like shell environment. An RCC user account is
+recommended, but not required. Guest access to the RCC cluster will be
+available in class to those with no RCC account. All participants must
+bring a laptop with a Mac, Linux, or Windows operating system that
+they have administrative privileges on.
 
 ## Other information
 
