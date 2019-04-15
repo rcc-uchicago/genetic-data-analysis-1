@@ -63,7 +63,7 @@ You may...
 4. Follow what I do on the projector.
 
 *I can't guarantee that all examples will work exactly the same on
-your laptop.*
+your laptop. My instructions assume you are using the RCC cluster*
 
 Software tools we will use today
 ================================
@@ -126,6 +126,18 @@ Challenge #1: Setting up your HPC environment
     1. Connect to midway2.
 
     2. Download workshop packet.
+ 
+    3. Install PLINK.
+
+    4. Download 1000 Genomes data.
+
+    5. Connect to a midway2 compute node.
+
+    6. Launch R, and check your R environment.
+
+    7. Set up R for plotting.
+
+    8. Open another midway2 connection (optional).
 
 Connect to midway2
 ==================
@@ -180,65 +192,143 @@ git clone https://github.com/rcc-uchicago/
   genetic-data-analysis-1.git
 ```
 
-Initial setup (part 2)
-======================
+Install PLINK
+=============
 
-If you are using the RCC cluster, set up your cluster computing
-environment:
+Download the most recent stable version of PLINK in the same place as
+the other workshop materials.
 
-1. Connect to midway2.
++ URL: www.cog-genomics.org/plink2
 
-    + See https://rcc.uchicago.edu/docs/connecting.
-    
-2. Request 1 CPU and 10 GB of memory on a midway2 compute node:
+On midway2, you can run these commands to download PLINK, and check
+the version:
 
+```{bash get-plink, eval=FALSE}
+cd $HOME/genetic-data-analysis-1
+wget https://bit.ly/2UgRH36 -O plink.zip
+unzip plink.zip
+./plink --version
+```
+
+Download 1000 Genomes data
+==========================
+
+Download the 1000 Genomes data from the European Bioinformatics
+Institute. *Downloading from the EBI may take a long time (10--20
+minutes), so if possible copy the previously downloaded files
+instead.*
+
++ Downloading from EBI:
+
+    + Short URL: http://bit.ly/2G7ZWYu
+  
+    + Download this file:
+
+      `ALL.chip.omni_broad_sanger_combined.
+       20140818.snps.genotypes.vcf.gz`
+
+    + Make sure you move the file to same location as the other
+      workshop materials.
+
++ Copying previously downloaded files:
+
+    ```{bash get-1kg-data, eval=FALSE}
+    cd $HOME/genetic-data-analysis-1
+    cp ~pcarbo/share/1kg.csv.gz .
     ```
-    sinteractive --partition=broadwl \
-      --time=3:00:00 --mem=10G
-    ```
-     
-Initial setup (part 3)
-======================
 
-Download the workshop packet from GitHub.
+Connect to a midway2 compute node
+=================================
 
-* URL: https://github.com/rcc-uchicago/genetic-data-analysis-1
+Set up an interactive session on a midway2 compute node with 8 CPUs
+and 18 GB of memory:
 
-If you are using the RCC cluster, you can run these commands to
-download the workshop packet:
-
-```{bash download-repo, eval=FALSE}
-cd ~
-git clone https://github.com/rcc-uchicago/
-  genetic-data-analysis-1.git
+```bash
+screen -S workshop
+sinteractive --partition=broadwl \
+  --reservation=workshop --cpus-per-task=8 \
+  --mem=18G --time=3:00:00 
+echo $HOSTNAME
 ```
 
-If you are using the RCC cluster, also download the workshop packet on
-to your laptop. Browse **slides.pdf** in the *docs* folder using your
-favourite PDF viewer. (You can also view slides.pdf on GitHub.)
+Launch R
+========
 
-What's in the workshop packet
-=============================
+Start up an interactive R session:
 
+```bash
+module load R/3.5.1
+which R
+R --no-save
 ```
-genetic-data-analysis-1
-  /bin     # All executables are stored here.
-  /code    # Source code used in analyses.
-  /data    # "Raw" and processed data.
-  /docs    # Additional workshop materials.
-  /output  # All results are stored here.
+
+Check your R environment
+========================
+
+Check that you are running R 3.5.1:
+
+```{r check-version}
+sessionInfo()
 ```
+
+Check that you are starting with an empty environment:
+
+```{r check-environment}
+ls()
+```
+
+Check that you have the correct working directory---it should be set
+to the "genetic-data-analysis-1" repository:
+
+```{r check-wd}
+getwd()
+```
+
+> Instructor notes: If `ls()` does not return `character(0)`, clear
+> your environment by running `rm(list = ls())`.
+
+Set up R for plotting
+=====================
+
+Make sure you can display graphics in your current R session, e.g.,
+
+```{r plot-cars}
+library(ggplot2)
+data(cars)
+quickplot(cars$dist,cars$speed)
+```
+
+You should see a scatterplot. If not, your connection is not set up to
+display graphics. An alternative is to save the plot to a file, and
+download the file to your computer using sftp or SAMBA:
+
++ See: rcc.uchicago.edu/docs/data-transfer
+
+Quit R
+======
+
+We will quit R, and return to it later.
+
+```{R quit, eval=FALSE}
+quit()
+```
+
+Open another connection to midway2
+==================================
+
++ Optionally, open a new SSH connection, following the same steps as
+  before (see the "Connect to midway2" slide).
+
++ This second connection can be used to monitor your computations on
+  the cluster.
+
+*At this point, you have completed the initial setup. You are now
+ready to move on to the next programming challenge.*
 
 Outline of workshop
 ===================
 
-1. Initial setup.
-
-2. **Download and prepare the genotype data.**
-
-3. Run PCA on the processed genotype data.
-
-4. Visualize and interpret the PCA results.
+*Workshop outline goes here.*
 
 Download and prepare the genotype data
 ======================================
@@ -247,8 +337,6 @@ Outline of the data preparation steps:
 
 1. Download and inspect 1000 Genomes data.
 
-3. Install PLINK.
-
 4. Convert VCF file to PLINK format.
 
 5. Remove related 1000 Genomes samples.
@@ -256,31 +344,6 @@ Outline of the data preparation steps:
 6. Merge 1000 Genomes with study data (`origins.ped`).
 
 7. Prune SNPs in LD.
-
-Download 1000 Genomes data
-==========================
-
-We download the 1000 Genomes data from the European Bioinformatics
-Institute. Downloading may take 10--20 minutes---**hopefully you did
-this before the workshop!**
-
-+ Long URL: ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/supporting/hd_genotype_chip
-
-+ Short URL: http://bit.ly/2G7ZWYu
-  
-+ Download this file:
-
-    `ALL.chip.omni_broad_sanger_combined.
-     20140818.snps.genotypes.vcf.gz`
-
-+ Make sure you move the file to the `data` folder.
-
-On the RCC cluster, you can run these commands:
-
-```{bash get-1kg-data, eval=FALSE}
-cd data
-wget http://bit.ly/2C617oO -O 1kg.vcf.gz
-```
 
 The data we will use in our analyses
 ====================================
@@ -316,7 +379,7 @@ stored in the VCF file.
 ```{bash inspect-1kg-vcf, eval=FALSE}
 cd data
 ls -lh 1kg.vcf.gz
-zcat 1kg.vcf.gz | less -S # On Mac, use gzcat.
+zcat 1kg.vcf.gz | less -S
 ```
 
 + VCF reference: http://www.cog-genomics.org/plink2/formats#vcf
@@ -337,23 +400,6 @@ have compressed it).
     - https://vcftools.github.io 
     - https://samtools.github.io/hts-specs 
     - doi:10.1093/bioinformatics/btr330
-
-Install PLINK
-=============
-
-We download the stable version of PLINK to the `bin` folder.
-
-+ URL: http://www.cog-genomics.org/plink2
-
-On the RCC cluster, you can run these commands to download and test
-the 64-bit Linux binary for PLINK 1.9b5.2:
-
-```{bash get-plink, eval=FALSE}
-cd bin
-wget http://bit.ly/2nUxOQX -O plink.zip
-unzip plink.zip
-./plink --version
-```
 
 Convert VCF to PLINK
 ====================
@@ -525,13 +571,7 @@ merging.
 Outline of workshop
 ===================
 
-1. Initial setup.
-
-2. Download and prepare the genotype data.
-
-3. **Run PCA on the processed genotype data.**
-
-4. Visualize and interpret the PCA results.
+*Workshop outline goes here.*
 
 Run PCA on combined data set
 ============================
@@ -729,26 +769,6 @@ Outline of the PCA visualization:
 3. Add population labels to the PC plot.
 
 4. Add sample ids to the unlabeled study samples in the PC plot.
-
-Set up R environment for plotting with ggplot2
-==============================================
-
-If you are using the RCC cluster, make sure you can display graphics
-in your current R session, e.g.,
-
-```{r plot-cars}
-plot(cars$dist,cars$speed)
-```
-
-You should see a scatterplot. If not, you should start a fresh R
-session in a new midway2 connection (**ThinLinc is the most reliable
-approach**). As a reminder, you will need to run these commands:
-
-```{bash, eval=FALSE}
-pwd # Should be .../code
-module load R/3.4.3
-R
-```
 
 Set up R environment for plotting with ggplot2
 ==============================================
