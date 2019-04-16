@@ -819,4 +819,12 @@ Recap
 
 Some genetic data analysis techniques we used today:
 
-*Add items here.*
++ Using PLINK and basic shell commands to process and convert genotype
+  data.
+
++ Importing genotype data into R.
+
++ Running PCA on a genotype matrix in R.
+
++ Using ggplot2 to visualize and interpret the results of the PCA
+  analysis.
