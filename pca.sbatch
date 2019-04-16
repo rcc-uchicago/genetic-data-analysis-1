@@ -10,7 +10,7 @@
 # 
 
 #SBATCH --partition=broadwl
-#SBATCH --mem=16G
+#SBATCH --mem=18G
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
