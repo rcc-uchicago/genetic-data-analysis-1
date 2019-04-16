@@ -1,0 +1,14 @@
+to do
+=====
+
++ Get list of people who registered.
+
++ Email workshop participants.
+
++ Run final "make test".
+
++ Fill out outline slides.
+
++ Fill out "What's included" slide.
+
++ Delete this file.

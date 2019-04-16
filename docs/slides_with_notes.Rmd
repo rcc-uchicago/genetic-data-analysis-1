@@ -15,8 +15,8 @@ knitr::opts_chunk$set(comment = "#",collapse = TRUE,fig.align = "center",
 		              warning = FALSE)
 ```
 					  
-Aims of workshop
-================
+Workshop aims
+=============
 
 1. Work through the steps of a basic population structure analysis in
 human genetics, starting with the **"raw" source data**, and ending
@@ -28,8 +28,28 @@ computer files.
 
 3. Use command-line tools to manipulate genetic data.
 
-4. Learn through "live coding"---this includes learning from our
-mistakes!
+Workshop aims
+=============
+
++ This is a *hands-on workshop*---you will get the most out of this
+  workshop if you work through the exercises on your computer.
+
++ All the examples are intended to run on the RCC cluster.
+
++ You may try to run the examples on your laptop. *However, I cannot
+  guarantee all examples will work the same on your laptop. My
+  instructions will assume you are using midway2.*
+
+Software tools we will use today
+================================
+
+1. PLINK
+
+2. R
+
+3. Several R packages: data.table, rsvd, ggplot2 and cowplot.
+
+4. Basic shell commands such as "cp" and "less".
 
 Our research task
 =================
@@ -46,40 +66,17 @@ data set*. We use the publicly available 1000 Genomes data as a
 reference. 
 
 4. We will use the most common statistical technique---Principal
-Components Analysis (PCA)---to expose, or "infer", population
-structure from the genetic data.
-
-It is your choice
-=================
-
-You may...
-
-1. Walk through the examples on the RCC cluster.
-
-2. Walk through the examples on your laptop.
-
-3. Pair with your neighbour.
-
-4. Follow what I do on the projector.
-
-*I can't guarantee that all examples will work exactly the same on
-your laptop. My instructions assume you are using the RCC cluster*
-
-Software tools we will use today
-================================
-
-1. PLINK
-
-2. R
-
-3. R packages `data.table`, `rsvd` and `ggplot2`.
-
-4. Basic shell commands such as `less` and `wc`.
+Components Analysis (PCA)---to investigate population structure from
+the genetic data.
 
 Outline of workshop
 ===================
 
-*Workshop outline goes here.*
++ **Preliminaries**
+
++ Programming challenges:
+
+    + *Add programming challenges here.*
 
 Preliminaries
 =============
@@ -108,7 +105,11 @@ Preliminaries
 Outline of workshop
 ===================
 
-*Workshop outline goes here.*
++ **Preliminaries**
+
++ Programming challenges:
+
+    + *Add programming challenges here.*
 
 What's included in the workshop packet
 ======================================
