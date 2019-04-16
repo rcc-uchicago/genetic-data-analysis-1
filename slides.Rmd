@@ -652,8 +652,8 @@ Visualize and interpret PCA results
 Set up R for plotting
 =====================
 
-Run these lines of code to load the plotting packages and some
-functions I defined for creating the PCA plots.
+Load the plotting packages and some functions I defined for creating
+the PCA plots.
 
 ```{r load-ggplot-pkg}
 library(ggplot2)
@@ -679,14 +679,8 @@ p <- basic.pc.plot(pcs,x = "PC1",y = "PC2",
 print(p)
 ```
 
-+ You may want to adjust the `size` argument.
+You may want to adjust the "size" argument.
 
-+ To learn how ggplot2 is used to generate the plot, see
-the code in `geno.utils.R`.
-
-This plot shows that there is clear structure in the data. *But it is
-difficult to interpret this structure without additional
-information.*
 
 Create a PC plot with population labels (part 1)
 ================================================
