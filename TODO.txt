@@ -11,4 +11,10 @@ to do
 
 + Fill out "What's included" slide.
 
++ Incorporate unused.Rmd material into slides_with_notes.Rmd.
+
++ Re-organize files in "data" folder.
+
 + Delete this file.
+
++ Print out slides.
