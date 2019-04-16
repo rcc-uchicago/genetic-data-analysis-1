@@ -19,6 +19,14 @@ read.geno.raw <- function (geno.file) {
   return(geno)
 }
 
+# This is a basic PC plot---it shows the projection of the samples
+# onto 2 selected PCs.
+basic.pc.plot <- function (dat, x = "PC1", y = "PC2", size = 2)
+  ggplot(as.data.frame(dat),aes_string(x = x,y = y),
+         environment = environment()) +
+    geom_point(color = "royalblue",shape = 20,size = size,na.rm = TRUE) +
+    theme(axis.line = element_blank())
+
 # Add labels to the PC data. Here I assume the row names of "pcs" are
 # of the form X_Y, where X is the family id and Y is the individual
 # id, and there is an "id" column in the "labels" data.frame giving
@@ -35,14 +43,6 @@ add.poplabels <- function (pcs, labels) {
   pops   <- c(setdiff(pops,"none"),"none")
   return(transform(pcs,label = factor(label,pops)))
 }
-
-# This is a basic PC plot---it shows the projection of the samples
-# onto 2 selected PCs.
-basic.pc.plot <- function (dat, x = "PC1", y = "PC2", size = 2)
-  ggplot(as.data.frame(dat),aes_string(x = x,y = y),
-         environment = environment()) +
-    geom_point(color = "royalblue",shape = 20,size = size,na.rm = TRUE) +
-    theme(axis.line = element_blank())
 
 # This is a labeled PC plot---it shows the project of the samples onto
 # 2 selected PCs, and varies the color and shape of the points

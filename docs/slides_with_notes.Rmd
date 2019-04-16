@@ -292,7 +292,7 @@ getwd()
 Set up R for plotting
 =====================
 
-Make sure you can display graphics in your current R session, e.g.,
+Make sure you can display graphics in your current R session.
 
 ```{r plot-cars}
 library(ggplot2)
@@ -340,7 +340,7 @@ Outline of workshop
 Download and prepare the genotype data
 ======================================
 
-+ Aim: 
++ Aim: Prepare genotype data for PCA analysis in R.
 
 + Steps:
 
@@ -509,17 +509,20 @@ Outline of workshop
 Run PCA on genotype data
 ========================
 
-Outline of the PCA analysis:
++ Aim: Compute principal components (PCs) from genotype data, which we
+  will use to gain insight into the genetic data.
 
-1. Convert genotypes to a matrix.
++ Steps:
 
-2. Launch R.
+    1. Convert genotypes to a matrix.
 
-3. Import genotypes into R.
+    2. Launch R.
 
-4. Fill in missing genotypes.
+    3. Import genotypes into R.
 
-5. Compute PCs in R using the `rsvd` package.
+    4. Fill in missing genotypes.
+
+    5. Compute PCs using rsvd package, and save PCA results.
 
 Convert genotype data to a matrix
 =================================
@@ -642,13 +645,13 @@ not matter much.
 + Not everyone agrees on the best numeric encoding of genotypes for
 PCA.
 
-+ See file "pca.sbatch" for a demonstration of how to automate the
-PCA analysis using Slurm.
++ See file "pca.sbatch" for an example of automating the PCA analysis
+using Slurm.
 
 Outline of workshop
 ===================
 
-+ **Preliminaries**
++ Preliminaries
 
 + Programming challenges:
 
@@ -657,41 +660,31 @@ Outline of workshop
 Visualize and interpret PCA results
 ===================================
 
-*We have now finished all the computationally intensive aspects of our
-analysis.*
++ Aim: Create plots from the PCA results to gain insight
+  into the genetic data.
 
-+ Our final step is to create plots from the PCA results to gain insight
-into the genetic data.
++ Steps:
 
-Outline of the PCA visualization:
+    1. Set up R for plotting.
 
-1. Set up R environment for plotting with `ggplot2`.
+    2. Create a basic PC plot.
 
-2. Create a basic PC plot.
+Set up R for plotting
+=====================
 
-3. Add population labels to the PC plot.
+Run these lines of code to load the plotting packages and some
+functions I defined for creating the PCA plots.
 
-4. Add sample ids to the unlabeled study samples in the PC plot.
-
-Set up R environment for plotting with ggplot2
-==============================================
-
-If you are not using the RCC cluster, you may need to install the
-`ggplot2` package (I also recommend the `cowplot` package).
-
-```{r, load-ggplot2-pkg}
-# install.packages("gplot2")
-# install.packages("cowplot")
+```{r load-ggplot-pkg}
 library(ggplot2)
-library(cowplot) # Optional.
-getwd() # Should be .../code
-source("geno.utils.R")
+library(cowplot)
+source("functions.R")
 ```
 
-Load the PCA results in case you don't already have them loaded:
+Load the PCA results.
 
-```{r, load-pca-results}
-load("../output/1kg_origins_pca.RData")
+```{r load-pca-results}
+load("1kg_pca.RData")
 ```
 
 Create a basic PC plot
@@ -700,7 +693,7 @@ Create a basic PC plot
 Use function `basic.pc.plot` to plot all the samples projected onto
 the first 2 PCs:
 
-```{r, pc-plot-1}
+```{r pc-plot-1}
 p <- basic.pc.plot(pcs,x = "PC1",y = "PC2",
                    size = 2)
 print(p)
@@ -721,7 +714,7 @@ Create a PC plot with population labels (part 1)
 To create this plot, we first need to load the 1000 Genomes
 population labels stored in `omni_samples.20141118.panel`:
 
-```{r, load-pop-labels}
+```{r load-pop-labels}
 labels.1kg <-
 read.table("../data/omni_samples.20141118.panel",
            sep = " ",header = TRUE,as.is = "id")
@@ -729,7 +722,7 @@ read.table("../data/omni_samples.20141118.panel",
 
 This adds a "label" column to the `pcs` table:
 
-```{r, add-pop-labels}
+```{r add-pop-labels}
 pcs <- add.poplabels(pcs,labels.1kg)
 head(pcs)
 ```
