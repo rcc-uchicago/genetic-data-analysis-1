@@ -157,7 +157,7 @@ Using the Yubikeys
 
 + Prerequisites:
 
-    1. SSH client
+    1. SSH client (for Windows, please use **MobaXterm**)
 
     2. USB-A port
 
@@ -174,7 +174,7 @@ Using the Yubikeys
 
     4. When prompted for password, press lightly on metal disc.
 
-+ Notes:
++ Important notes:
 
     - Yubikeys do not work with ThinLinc.
 
@@ -219,24 +219,24 @@ Institute. *Downloading from the EBI may take a long time (10--20
 minutes), so if possible copy the previously downloaded files
 instead.*
 
++ Copying previously downloaded data:
+
+    ```{bash get-1kg-data, eval=FALSE}
+    cd $HOME/genetic-data-analysis-1
+    cp ~pcarbo/share/1kg.csv.gz .
+    ```
+
 + Downloading from EBI:
 
     + Short URL: http://bit.ly/2G7ZWYu
   
     + Download this file:
 
-      `ALL.chip.omni_broad_sanger_combined.
-       20140818.snps.genotypes.vcf.gz`
+        `ALL.chip.omni_broad_sanger_combined.
+         20140818.snps.genotypes.vcf.gz`
 
     + Make sure you move the file to same location as the other
       workshop materials.
-
-+ Copying previously downloaded files:
-
-    ```{bash get-1kg-data, eval=FALSE}
-    cd $HOME/genetic-data-analysis-1
-    cp ~pcarbo/share/1kg.csv.gz .
-    ```
 
 Connect to a midway2 compute node
 =================================
@@ -258,6 +258,7 @@ Launch R
 Start up an interactive R session:
 
 ```bash
+cd $HOME/genetic-data-analysis-1
 module load R/3.5.1
 which R
 R --no-save
@@ -310,7 +311,7 @@ Quit R
 
 We will quit R, and return to it later.
 
-```{R quit, eval=FALSE}
+```{r quit, eval=FALSE}
 quit()
 ```
 
@@ -635,7 +636,7 @@ cluster, you may need to install this package.
 
 ```{r load-data-table-pkg}
 library(data.table)
-source("geno.utils.R")
+source("functions.R")
 ```
 
 Load the genotype matrix into R: 
