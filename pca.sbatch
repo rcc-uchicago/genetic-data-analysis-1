@@ -22,6 +22,5 @@ module load R/3.5.1
 # Set the number of threads used for matrix operations.
 export OPENBLAS_NUM_THREADS=4
 
-# Run the R script. Progress is reported to file pca.Rout.
-R CMD BATCH --slave --no-save pca.R
-
+# Run the R script. Progress is reported to file pca.out.
+Rscript pca.R > pca.out

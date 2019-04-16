@@ -1,17 +1,15 @@
-# Script to reproduce the PCA analysis of the combined 1000 Genomes +
-# Human Origins data set. This script should be run from the "code"
-# folder. See "run PCA on combined data set" in the slides for more
-# information.
+# Script to reproduce the PCA analysis of 1000 Genomes data. This
+# script should be run from the "genetic-data-analysis-1" folder.
 
 # Load the data.table and rsvd R packages, and some functions I wrote
 # specifically for this analysis.
 suppressMessages(library(data.table))
 library(rsvd)
-source("geno.utils.R")
+source("functions.R")
 
 # Load the genotype matrix into R.
 cat("Loading genotype matrix.\n")
-geno <- read.geno.raw("../data/1kg_origins_recoded.raw")
+geno <- read.geno.raw("1kg_recoded.raw")
 
 # Fill in the missing genotypes.
 cat("Filling in missing genotypes.\n")
@@ -30,6 +28,6 @@ summary(out.pca)
 
 # Save PCA results.
 cat("Saving results to file.\n")
-save(file = "../output/1kg_origins_pca.RData",
+save(file = "../output/1kg_pca.RData",
      list = c("out.pca","pcs"))
 
