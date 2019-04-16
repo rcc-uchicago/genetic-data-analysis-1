@@ -11,7 +11,7 @@
 
 #SBATCH --partition=broadwl
 #SBATCH --mem=19G
-#SBATCH --cpus-per-task=4
+#SBATCH --cpus-per-task=8
 #SBATCH --time=00:15:00
 
 # For reproducibility, I add a version number to "module load" call.

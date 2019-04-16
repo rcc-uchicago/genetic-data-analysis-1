@@ -242,13 +242,13 @@ Connect to a midway2 compute node
 =================================
 
 Set up an interactive session on a midway2 compute node with 8 CPUs
-and 18 GB of memory:
+and 19 GB of memory:
 
 ```bash
 screen -S workshop
 sinteractive --partition=broadwl \
   --reservation=workshop --cpus-per-task=8 \
-  --mem=18G --time=3:00:00 
+  --mem=19G --time=3:00:00
 echo $HOSTNAME
 ```
 
@@ -478,7 +478,7 @@ disequibilirium, or LD) to make analysis better supported.
 
 ```{bash ld-prune-plink, eval=FALSE}
 ./plink --bfile 1kg_unrelated \
-  --indep-pairwise 1000 500 0.1
+  --indep-pairwise 1000 500 0.08
 ./plink --bfile 1kg_unrelated \
   --make-bed --extract plink.prune.in \
   --out 1kg_pruned
@@ -705,24 +705,31 @@ You may want to adjust the "size" argument.
 > the data. But it is difficult to interpret without more
 > information.
 
-Create a PC plot with population labels (part 1)
-================================================
+Create a PC plot with population labels
+=======================================
 
 To create this plot, we first need to load the 1000 Genomes
 population labels stored in `omni_samples.20141118.panel`:
 
 ```{r load-pop-labels}
-labels.1kg <-
-read.table("../data/omni_samples.20141118.panel",
-           sep = " ",header = TRUE,as.is = "id")
+labels <-
+  read.table("omni_samples.20141118.panel",
+             sep = " ",header = TRUE,as.is = "id")
 ```
 
-This adds a "label" column to the `pcs` table:
+Add a new column, "label", to the PCA results table:
 
 ```{r add-pop-labels}
-pcs <- add.poplabels(pcs,labels.1kg)
-head(pcs)
+pcs    <- as.data.frame(pcs)
+ids    <- sapply(strsplit(rownames(pcs),"_"),
+                 function (x) x[2])
+labels <- subset(labels,is.element(labels$id,ids))
+rows   <- match(ids,labels$id)
+pcs$label <- factor(labels$pop)
 ```
+
+Create a PC plot with population labels
+=======================================
 
 Create the PC plot with labels:
 
@@ -732,8 +739,8 @@ p2 <- labeled.pc.plot(pcs,x = "PC1",y = "PC2",
 print(p2)
 ```
 
-Add population labels to PC plot (part 2)
-=========================================
+Create a PC plot with population labels
+=======================================
 
 Several interesting insights can be drawn from this plot---*discuss.*
 
