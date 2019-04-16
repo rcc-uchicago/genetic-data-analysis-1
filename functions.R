@@ -24,7 +24,7 @@ read.geno.raw <- function (geno.file) {
 basic.pc.plot <- function (dat, x = "PC1", y = "PC2", size = 2)
   ggplot(as.data.frame(dat),aes_string(x = x,y = y),
          environment = environment()) +
-    geom_point(color = "royalblue",shape = 20,size = size,na.rm = TRUE) +
+    geom_point(color = "darkblue",shape = 20,size = size,na.rm = TRUE) +
     theme(axis.line = element_blank())
 
 # Add labels to the PC data. Here I assume the row names of "pcs" are
