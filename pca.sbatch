@@ -10,11 +10,9 @@
 # 
 
 #SBATCH --partition=broadwl
-#SBATCH --mem=18G
-#SBATCH --nodes=1
-#SBATCH --ntasks=1
+#SBATCH --mem=19G
 #SBATCH --cpus-per-task=4
-#SBATCH --time=00:10:00
+#SBATCH --time=00:15:00
 
 # For reproducibility, I add a version number to "module load" call.
 module load R/3.5.1

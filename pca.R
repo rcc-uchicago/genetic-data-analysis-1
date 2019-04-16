@@ -28,6 +28,4 @@ summary(out.pca)
 
 # Save PCA results.
 cat("Saving results to file.\n")
-save(file = "../output/1kg_pca.RData",
-     list = c("out.pca","pcs"))
-
+save(file = "1kg_pca.RData",list = c("out.pca","pcs"))
