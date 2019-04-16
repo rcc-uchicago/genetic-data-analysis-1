@@ -1,8 +1,3 @@
-# Colors and shapes used in the PC plots.
-colors <- c(rep(c("#E69F00","#56B4E9","#009E73","#F0E442","#0072B2",
-                  "#D55E00","#CC79A7"),length.out = 21),"black")
-shapes <- c(rep(c(19,17,8,1,3),length.out = 21),19)
-
 # Read an n x p genotype matrix from a .raw file, where n is the
 # number of samples and p is the number of genetic markers (SNPs). See
 # http://www.cog-genomics.org/plink2/formats#raw for more information
@@ -27,6 +22,23 @@ basic.pc.plot <- function (dat, x = "PC1", y = "PC2", size = 2)
     geom_point(color = "royalblue",shape = 20,size = size,na.rm = TRUE) +
     theme(axis.line = element_blank())
 
+# This is a labeled PC plot---it shows the project of the samples onto
+# 2 selected PCs, and varies the color and shape of the points
+# according to their labels (this should be a factor, i.e. a
+# categorical variable).
+labeled.pc.plot <- function (dat, x = "PC1", y = "PC2",
+                             label = "label", size = 2) {
+  colors <- rep(c("#E69F00","#56B4E9","#009E73","#F0E442","#0072B2",
+                  "#D55E00","#CC79A7"),length.out = 28)
+  shapes <- rep(c(19,17,8,3),length.out = 28)
+  return(ggplot(as.data.frame(dat),
+                aes_string(x = x,y = y,color = "label",shape = "label"),
+                environment = environment()) +
+         geom_point(size = size,na.rm = TRUE) +
+         scale_color_manual(values = colors) +
+         scale_shape_manual(values = shapes) +
+         theme(axis.line = element_blank()))
+
 # Add labels to the PC data. Here I assume the row names of "pcs" are
 # of the form X_Y, where X is the family id and Y is the individual
 # id, and there is an "id" column in the "labels" data.frame giving
@@ -43,20 +55,6 @@ add.poplabels <- function (pcs, labels) {
   pops   <- c(setdiff(pops,"none"),"none")
   return(transform(pcs,label = factor(label,pops)))
 }
-
-# This is a labeled PC plot---it shows the project of the samples onto
-# 2 selected PCs, and varies the color and shape of the points
-# according to their labels (this should be a factor, i.e. a
-# categorical variable).
-labeled.pc.plot <- function (dat, x = "PC1", y = "PC2", label = "label",
-                             size = 2)
-  ggplot(as.data.frame(dat),
-         aes_string(x = x,y = y,color = "label",shape = "label"),
-         environment = environment()) +
-    geom_point(size = size,na.rm = TRUE) +
-    scale_color_manual(values = colors) +
-    scale_shape_manual(values = shapes) +
-    theme(axis.line = element_blank())
 
 # This does the same thing as labeled.pc.plot, but also shows the ids
 # of the unlabeled samples.
