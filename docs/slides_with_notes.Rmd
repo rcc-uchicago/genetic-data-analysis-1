@@ -633,7 +633,6 @@ I wrote a function to rapidly load the genotype matrix using function
 cluster, you may need to install this package.
 
 ```{r load-data-table-pkg}
-# install.packages("data.table")
 library(data.table)
 source("geno.utils.R")
 ```
