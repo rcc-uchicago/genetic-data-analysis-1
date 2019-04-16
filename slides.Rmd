@@ -187,7 +187,7 @@ Once you have connected to a midway2 login node, download the workshop
 packet to your scratch directory on the cluster (**note:** there are no
 spaces in the URL below):
 
-```{bash download-packet}
+```{bash download-packet, eval=FALSE}
 cd $SCRATCH
 git clone https://github.com/rcc-uchicago/
   genetic-data-analysis-1.git
