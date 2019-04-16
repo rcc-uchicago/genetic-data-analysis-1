@@ -244,7 +244,7 @@ instead.*
 
     ```{bash get-1kg-data, eval=FALSE}
     cd $SCRATCH/genetic-data-analysis-1
-    cp ~pcarbo/share/1kg.csv.gz .
+    cp ~pcarbo/share/1kg.vcf.gz .
     ```
 
 + Downloading from EBI:
