@@ -184,11 +184,11 @@ Download workshop packet
 ========================
 
 Once you have connected to a midway2 login node, download the workshop
-packet to your home directory on the cluster (**note:** there are no
+packet to your scratch directory on the cluster (**note:** there are no
 spaces in the URL below):
 
 ```bash
-cd $HOME
+cd $SCRATCH
 git clone https://github.com/rcc-uchicago/
   genetic-data-analysis-1.git
 ```
@@ -205,7 +205,7 @@ On midway2, you can run these commands to download PLINK, and check
 the version:
 
 ```{bash get-plink, eval=FALSE}
-cd $HOME/genetic-data-analysis-1
+cd $SCRATCH/genetic-data-analysis-1
 wget https://bit.ly/2UgRH36 -O plink.zip
 unzip plink.zip
 ./plink --version
@@ -222,7 +222,7 @@ instead.*
 + Copying previously downloaded data:
 
     ```{bash get-1kg-data, eval=FALSE}
-    cd $HOME/genetic-data-analysis-1
+    cd $SCRATCH/genetic-data-analysis-1
     cp ~pcarbo/share/1kg.csv.gz .
     ```
 
@@ -258,7 +258,7 @@ Launch R
 Start up an interactive R session:
 
 ```bash
-cd $HOME/genetic-data-analysis-1
+cd $SCRATCH/genetic-data-analysis-1
 module load R/3.5.1
 which R
 R --no-save
@@ -342,56 +342,31 @@ Download and prepare the genotype data
 
 Outline of the data preparation steps:
 
-1. Download and inspect 1000 Genomes data.
+1. Examine VCF file.
 
-4. Convert VCF file to PLINK format.
+2. Convert VCF file to PLINK format.
 
-5. Remove related 1000 Genomes samples.
+3. Convert PLINK text file to binary format.
 
-6. Merge 1000 Genomes with study data (`origins.ped`).
+4. Remove related 1000 Genomes samples.
 
-7. Prune SNPs in LD.
+5. Prune SNPs in LD.
 
-The data we will use in our analyses
-====================================
-
-In the `data` folder:
-
-+ **1kg.vcf.gz:** downloaded genotype data from 1000 Genomes project,
-in VCF format.
-
-+ **20140625_related_individuals.txt:** list of 1000 Genomes samples
-previously identified as being closely related to other samples.
-
-+ **omni_samples.20141118.panel:** Population labels assigned to 1000
-Genomes samples.
-
-+ **1kg.pop**: Descriptions of 1000 Genomes population labels.
-
-+ **origins.ped:** 5 samples from our small study, in PLINK text
-format. (Actual source is the Affymetric Human Origins data set.)
-
-+ **affymetrix-human-origins.ind:** Information about samples from
-Affymetrix Human Origins data set.
-
-+ **1kg_origins_markers.txt:** A set of SNPs that can be used to merge
-reference and study genotypes.
-
-Explore the VCF file
+Examine the VCF file
 ====================
 
-Let's run some simple shell commands to inspect the genotype data
+Run a few simple shell commands to inspect the genotype data
 stored in the VCF file.
 
 ```{bash inspect-1kg-vcf, eval=FALSE}
-cd data
+cd $SCRATCH/genetic-data-analysis-1
 ls -lh 1kg.vcf.gz
 zcat 1kg.vcf.gz | less -S
 ```
 
-+ VCF reference: http://www.cog-genomics.org/plink2/formats#vcf
++ Reference: www.cog-genomics.org/plink2/formats#vcf
 
-VCF files: concepts
+What is a VCF file?
 ===================
 
 + The Variant Call Format (VCF) is a text format for storing many
@@ -400,38 +375,41 @@ for annotating these variants.
 
 + It is one of the most commonly used data formats in genetics.
 
-+ It is not an efficient way to store genotype data (this is why we
-have compressed it).
++ It is not an efficient way to store genotype data.
 
 + See also:
-    - https://vcftools.github.io 
-    - https://samtools.github.io/hts-specs 
+
+    - vcftools.github.io 
+    - samtools.github.io/hts-specs 
     - doi:10.1093/bioinformatics/btr330
 
 Convert VCF to PLINK
 ====================
 
 Run this command to convert the genotypes from VCF to the PLINK text
-format. This may take a few minutes to complete.
+format. This may take a few minutes.
 
 ```{bash vcf2plink, eval=FALSE}
-cd data
-../bin/plink --vcf 1kg.vcf.gz --recode \
+./plink --vcf 1kg.vcf.gz --recode \
   --chr 1-22 --allow-extra-chr \
   --geno 0.01 --out 1kg
 ```
 
-+ Command details:
-    - Creates two new files: `1kg.map` and `1kg.ped`.
-    - We retain only SNPs on (autosomal) chromosomes 1--22.
-    - We remove any SNPs with >1% missing genotypes.
-    - These steps are taken to simplify the analyses.
+**Note:** This step will require about 18 GB of free space.
+
+> Instructor notes:
+>
+>  + Creates two new files, 1kg.map and 1kg.ped.
+>  + Retain only SNPs on (autosomal) chromosomes 1--22.
+>  + Removes SNPs with >1% missing genotypes.
+>  + These are steps are taken to simplify the analyses.
+>
 
 Explore PLINK files
 ===================
 
-Let's run some simple shell commands to inspect the 1000 Genomes
-genotype data stored in the PLINK files.
+Run a few simple shell commands to inspect the genotype data stored in
+the PLINK files.
 
 ```{bash inspect-1kg-plink, eval=FALSE}
 head 1kg.map
@@ -441,94 +419,52 @@ less -S 1kg.ped
 wc -l -w 1kg.ped
 ```
 
-Next, use these same commands to inspect the AffyMetrix Human Origins
-data stored in `origins.map` and `origins.ped` (they are already
-included in the git repository).
-
-+ Columns in `.map` file: (1) chromosome; (2) marker id; (3)
-genetic distance on chromosome, in cM; (4) base-pair position on
-chromosome.
-  
-+ Columns in `.ped` file: (1) family id, (2) individual id, (3) father
-id, (4) mother id, (5) gender, (6) phenotype measurement, (7---) SNP
-genotypes.
+> Instructor notes:
+>
+> Columns in .map file: (1) chromosome; (2) marker id; (3) genetic
+> distance on chromosome, in cM; (4) base-pair position on chromosome.
+>
+> Columns in .ped file: (1) family id, (2) individual id, (3) father
+> id, (4) mother id, (5) gender, (6) phenotype measurement, (7---) SNP
+> genotypes.
+>
 
 PLINK files: concepts
 =====================
 
-+ The most commonly used format for storing human genoytpe data.
++ Probably most commonly used format for storing human genoytpe data.
 
 + Less flexible than VCF.
 
-+ The PLINK text format is easy to view and manipulate with simple
-shell commands (e.g., `wc`, `grep`, `cat`, `cut`, `paste`).
++ Easy to view and manipulate with simple shell commands (e.g., wc,
+  grep, cat, cut, paste).
 
-+ For long-term storage, use PLINK binary (`.bed`) format. It is much
-more efficient, but is not human readable.
++ For long-term storage, use PLINK binary (.bed) format. It is 
+  more efficient, but not human readable.
 
-+ See: http://www.cog-genomics.org/plink/1.9/formats#ped
++ See: www.cog-genomics.org/plink/1.9/formats#ped
 
-Prepare the 1000 Genomes data
-=============================
+Convert to binary format, remove related samples
+================================================
 
 To speed up the data processing steps, we convert to binary PLINK
-format, then we remove related samples (which standard population
-structure analyses are not designed to handle).
+format (and remove the very large .ped file).
 
-1. Convert to PLINK binary format:
-```
-cd data
-../bin/plink --file 1kg --make-bed --out 1kg
+```{bash ped2ped, eval=FALSE}
+./plink --file 1kg --make-bed --out 1kg
+rm 1kg.map 1kg.ped
 ```
 
-2. Inspect the 3 new files: `1kg.bed`, `1kg.bim`, `1kg.fam`.
+Remove 29 of 31 related samples (because most population structure
+analyses are not designed to handle related samples):
 
-3. Remove 29 of 31 related samples:
-```
+```{bash remove-related-samples, eval=FALSE}
 cut -f 1 20140625_related_individuals.txt \
   > temp.txt
 paste temp.txt temp.txt > samples.txt
-../bin/plink --bfile 1kg --make-bed \
-   --remove samples.txt --out 1kg_unrelated
+./plink --bfile 1kg --make-bed \
+  --remove samples.txt --out 1kg_unrelated
 ```
-
-Merge with Affymetrix Human Origins data (part 1)
-=================================================
-
-In order to merge the data sets, we need to identify a set of SNPs
-that is common to both data sets (see below for details), and
-extract the genotypes for the common SNPs only.
-
-1. Extract common SNPs from 1000 Genomes data:
-
-```
-cd data
-../bin/plink --bfile 1kg_unrelated \
-  --extract 1kg_origins_markers.txt \
-  --make-bed --out 1kg_common
-```
-
-2. Extract common SNPs from Human Origins data:
-```
-../bin/plink --file origins \
-  --extract 1kg_origins_markers.txt \
-  --make-bed --out origins_common
-```
-
-Merge with Affymetrix Human Origins data (part 2)
-=================================================
-
-3. Merge the two data sets:
-```
-../bin/plink --bfile 1kg_common \
-  --bmerge origins_common \
-  --out 1kg_origins_combined
-```
-
-*Optional exercise:* It is good practice to double-check the output
-after each processing step. Use the `cut` and `diff` commands to
-compare the SNPs in `1kg_common` and `origins_common` and check that
-the SNPs are in the same order.
 
 Prune SNPs in LD
 ================
@@ -539,49 +475,37 @@ strongly correlated with each other (*i.e.*, in linkage
 disequibilirium, or LD) to make analysis better supported.
 
 ```{bash ld-prune-plink, eval=FALSE}
-cd data
-../bin/plink --bfile 1kg_origins_combined \
-  --indep-pairwise 1000 500 0.8
-../bin/plink --bfile 1kg_origins_combined \
+./plink --bfile 1kg_unrelated \
+  --indep-pairwise 1000 500 0.1
+./plink --bfile 1kg_unrelated \
   --make-bed --extract plink.prune.in \
-  --out 1kg_origins_pruned
+  --out 1kg_pruned
 ```
-
-Typically you will want to be more aggressive in pruning SNPs in LD
-(a LD threshold smaller than 0.8).
 
 Data preparation: take-home points
 ==================================
 
-+ VCFtools and PLINK have many commands for manipulating genotype data.
++ VCFtools and PLINK have *many* commands for manipulating genotype data.
 
-+ For more specialized edits, you can go far with basic shell
-commands (e.g., `awk`, `cut`, `head`, `cat`, `paste`).
++ For more specialized manipulations, you can go far with basic shell
+  commands (e.g., awk, cut, head, cat, paste).
 
 + Often the majority of the effort goes toward data processing.
-Careless data processing---or no data processing!---can lead to a poor
-quality analysis.
+  Careless data processing can lead to a poor quality analysis.
 
-+ It is very common to introduce errors when merging multiple data
-sets. Errors can be due to different genome assemblies, different
-allele encodings, different genotyping error rates, *etc.*
-
-+ The PLINK "merge" command will correct some of these errors, but not all
-of them.
-
-+ I was conservative in selecting SNP common to both data sets to
-avoid introducing errors. As a result, we lost a lot of data after
-merging.
-
-+ *Important:* Record all your data processing steps.
++ It is important to record all your data processing steps.
 
 Outline of workshop
 ===================
 
-*Workshop outline goes here.*
++ Preliminaries
 
-Run PCA on combined data set
-============================
++ Programming challenges:
+
+    + *Add programming challenges here.*
+
+Run PCA on genotype data
+========================
 
 Outline of the PCA analysis:
 

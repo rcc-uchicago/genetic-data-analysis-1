@@ -1,0 +1,56 @@
+Next, use these same commands to inspect the AffyMetrix Human Origins
+data stored in `origins.map` and `origins.ped` (they are already
+included in the git repository).
+
+Merge with Affymetrix Human Origins data (part 1)
+=================================================
+
+In order to merge the data sets, we need to identify a set of SNPs
+that is common to both data sets (see below for details), and
+extract the genotypes for the common SNPs only.
+
+1. Extract common SNPs from 1000 Genomes data:
+
+```
+cd data
+../bin/plink --bfile 1kg_unrelated \
+  --extract 1kg_origins_markers.txt \
+  --make-bed --out 1kg_common
+```
+
+2. Extract common SNPs from Human Origins data:
+```
+../bin/plink --file origins \
+  --extract 1kg_origins_markers.txt \
+  --make-bed --out origins_common
+```
+
+Merge with Affymetrix Human Origins data (part 2)
+=================================================
+
+3. Merge the two data sets:
+```
+../bin/plink --bfile 1kg_common \
+  --bmerge origins_common \
+  --out 1kg_origins_combined
+```
+
+*Optional exercise:* It is good practice to double-check the output
+after each processing step. Use the `cut` and `diff` commands to
+compare the SNPs in `1kg_common` and `origins_common` and check that
+the SNPs are in the same order.
+
+Data preparation: take-home points
+==================================
+
++ It is very common to introduce errors when merging multiple data
+  sets. Errors can be due to different genome assemblies, different
+  allele encodings, different genotyping error rates, *etc.*
+
++ The PLINK "merge" command will correct some of these errors, but not all
+  of them.
+
++ I was conservative in selecting SNP common to both data sets to
+  avoid introducing errors. As a result, we lost a lot of data after
+  merging.
+
