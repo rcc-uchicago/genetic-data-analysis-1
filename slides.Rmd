@@ -335,8 +335,8 @@ Outline of workshop
 
     + *Add programming challenges here.*
 
-Download and prepare the genotype data
-======================================
+Challenge #2: Download & prepare genotype data
+==============================================
 
 + Aim: Prepare genotype data for PCA analysis in R.
 
@@ -488,8 +488,8 @@ Outline of workshop
 
     + *Add programming challenges here.*
 
-Run PCA on genotype data
-========================
+Challenge #3: Run PCA on genotype data
+======================================
 
 + Aim: Compute principal components (PCs) from genotype data, which we
   will use to gain insight into the genetic data.
@@ -637,8 +637,8 @@ Outline of workshop
 
     + *Add programming challenges here.*
 
-Visualize and interpret PCA results
-===================================
+Challenge #4: Visualize and interpret PCA results
+=================================================
 
 + Aim: Create plots from the PCA results to gain insight
   into the genetic data.
