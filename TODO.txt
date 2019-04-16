@@ -1,13 +1,13 @@
 to do
 =====
 
-+ Update pca.R and pca.sbatch.
-
 + Run final "make test".
 
 + Fill out outline slides.
 
 + Fill out "What's included" slide.
+
++ Fill out "Recap" slide.
 
 + Incorporate unused.Rmd material into slides_with_notes.Rmd.
 

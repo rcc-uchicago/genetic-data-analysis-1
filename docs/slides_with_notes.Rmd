@@ -187,7 +187,7 @@ Once you have connected to a midway2 login node, download the workshop
 packet to your scratch directory on the cluster (**note:** there are no
 spaces in the URL below):
 
-```bash
+```{bash download-packet}
 cd $SCRATCH
 git clone https://github.com/rcc-uchicago/
   genetic-data-analysis-1.git
@@ -244,7 +244,7 @@ Connect to a midway2 compute node
 Set up an interactive session on a midway2 compute node with 8 CPUs
 and 19 GB of memory:
 
-```bash
+```{bash connect-midway2}
 screen -S workshop
 sinteractive --partition=broadwl \
   --reservation=workshop --cpus-per-task=8 \
@@ -257,7 +257,7 @@ Launch R
 
 Start up an interactive R session:
 
-```bash
+```{bash start-R}
 cd $SCRATCH/genetic-data-analysis-1
 module load R/3.5.1
 which R
@@ -540,7 +540,7 @@ Launch R
 
 Start up an interactive R session:
 
-```{bash load-R, eval=FALSE}
+```{bash start-R-2, eval=FALSE}
 R --no-save
 ```
 
@@ -739,82 +739,46 @@ p2 <- labeled.pc.plot(pcs,x = "PC1",y = "PC2",
 print(p2)
 ```
 
-Create a PC plot with population labels
-=======================================
-
-Several interesting insights can be drawn from this plot---*discuss.*
-
-+ How would you explain in a concise, non-technical way the main
-demographic patterns captured by PCs 1 and 2?
-
-+ How well do these results agree with Supp. Fig. 4 of the 1000
-Genomes paper (`doi:10.1038/nature11632`)?
-
-+ See `1kg.pop` in the `data` folder to help with interpreting these
-results.
-
-In some parts of the plot, the samples are clustered closely together.
-To gain additional insight, it is helpful to zoom on the denser parts.
-This is easily done with ggplot2, e.g.,
-
-```{r pc-plot-2b}
-p2 + xlim(c(-30,10)) + ylim(c(10,50))
-```
-
-*Optional exercise:* Investigate demographic patterns exposed by PCs 3
-and 4.
-
-Add sample ids to unlabeled samples in PC plot
-==============================================
-
-To interpret the PCA results for the 5 study samples, we add sample
-ids to the 5 points in the PC plot:
-
-```{r pc-plot-3}
-p3 <-
-labeled.pc.plot.with.ids(pcs,x = "PC1",y = "PC2",
-                         label = "label",size = 2)
-print(p3)
-```
-
-+ Compare this PC projection for these 5 samples results against the
-sample information provided the Human Origins data file
-`affymetrix-human-origins.ind`. Are these results expected or
-surprising based on the provided population labels?
+> Instructor notes: Discuss insights drawn from this plot.
+> 
+> + See file 1kg.pop to help interpret these results.
+>
+> + How would you explain in a concise, non-technical way the main
+>   demographic patterns captured by PCs 1 and 2?
+> 
+> + How well do these results agree with Supp. Fig. 4 of the 1000
+>   Genomes paper (`doi:10.1038/nature11632`)?
+> 
+> + To gain additional insight, it might be helpful to zoom on the
+>   denser parts.
+>
+> + Optional exercise: Investigate demographic patterns exposed by
+>   PCs 3 and 4.
+>
 
 Save the PC plot
 ================
 
-That was our final PC plot. Let's save our work as a PDF file using
-the `ggsave` function from the `ggplot2` package:
+Save your work as a PDF file using the "ggsave" from the ggplot2
+package:
 
-```{r save-pc-plot-3}
-ggsave("../output/1kg_origins_pcs1+2.pdf",p3)
+```{r save-pc-plot}
+ggsave("1kg_pca.pdf",p2)
 ```
 
 Visualizing and interpreting PCA results: take-home points
 ==========================================================
 
-+ PCA is the most common approach to infer population structure from
-genotype data.
++ PCA is the most commonly used approach to infer population structure
+  from genotype data.
 
 + One reason PCA is so popular is that it can produce evocative
-visualizations of populations structure (see doi:10.1038/nature07566
-for a particularly famous example produced by University of Chicago
-researchers).
+  visualizations of populations structure.
 
-+ However, there are many well-known pitfalls in interpreting the
-results of a PCA analysis applied to genetic data---8proceed with
-caution*!
++ However, there are many pitfalls in interpreting PCA
+  results---proceed with caution!
 
 Recap
 =====
 
-+ An effective analysis of genetic data requires a variety of
-programmings skills.
-
-+ We did not work with sequencing data in this workshop---genotype
-data from DNA sequence assays introduces many more complications!
-
-+ Please email me (`pcarbo@uchicago.edu`) with questions, or for
-advice on analyzing your genetic data.
+*Fill out recap here.*

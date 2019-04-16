@@ -54,3 +54,22 @@ Data preparation: take-home points
   avoid introducing errors. As a result, we lost a lot of data after
   merging.
 
+
+Add sample ids to unlabeled samples in PC plot
+==============================================
+
+To interpret the PCA results for the 5 study samples, we add sample
+ids to the 5 points in the PC plot:
+
+```{r pc-plot-3}
+p3 <-
+labeled.pc.plot.with.ids(pcs,x = "PC1",y = "PC2",
+                         label = "label",size = 2)
+print(p3)
+```
+
++ Compare this PC projection for these 5 samples results against the
+sample information provided the Human Origins data file
+`affymetrix-human-origins.ind`. Are these results expected or
+surprising based on the provided population labels?
+
