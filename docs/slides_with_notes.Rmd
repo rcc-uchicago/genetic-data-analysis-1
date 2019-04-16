@@ -340,17 +340,19 @@ Outline of workshop
 Download and prepare the genotype data
 ======================================
 
-Outline of the data preparation steps:
++ Aim: 
 
-1. Examine VCF file.
++ Steps:
 
-2. Convert VCF file to PLINK format.
+    1. Examine VCF file.
 
-3. Convert PLINK text file to binary format.
+    2. Convert VCF file to PLINK format.
 
-4. Remove related 1000 Genomes samples.
+    3. Convert PLINK text file to binary format.
 
-5. Prune SNPs in LD.
+    4. Remove related 1000 Genomes samples.
+
+    5. Prune SNPs in LD.
 
 Examine the VCF file
 ====================
@@ -553,7 +555,7 @@ source("functions.R")
 Load the genotype matrix into R: 
 
 ```{r load-geno}
-geno <- cread.geno.raw("1kg_recoded.raw")
+geno <- read.geno.raw("1kg_recoded.raw")
 ```
 
 Examine genotypes
@@ -646,13 +648,11 @@ PCA analysis using Slurm.
 Outline of workshop
 ===================
 
-1. Initial setup.
++ **Preliminaries**
 
-2. Download and prepare the genotype data.
++ Programming challenges:
 
-3. Run PCA on the processed genotype data.
-
-4. **Visualize and interpret the PCA results.**
+    + *Add programming challenges here.*
 
 Visualize and interpret PCA results
 ===================================
