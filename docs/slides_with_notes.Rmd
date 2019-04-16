@@ -703,6 +703,8 @@ Challenge #4: Visualize and interpret PCA results
 
     2. Create a basic PC plot.
 
+    3. Create a PC plot with population labels.
+
 Set up R for plotting
 =====================
 
@@ -715,7 +717,7 @@ library(cowplot)
 source("functions.R")
 ```
 
-Load the PCA results.
+If necessary, load the PCA results.
 
 ```{r load-pca-results}
 load("1kg_pca.RData")
@@ -790,8 +792,8 @@ print(p2)
 >   PCs 3 and 4.
 >
 
-Save the PC plot
-================
+Save the labeled PC plot
+========================
 
 Save your work as a PDF file using the "ggsave" from the ggplot2
 package:
@@ -815,4 +817,6 @@ Visualizing and interpreting PCA results: take-home points
 Recap
 =====
 
-*Fill out recap here.*
+Some genetic data analysis techniques we used today:
+
+*Add items here.*

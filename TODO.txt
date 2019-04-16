@@ -3,10 +3,6 @@ to do
 
 + Run final "make test".
 
-+ Fill out outline slides.
-
-+ Fill out "What's included" slide.
-
 + Fill out "Recap" slide.
 
 + Delete this file.
