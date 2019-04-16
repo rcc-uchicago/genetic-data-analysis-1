@@ -244,7 +244,7 @@ Connect to a midway2 compute node
 Set up an interactive session on a midway2 compute node with 8 CPUs
 and 19 GB of memory:
 
-```{bash connect-midway2}
+```{bash connect-midway2, eval=FALSE}
 screen -S workshop
 sinteractive --partition=broadwl \
   --reservation=workshop --cpus-per-task=8 \
@@ -257,7 +257,7 @@ Launch R
 
 Start up an interactive R session:
 
-```{bash start-R}
+```{bash start-R, eval=FALSE}
 cd $SCRATCH/genetic-data-analysis-1
 module load R/3.5.1
 which R
