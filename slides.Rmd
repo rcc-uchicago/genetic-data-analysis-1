@@ -491,11 +491,11 @@ Run PCA on genotype data
 
 Outline of the PCA analysis:
 
-1. Convert genotype data to a numeric representation (a matrix).
+1. Convert genotypes to a matrix.
 
-2. Start up interactive R environment.
+2. Launch R.
 
-3. Load genotype matrix into R.
+3. Import genotypes into R.
 
 4. Fill in missing genotypes.
 
@@ -504,46 +504,28 @@ Outline of the PCA analysis:
 Convert genotype data to a matrix
 =================================
 
-The input to PCA must be an $n \times p$ matrix, where $n$ is the
+The input to PCA should be an $n \times p$ matrix, where $n$ is the
 number of samples and $p$ is the number of SNPs.
 
 ```{bash plink2matrix, eval=FALSE}
-cd data
-../bin/plink --bfile 1kg_origins_pruned \
-  --recode A --out 1kg_origins_recoded
+./plink --bfile 1kg_pruned \
+  --recode A --out 1kg_recoded
 ```
 
-This command creates a new file, `1kg_origins_recoded.raw`.
+Launch R
+========
 
-Start up interactive R environment
-==================================
-
-Move to the `code` folder, and start up R. On the RCC cluster, run
-these commands:
+Start up an interactive R session:
 
 ```{bash load-R, eval=FALSE}
-pwd # Should be .../code
-module load R/3.4.3
-R
+R --no-save
 ```
 
-*Note:* If you are not using the RCC cluster, make sure you have a
-recent version of R installed on your laptop, preferrably 3.4.0 or
-greater. You can check which version you have by typing
-`version$version.string` in R.
+Import genotypes into R
+=======================
 
-Load genotype matrix into R (part 1)
-====================================
-
-Before continuing, check your working directory:
-
-```{r getwd}
-getwd() # Should be .../code
-```
-
-I wrote a function to rapidly load the genotype matrix using function
-`fread` from the `data.table` package. If you are not using the RCC
-cluster, you may need to install this package.
+I implemented a function to import the genotypes into a matrix. It
+uses `fread` from the `data.table` package.
 
 ```{r load-data-table-pkg}
 library(data.table)
@@ -553,32 +535,32 @@ source("functions.R")
 Load the genotype matrix into R: 
 
 ```{r load-geno}
-geno <-
-read.geno.raw("../data/1kg_origins_recoded.raw")
+geno <- cread.geno.raw("1kg_recoded.raw")
 ```
 
-Load genotype matrix into R (part 2)
-====================================
+Examine genotypes
+=================
 
-Run a few commands to inspect the genoytpe data, e.g.:
+Run a few commands to examine the genotype matrix:
 
-```{r inspect-geno}
+```{r examine-geno}
 class(geno)
-dim(geno)
-geno[1:5,1:5]
+nrow(geno)
+ncol(geno)
+geno[1:4,1:4]
 ```
 
 Fill in missing genotypes
 =========================
 
-*A problem:* <1% of the genotypes are missing:
+*Problem:* A small fraction (<1%) of the genotypes are missing:
 
 ```{r missing-genotypes}
 mean(is.na(geno))
 ```
 
-We need to fill in these missing genotypes. In this case, a reasonable
-choice is the mean genotype:
+For PCA, we need to fill in these missing genotypes. In this case, a
+reasonable choice is the mean genotype:
 
 ```{r fill-missing-genotypes}
 p <- ncol(geno)
@@ -588,59 +570,49 @@ for (j in 1:p) {
 }
 ```
 
-Check that there are no missing genotypes:
+Double-dheck that there are no missing genotypes:
 
 ```{r check-missing-genotypes}
 sum(is.na(geno))
 ```
 
-Note that the genotypes are now not always 0, 1 or 2! e.g.,
-`geno[1200,1]`. How to interpret these "fractional" genotypes?
 
-Compute PCs using rsvd package (part 1)
-=======================================
+Compute PCs
+===========
 
-If you are not using the RCC cluster, you may need to install the rsvd
-package.
-
-```{r load-rsvdpkg}
-# install.packages("rsvd")
-library(rsvd)
-```
-
-Use the `rpca` function to compute the first 10 PCs---that is, the 10
-components that explain the most variation in the genotypes:
+Use the "rpca" function from the rsvd package to compute the first 10
+PCs---that is, the 10 components that explain the most variation in
+the genotypes:
 
 ```{r run-rpca}
+library(rsvd)
 out.pca <- rpca(geno,k = 10,center = TRUE,
                 scale = FALSE,retx = TRUE)
 ```
 
-Compute PCs using rsvd package (part 2)
-=======================================
+Compute PCs
+===========
 
-Let's take a quick look at the PCA results:
+Take a quick look at the PCA results:
 
 ```{r inspect-pca}
 summary(out.pca)
-pcs <- out.pca$x
+pcs           <- out.pca$x
 colnames(pcs) <- paste0("PC",1:10)
 head(pcs)
 ```
 
-Assuming we didn't encounter problems in any of these steps, let's
-save the results of our analysis to the `output` folder.
+Save the PCA results analysis:
 
 ```{r save-pca}
-save(file = "../output/1kg_origins_pca.RData",
+save(file = "1kg_pca.RData",
      list = c("out.pca","pcs"))
 ```
 
 PCA analysis: take-home points
 ==============================
 
-+ PCA requires a matrix (with no missing values), so the genotypes
-need to be encoded as numeric values.
++ The input to PCA must be a (numeric) matrix with no missing values.
 
 + Other software deals more elegantly with missing data. Here it does
 not matter much.
@@ -648,9 +620,8 @@ not matter much.
 + Not everyone agrees on the best numeric encoding of genotypes for
 PCA.
 
-+ *Optional:* See file `pca.sbatch` in the `code` folder for an
-illustration of how to automate the steps of the this analysis on the
-RCC cluster using the SLURM job engine.
++ See file "pca.sbatch" for a demonstration of how to automate the
+PCA analysis using Slurm.
 
 Outline of workshop
 ===================

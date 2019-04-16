@@ -1,6 +1,8 @@
 to do
 =====
 
++ Update pca.R and pca.sbatch.
+
 + Run final "make test".
 
 + Fill out outline slides.

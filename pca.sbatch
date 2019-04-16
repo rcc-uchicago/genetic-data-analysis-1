@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# This bash script illustrates how to automate the PCA steps on the
-# RCC cluster (specifically, the "Broadwell" partition) using the
-# SLURM job engine. Here we use multithreaded computation on 4 CPUs to
-# speed up the computation of the principal components (PCs). Run this
-# script with the following command:
+# This bash script illustrates how to automate the PCA steps on
+# midway2 (specifically, the "Broadwell" partition) using
+# Slurm. Multithreaded computation on 4 CPUs is used here to speed up
+# the computation of the principal components (PCs). Run this script
+# with the following command:
 #
 #   sbatch pca.sbatch
 # 
@@ -16,14 +16,8 @@
 #SBATCH --cpus-per-task=4
 #SBATCH --time=00:10:00
 
-# Get the phenotype specified as a command-line argument.
-PHENOTYPE=${1}
-
-# Specify the number of threads to use for the mclapply call.
-NC=1
-
-# For reproducibility, add version number to "module load" call.
-module load R/3.4.3
+# For reproducibility, I add a version number to "module load" call.
+module load R/3.5.1
 
 # Set the number of threads used for matrix operations.
 export OPENBLAS_NUM_THREADS=4
