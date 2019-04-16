@@ -72,7 +72,7 @@ the genetic data.
 Outline of workshop
 ===================
 
-+ Preliminaries
++ **Preliminaries**
 
 + Programming challenges:
 
@@ -105,7 +105,11 @@ Preliminaries
 Outline of workshop
 ===================
 
-*Workshop outline goes here.*
++ **Preliminaries**
+
++ Programming challenges:
+
+    + *Add programming challenges here.*
 
 What's included in the workshop packet
 ======================================
