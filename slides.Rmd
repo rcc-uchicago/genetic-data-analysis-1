@@ -105,7 +105,7 @@ Preliminaries
 Outline of workshop
 ===================
 
-+ **Preliminaries**
++ Preliminaries
 
 + Programming challenges:
 
@@ -258,6 +258,7 @@ Launch R
 Start up an interactive R session:
 
 ```bash
+cd $HOME/genetic-data-analysis-1
 module load R/3.5.1
 which R
 R --no-save
@@ -293,6 +294,7 @@ Make sure you can display graphics in your current R session, e.g.,
 
 ```{r plot-cars}
 library(ggplot2)
+library(cowplot)
 data(cars)
 quickplot(cars$dist,cars$speed)
 ```
@@ -301,21 +303,21 @@ You should see a scatterplot. If not, your connection is not set up to
 display graphics. An alternative is to save the plot to a file, and
 download the file to your computer using sftp or SAMBA:
 
-+ See: rcc.uchicago.edu/docs/data-transfer
++ rcc.uchicago.edu/docs/data-transfer
 
 Quit R
 ======
 
 We will quit R, and return to it later.
 
-```{R quit, eval=FALSE}
+```{r quit, eval=FALSE}
 quit()
 ```
 
 Open another connection to midway2
 ==================================
 
-+ Optionally, open a new SSH connection, following the same steps as
++ *Optionally,* open a new SSH connection, following the same steps as
   before (see the "Connect to midway2" slide).
 
 + This second connection can be used to monitor your computations on
@@ -327,7 +329,11 @@ ready to move on to the next programming challenge.*
 Outline of workshop
 ===================
 
-*Workshop outline goes here.*
++ Preliminaries
+
++ Programming challenges:
+
+    + *Add programming challenges here.*
 
 Download and prepare the genotype data
 ======================================
@@ -633,7 +639,7 @@ cluster, you may need to install this package.
 
 ```{r load-data-table-pkg}
 library(data.table)
-source("geno.utils.R")
+source("functions.R")
 ```
 
 Load the genotype matrix into R: 
