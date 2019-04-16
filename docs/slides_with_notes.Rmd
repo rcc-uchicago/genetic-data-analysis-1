@@ -57,15 +57,11 @@ Our research task
 We will simulate a population structure analysis commonly done in
 human genetics studies.
 
-1. We have collected 5 genotype samples as part of our study.
+1. We have collected genotype samples as part of our study.
 
-2. We would like to uncover population structure in this small sample.
+2. We would like to uncover population structure in this sample.
 
-3. To do so, we infer population structure *relative to a "reference"
-data set*. We use the publicly available 1000 Genomes data as a
-reference. 
-
-4. We will use the most common statistical technique---Principal
+3. We will use the most common statistical technique---Principal
 Components Analysis (PCA)---to investigate population structure from
 the genetic data.
 
@@ -76,7 +72,13 @@ Outline of workshop
 
 + Programming challenges:
 
-    + *Add programming challenges here.*
+    1. Setting up your environment for genetic data analysis.
+
+    2. Downloading and preparing genotype data for PCA.
+
+    3. Run PCA on genotype data.
+
+    4. Visualize and interpret PCA results.
 
 Preliminaries
 =============
@@ -102,6 +104,24 @@ Preliminaries
 
 + Download the workshop packet to your computer.
 
+What's included in the workshop packet
+======================================
+
++ **slides.pdf:** These slides.
+
++ **slides.Rmd:** R Markdown source used to create these slides.
+
++ **pca.R**, **pca.sbatch**: Example R and Slurm script implementing the
+PCA analysis.
+
++ **functions.R**: Some R functions used to run PCA and plot the results.
+
++ **omni_samples.20141118.panel**: 1000 Genomes population labels.
+
++ **1kg.pop**: description of population labels.
+
++ **20140625_related_individuals.txt**: 31 closely related samples.
+
 Outline of workshop
 ===================
 
@@ -109,12 +129,13 @@ Outline of workshop
 
 + Programming challenges:
 
-    + *Add programming challenges here.*
+    1. **Setting up your environment for genetic data analysis.**
 
-What's included in the workshop packet
-======================================
+    2. Downloading and preparing genotype data for PCA.
 
-*Give overview of contents here.*
+    3. Run PCA on genotype data.
+
+    4. Visualize and interpret PCA results.
 
 Challenge #1: Setting up your HPC environment
 =============================================
@@ -138,7 +159,7 @@ Challenge #1: Setting up your HPC environment
 
     7. Set up R for plotting.
 
-    8. Open another midway2 connection (optional).
+    8. Open another midway2 connection (*optional*).
 
 Connect to midway2
 ==================
@@ -235,7 +256,7 @@ instead.*
         `ALL.chip.omni_broad_sanger_combined.
          20140818.snps.genotypes.vcf.gz`
 
-    + Make sure you move the file to same location as the other
+    + Make sure you put the file in same location as the other
       workshop materials.
 
 Connect to a midway2 compute node
@@ -335,7 +356,13 @@ Outline of workshop
 
 + Programming challenges:
 
-    + *Add programming challenges here.*
+    1. Setting up your environment for genetic data analysis.
+
+    2. **Downloading and preparing genotype data for PCA.**
+
+    3. Run PCA on genotype data.
+
+    4. Visualize and interpret PCA results.
 
 Challenge #2: Download & prepare genotype data
 ==============================================
@@ -504,7 +531,13 @@ Outline of workshop
 
 + Programming challenges:
 
-    + *Add programming challenges here.*
+    1. Setting up your environment for genetic data analysis.
+
+    2. Downloading and preparing genotype data for PCA.
+
+    3. **Run PCA on genotype data.**
+
+    4. Visualize and interpret PCA results.
 
 Challenge #3: Run PCA on genotype data
 ======================================
@@ -516,13 +549,11 @@ Challenge #3: Run PCA on genotype data
 
     1. Convert genotypes to a matrix.
 
-    2. Launch R.
+    2. Import genotypes into R.
 
-    3. Import genotypes into R.
+    3. Fill in missing genotypes.
 
-    4. Fill in missing genotypes.
-
-    5. Compute PCs using rsvd package, and save PCA results.
+    4. Compute PCs using rsvd package, and save results.
 
 Convert genotype data to a matrix
 =================================
@@ -535,17 +566,14 @@ number of samples and $p$ is the number of SNPs.
   --recode A --out 1kg_recoded
 ```
 
-Launch R
-========
+Import genotypes into R
+=======================
 
 Start up an interactive R session:
 
 ```{bash start-R-2, eval=FALSE}
 R --no-save
 ```
-
-Import genotypes into R
-=======================
 
 I implemented a function to import the genotypes into a matrix. It
 uses `fread` from the `data.table` package.
@@ -655,7 +683,13 @@ Outline of workshop
 
 + Programming challenges:
 
-    + *Add programming challenges here.*
+    1. Setting up your environment for genetic data analysis.
+
+    2. Downloading and preparing genotype data for PCA.
+
+    3. Run PCA on genotype data.
+
+    4. **Visualize and interpret PCA results.**
 
 Challenge #4: Visualize and interpret PCA results
 =================================================

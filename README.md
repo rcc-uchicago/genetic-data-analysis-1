@@ -32,15 +32,14 @@ they have administrative privileges on.
 
 ## Notes on data files
 
-+ 1kg.pop describes the population labels used in the 1000 Genomes
++ `1kg.pop` describes the population labels used in the 1000 Genomes
   data. This information comes from Supplementary Table 1 of the most
   recent 1000 Genomes paper (Nature, 2015, doi:10.1038/nature15393).
 
-+ omni_samples.20141118.panel was downloaded from this FTP location:
-  ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/supporting/
-  hd_genotype_chip
++ `omni_samples.20141118.panel` was downloaded from this FTP location:
+  ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/supporting/hd_genotype_chip
 
-+ 20140625_related_individuals.txt was downloaded from this FTP
++ `20140625_related_individuals.txt` was downloaded from this FTP
   location: ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502. This
   file gives information about the 31 genotype samples that were found
   to be closely related. The columns in the file from left to right
