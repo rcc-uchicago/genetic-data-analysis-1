@@ -38,6 +38,7 @@ labeled.pc.plot <- function (dat, x = "PC1", y = "PC2",
          scale_color_manual(values = colors) +
          scale_shape_manual(values = shapes) +
          theme(axis.line = element_blank()))
+}
 
 # Add labels to the PC data. Here I assume the row names of "pcs" are
 # of the form X_Y, where X is the family id and Y is the individual
