@@ -167,7 +167,7 @@ Connect to midway2
 + **If you have an RCC account:** I'm assuming you already know how to
   connect to midway2. *ThinLinc is recommended if you do not know how
   activate X11 forwarding in SSH.* See:
-  https://rcc.uchicago.edu/docs/connecting
+  rcc.uchicago.edu/docs/connecting
 
 + **If you do not have an RCC account:** I can provide you with a
   Yubikey. This will give you guest access to the RCC cluster (see the
@@ -191,7 +191,7 @@ Using the Yubikeys
 
     3. Follow instructions to connect to midway2 via SSH, replacing
        the cnetid with your `rccguestXXXX` user name:
-       https://rcc.uchicago.edu/docs/connecting
+       rcc.uchicago.edu/docs/connecting
 
     4. When prompted for password, press lightly on metal disc.
 
@@ -249,7 +249,7 @@ instead.*
 
 + Downloading from EBI:
 
-    + Short URL: http://bit.ly/2G7ZWYu
+    + Short URL: bit.ly/2G7ZWYu
   
     + Download this file:
 
