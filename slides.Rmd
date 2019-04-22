@@ -235,19 +235,19 @@ unzip plink.zip
 Download 1000 Genomes data
 ==========================
 
-Download the 1000 Genomes data from the European Bioinformatics
-Institute. *Downloading from the EBI may take a long time (10--20
-minutes), so if possible copy the previously downloaded files
-instead.*
+Copy or download the 1000 Genomes data from the European
+Bioinformatics Institute. *Downloading from the EBI may take a long
+time (10--20 minutes), so it is better to copy the previously
+downloaded files.*
 
-+ Copying previously downloaded data:
++ Copy previously downloaded data:
 
     ```{bash get-1kg-data, eval=FALSE}
     cd $SCRATCH/genetic-data-analysis-1
     cp ~pcarbo/share/1kg.vcf.gz .
     ```
 
-+ Downloading from EBI:
++ Or download the data from EBI:
 
     + Short URL: bit.ly/2G7ZWYu
   
