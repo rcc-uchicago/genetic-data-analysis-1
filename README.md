@@ -11,7 +11,8 @@ genetic data and visualize the results. This workshop is mainly
 intended to develop practical computing skills for researchers working
 with genetic data—concepts such as "genotype" and "allele frequency"
 will not be explained. This will be a hands-on workshop and we will do
-"live coding" throughout, so please bring your laptop!  Objectives:
+"live coding" throughout, so please bring your laptop!
+
 Attendees will: (1) work through the steps of a basic population
 structure analysis in human genetics, starting with the “raw” source
 data, and ending with a visualization of population structure
