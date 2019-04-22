@@ -60,8 +60,6 @@ need to to install the [rmarkdown][rmarkdown] package in R, as well as
 the packages used in [slides.Rmd](slides.Rmd). For more details,
 see the [Makefile](Makefile).
 
-+ See also the [instructor notes](NOTES.md).
-
 ## Credits
 
 These materials were developed by [Peter Carbonetto][peter] at the
