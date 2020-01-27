@@ -18,9 +18,9 @@ structure analysis in human genetics, starting with the “raw” source
 data, and ending with a visualization of population structure
 estimated from the genetic data; (2) understand how large genetic data
 sets are commonly represented in computer files; (3) use command-line
-tools (e.g., PLINK) to manipulate genetic data; (4) use R to compute
-principal components, and visualize the results of PCA; (5) learn
-through "live coding."
+tools (e.g., PLINK) to manipulate the genetic data; (4) use R to
+compute principal components, and visualize the results of PCA; (5)
+learn through "live coding."
 
 ## Prerequisites
 
