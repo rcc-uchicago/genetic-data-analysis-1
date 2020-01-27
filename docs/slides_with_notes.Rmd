@@ -74,7 +74,7 @@ Outline of workshop
 
     1. Set up your environment for genetic data analysis.
 
-    2. Download and prepare genotype data for PCA.
+    2. Prepare genotype data for PCA.
 
     3. Run PCA on genotype data.
 
@@ -114,13 +114,14 @@ What's included in the workshop packet
 + **pca.R**, **pca.sbatch**: Example R and Slurm script implementing the
 PCA analysis.
 
-+ **functions.R**: Some R functions used to run PCA and plot the results.
++ **functions.R**: Some R functions used to run PCA and visualize the PCs.
 
 + **omni_samples.20141118.panel**: 1000 Genomes population labels.
 
 + **1kg.pop**: description of population labels.
 
-+ **20140625_related_individuals.txt**: 31 closely related samples.
++ **20140625_related_individuals.txt**: 31 samples identified as
+  "closely related".
 
 Outline of workshop
 ===================
@@ -131,7 +132,7 @@ Outline of workshop
 
     1. **Set up your environment for genetic data analysis.**
 
-    2. Download and prepare genotype data for PCA.
+    2. Prepare genotype data for PCA.
 
     3. Run PCA on genotype data.
 
@@ -140,8 +141,7 @@ Outline of workshop
 Challenge #1: Set up your HPC environment
 =========================================
 
-+ Aim: Configure your HPC environment for the next programming
-  challenges.
++ Aim: Configure your HPC environment for analysis of the genetic data.
 
 + Steps:
 
@@ -149,7 +149,7 @@ Challenge #1: Set up your HPC environment
 
     2. Download workshop packet.
  
-    3. Install PLINK.
+    3. Install PLINK (optional).
 
     4. Download 1000 Genomes data.
 
@@ -158,8 +158,6 @@ Challenge #1: Set up your HPC environment
     6. Launch R, and check your R environment.
 
     7. Set up R for plotting.
-
-    8. Open another midway2 connection (*optional*).
 
 Connect to midway2
 ==================
@@ -205,8 +203,8 @@ Download workshop packet
 ========================
 
 Once you have connected to a midway2 login node, download the workshop
-packet to your scratch directory on the cluster (**note:** there are no
-spaces in the URL below):
+packet to your scratch directory on the cluster (**note there are no
+spaces in the URL below**):
 
 ```{bash download-packet, eval=FALSE}
 cd $SCRATCH
@@ -214,11 +212,19 @@ git clone https://github.com/rcc-uchicago/
   genetic-data-analysis-1.git
 ```
 
-Install PLINK
-=============
+Install PLINK (optional)
+========================
 
-Download the most recent stable version of PLINK in the same place as
-the other workshop materials.
+*PLINK is already installed on midway2.* To use the previously
+ installed PLINK, run:
+
+```{bash load-plink, eval=FALSE}
+module load plink
+plink --version
+```
+
+Alternatively, you may download an up-to-date version of PLINK in the
+same place as the other workshop materials.
 
 + URL: www.cog-genomics.org/plink2
 
@@ -227,7 +233,7 @@ the version:
 
 ```{bash get-plink, eval=FALSE}
 cd $SCRATCH/genetic-data-analysis-1
-wget https://bit.ly/2UgRH36 -O plink.zip
+wget https://go.aws/38KfiAE -O plink.zip
 unzip plink.zip
 ./plink --version
 ```
@@ -256,8 +262,10 @@ downloaded files.*
         `ALL.chip.omni_broad_sanger_combined.
          20140818.snps.genotypes.vcf.gz`
 
-    + Make sure you put the file in same location as the other
-      workshop materials.
+    + Rename it as `1kg.vcf.gz`.
+
+    + *Make sure to copy the file to same location as the other
+      workshop materials.*
 
 Connect to a midway2 compute node
 =================================
@@ -280,7 +288,7 @@ Start up an interactive R session:
 
 ```{bash start-R, eval=FALSE}
 cd $SCRATCH/genetic-data-analysis-1
-module load R/3.5.1
+module load R/3.6.1
 which R
 R --no-save
 ```
@@ -288,10 +296,10 @@ R --no-save
 Check your R environment
 ========================
 
-Check that you are running R 3.5.1:
+Check that you are running R 3.6.1:
 
 ```{r check-version}
-sessionInfo()
+version$version
 ```
 
 Check that you are starting with an empty environment:
@@ -313,7 +321,7 @@ getwd()
 Set up R for plotting
 =====================
 
-Make sure you can display graphics in your current R session.
+Make sure you can display a plot in your current R session.
 
 ```{r plot-cars}
 library(ggplot2)
@@ -322,29 +330,16 @@ data(cars)
 quickplot(cars$dist,cars$speed)
 ```
 
-You should see a scatterplot. If not, your connection is not set up to
-display graphics. An alternative is to save the plot to a file, and
-download the file to your computer using sftp or SAMBA:
-
-+ rcc.uchicago.edu/docs/data-transfer
+You should see a scatterplot.
 
 Quit R
 ======
 
-We will quit R, and return to it later.
+Quit R. We will return to it later.
 
 ```{r quit, eval=FALSE}
 quit()
 ```
-
-Open another connection to midway2
-==================================
-
-+ *Optionally,* open a new SSH connection, following the same steps as
-  before (see the "Connect to midway2" slide).
-
-+ This second connection can be used to monitor your computations on
-  the cluster.
 
 *At this point, you have completed the initial setup. You are now
 ready to move on to the next programming challenge.*
@@ -358,7 +353,7 @@ Outline of workshop
 
     1. Set up your environment for genetic data analysis.
 
-    2. **Download and prepare genotype data for PCA.**
+    2. **Prepare genotype data for PCA.**
 
     3. Run PCA on genotype data.
 
@@ -533,7 +528,7 @@ Outline of workshop
 
     1. Set up your environment for genetic data analysis.
 
-    2. Download and prepare genotype data for PCA.
+    2. Prepare genotype data for PCA.
 
     3. **Run PCA on genotype data.**
 
@@ -685,7 +680,7 @@ Outline of workshop
 
     1. Set up your environment for genetic data analysis.
 
-    2. Download and prepare genotype data for PCA.
+    2. Prepare genotype data for PCA.
 
     3. Run PCA on genotype data.
 
