@@ -20,6 +20,7 @@ basic.pc.plot <- function (dat, x = "PC1", y = "PC2", size = 2)
   ggplot(as.data.frame(dat),aes_string(x = x,y = y),
          environment = environment()) +
     geom_point(color = "darkblue",shape = 20,size = size,na.rm = TRUE) +
+    theme_cowplot() +
     theme(axis.line = element_blank())
 
 # This is a labeled PC plot---it shows the project of the samples onto
@@ -37,5 +38,6 @@ labeled.pc.plot <- function (dat, x = "PC1", y = "PC2",
          geom_point(size = size,na.rm = TRUE) +
          scale_color_manual(values = colors) +
          scale_shape_manual(values = shapes) +
+         theme_cowplot() +
          theme(axis.line = element_blank()))
 }

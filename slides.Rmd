@@ -65,6 +65,8 @@ human genetics studies.
 components analysis (PCA)---to investigate population structure from
 the genetic data.
 
+We will use the data from the "1000 Genomes" study.
+
 Outline of workshop
 ===================
 
@@ -290,7 +292,7 @@ Start up an interactive R session:
 cd $SCRATCH/genetic-data-analysis-1
 module load R/3.6.1
 which R
-R --no-save
+R
 ```
 
 Check your R environment
@@ -536,7 +538,8 @@ Convert genotype data to a matrix
 =================================
 
 The input to PCA should be an $n \times p$ matrix, where $n$ is the
-number of samples and $p$ is the number of SNPs.
+number of samples and $p$ is the number of SNPs. The "recode" function
+in PLINK can be used to create a matrix:
 
 ```{bash plink2matrix, eval=FALSE}
 plink --bfile 1kg_pruned \
@@ -549,11 +552,11 @@ Import genotypes into R
 Start up an interactive R session:
 
 ```{bash start-R-2, eval=FALSE}
-R --no-save
+R
 ```
 
-I implemented a function to import the genotypes into a matrix. It
-uses `fread` from the `data.table` package.
+I wrote a function to import the genotypes into a matrix. It uses
+`fread` from the `data.table` package.
 
 ```{r load-data-table-pkg}
 library(data.table)
@@ -575,7 +578,7 @@ Run a few commands to examine the genotype matrix:
 class(geno)
 nrow(geno)
 ncol(geno)
-geno[1:4,1:4]
+geno[1:3,1:10]
 ```
 
 Fill in missing genotypes
@@ -587,8 +590,9 @@ Fill in missing genotypes
 mean(is.na(geno))
 ```
 
-For PCA, we need to fill in these missing genotypes. In this case, a
-reasonable choice is the mean genotype:
+To run PCA, we need to fill in these missing genotypes. In this
+particular case, we can set these missing entries to the mean
+genotype:
 
 ```{r fill-missing-genotypes}
 p <- ncol(geno)
@@ -598,7 +602,7 @@ for (j in 1:p) {
 }
 ```
 
-Double-dheck that there are no missing genotypes:
+Double-check that there are no more missing genotypes:
 
 ```{r check-missing-genotypes}
 sum(is.na(geno))
@@ -625,12 +629,17 @@ Take a quick look at the PCA results:
 
 ```{r inspect-pca}
 summary(out.pca)
+```
+
+Get the projection of the genotype samples onto the 10 PCs:
+
+```{r get-pcs}
 pcs           <- out.pca$x
 colnames(pcs) <- paste0("PC",1:10)
 head(pcs)
 ```
 
-Save the PCA results analysis:
+Before moving on, let's save our results:
 
 ```{r save-pca}
 save(file = "1kg_pca.RData",
@@ -645,8 +654,7 @@ PCA analysis: take-home points
 + Other software deals more elegantly with missing data. Here it does
 not matter much.
 
-+ Not everyone agrees on the best numeric encoding of genotypes for
-PCA.
++ We glossed over some details about encoding genotypes as a matrix.
 
 + See file "pca.sbatch" for an example of automating the PCA analysis
 using Slurm.
@@ -716,8 +724,8 @@ You may want to adjust the "size" argument.
 Create a PC plot with population labels
 =======================================
 
-To create this plot, we first need to load the 1000 Genomes
-population labels stored in `omni_samples.20141118.panel`:
+To create a plot with labels, we first need to load the 1000 Genomes
+population labels. They are stored in `omni_samples.20141118.panel`.
 
 ```{r load-pop-labels}
 labels <-
@@ -725,14 +733,13 @@ labels <-
              sep = " ",header = TRUE,as.is = "id")
 ```
 
-Add a new column, "label", to the PCA results table:
+Add the labels to the PCs matrix:
 
 ```{r add-pop-labels}
 pcs    <- as.data.frame(pcs)
-ids    <- sapply(strsplit(rownames(pcs),"_"),
-                 function (x) x[2])
+ids    <- sapply(strsplit(rownames(pcs),"_"),"[",2)
 labels <- subset(labels,is.element(labels$id,ids))
-rows   <- match(ids,labels$id)
+all(ids == labels$id)
 pcs$label <- factor(labels$pop)
 ```
 
@@ -743,7 +750,7 @@ Create the PC plot with labels:
 
 ```{r pc-plot-2}
 p2 <- labeled.pc.plot(pcs,x = "PC1",y = "PC2",
-                      label = "label",size = 2)
+                      size = 2)
 print(p2)
 ```
 
@@ -765,22 +772,21 @@ Visualizing and interpreting PCA results: take-home points
   from genotype data.
 
 + One reason PCA is so popular is that it can produce evocative
-  visualizations of populations structure.
+  visualizations of population structure.
 
 + However, there are many pitfalls in interpreting PCA
-  results---proceed with caution!
+  results... proceed with caution!
 
 Recap
 =====
 
 Some genetic data analysis techniques we used today:
 
-+ Using PLINK and basic shell commands to process and convert genotype
-  data.
++ Using PLINK and basic shell commands to process and reformat
+  genotype data.
 
 + Importing genotype data into R.
 
 + Running PCA on a genotype matrix in R.
 
-+ Using ggplot2 to visualize and interpret the results of the PCA
-  analysis.
++ Using ggplot2 to visualize the results of the PCA analysis.

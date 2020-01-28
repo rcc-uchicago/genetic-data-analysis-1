@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # This bash script illustrates how to automate the PCA steps on
-# midway2 (specifically, the "Broadwell" partition) using
-# Slurm. Multithreaded computation on 4 CPUs is used here to speed up
-# the computation of the principal components (PCs). Run this script
-# with the following command:
+# midway2 (specifically, the "Broadwell" partition) using Slurm.
+# Multithreaded computation on 4 CPUs is used here to speed up the
+# computation of the principal components (PCs). Run this script with
+# the following command:
 #
 #   sbatch pca.sbatch
 # 
@@ -15,7 +15,7 @@
 #SBATCH --time=00:15:00
 
 # For reproducibility, I add a version number to "module load" call.
-module load R/3.5.1
+module load R/3.6.1
 
 # Set the number of threads used for matrix operations.
 export OPENBLAS_NUM_THREADS=4
