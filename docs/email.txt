@@ -1,9 +1,9 @@
-Subject: Please read for today's RCC workshop, "analysis of genetic
-data"
+Subject: Please read for RCC workshop tomorrow, "Analysis of Genetic
+Data 1"
 
 Thank you for registering for the RCC workshop, "Analysis of Genetic
-Data 1: Inferring Population Structure." It is taking place this
-afternoon (Tuesday, April 16), 2–5p in the Zar Room, which is in the
+Data 1: Inferring Population Structure." It is taking place tomorrow
+afternoon (Tuesday, January 28), 2–5p in the Zar Room, which is in the
 John Crerar Library.
 
 Here are a few notes about participating in the workshop.
@@ -14,7 +14,8 @@ size.
 
 This is a hands-on tutorial, so you will get the most benefit from the
 tutorial if you bring your laptop and work through the examples
-in-class. We will be using the RCC cluster for all the examples.
+in-class. We will use the RCC cluster, "midway2", for all the
+examples.
 
 If you have an RCC account, please make sure you are able to log in to
 midway2. Please refer to the instructions in the User Guide:
@@ -24,8 +25,8 @@ If you do not have an RCC account, I will provide you with guest
 access. To use the guest account, your laptop will need: (1) a USB-A
 port, or that an adapter for USB-A—the newer USB ports are smaller
 than USB-A, so require an adapter; (2) an SSH client, preferrably
-MobaXterm (if you have macOS or Linux, you most likely already have
-SSH). For further details, go to
+MobaXterm (if you have macOS or Linux, most likely you already have
+SSH). For further details, see
 https://rcc.uchicago.edu/docs/connecting.
 
 At the beginning of the workshop, I will provide you with additional
