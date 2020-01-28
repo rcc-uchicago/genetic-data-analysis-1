@@ -359,8 +359,8 @@ Outline of workshop
 
     4. Visualize and interpret PCA results.
 
-Challenge #2: Download & prepare genotype data
-==============================================
+Challenge #2: Prepare genotype data
+===================================
 
 + Aim: Prepare genotype data for PCA analysis in R.
 
@@ -379,8 +379,8 @@ Challenge #2: Download & prepare genotype data
 Examine the VCF file
 ====================
 
-Run a few simple shell commands to inspect the genotype data
-stored in the VCF file.
+Run a few shell commands to inspect the genotype data stored in the
+VCF file.
 
 ```{bash inspect-1kg-vcf, eval=FALSE}
 cd $SCRATCH/genetic-data-analysis-1
@@ -399,7 +399,7 @@ for annotating these variants.
 
 + It is one of the most commonly used data formats in genetics.
 
-+ It is not an efficient way to store genotype data.
++ It is *not* an efficient way to store genotype data.
 
 + See also:
 
@@ -414,7 +414,7 @@ Run this command to convert the genotypes from VCF to the PLINK text
 format. This may take a few minutes.
 
 ```{bash vcf2plink, eval=FALSE}
-./plink --vcf 1kg.vcf.gz --recode \
+plink --vcf 1kg.vcf.gz --recode \
   --chr 1-22 --allow-extra-chr \
   --geno 0.01 --out 1kg
 ```
@@ -423,6 +423,7 @@ format. This may take a few minutes.
 
 > Instructor notes:
 >
+>  + PLINK may need to be called as "./plink".
 >  + Creates two new files, 1kg.map and 1kg.ped.
 >  + Retain only SNPs on (autosomal) chromosomes 1--22.
 >  + Removes SNPs with >1% missing genotypes.
@@ -463,19 +464,19 @@ PLINK files: concepts
 + Easy to view and manipulate with simple shell commands (e.g., wc,
   grep, cat, cut, paste).
 
-+ For long-term storage, use PLINK binary (.bed) format. It is 
-  more efficient, but not human readable.
++ Use PLINK binary (.bed) format for faster processing and more
+  efficient storage. However, it is not "human readable".
 
 + See: www.cog-genomics.org/plink/1.9/formats#ped
 
 Convert to binary format, remove related samples
 ================================================
 
-To speed up the data processing steps, we convert to binary PLINK
-format (and remove the very large .ped file).
+To speed up the data processing steps, convert to binary PLINK
+format (then remove the large "ped" file).
 
 ```{bash ped2ped, eval=FALSE}
-./plink --file 1kg --make-bed --out 1kg
+plink --file 1kg --make-bed --out 1kg
 rm 1kg.map 1kg.ped
 ```
 
@@ -486,7 +487,7 @@ analyses are not designed to handle related samples):
 cut -f 1 20140625_related_individuals.txt \
   > temp.txt
 paste temp.txt temp.txt > samples.txt
-./plink --bfile 1kg --make-bed \
+plink --bfile 1kg --make-bed \
   --remove samples.txt --out 1kg_unrelated
 ```
 
@@ -496,12 +497,12 @@ Prune SNPs in LD
 Many basic population structure analyses (e.g., PCA) assume that the
 SNPs are independent. A common step is to "prune" SNPs that are
 strongly correlated with each other (*i.e.*, in linkage
-disequibilirium, or LD) to make analysis better supported.
+disequibilirium) to make analysis better supported.
 
 ```{bash ld-prune-plink, eval=FALSE}
-./plink --bfile 1kg_unrelated \
+plink --bfile 1kg_unrelated \
   --indep-pairwise 1000 500 0.08
-./plink --bfile 1kg_unrelated \
+plink --bfile 1kg_unrelated \
   --make-bed --extract plink.prune.in \
   --out 1kg_pruned
 ```
@@ -514,10 +515,10 @@ Data preparation: take-home points
 + For more specialized manipulations, you can go far with basic shell
   commands (e.g., awk, cut, head, cat, paste).
 
-+ Often the majority of the effort goes toward data processing.
-  Careless data processing can lead to a poor quality analysis.
++ Data processing is important---careless data processing can lead to
+  a poor quality analysis.
 
-+ It is important to record all your data processing steps.
++ It is helpful to record your data processing steps.
 
 Outline of workshop
 ===================
@@ -557,7 +558,7 @@ The input to PCA should be an $n \times p$ matrix, where $n$ is the
 number of samples and $p$ is the number of SNPs.
 
 ```{bash plink2matrix, eval=FALSE}
-./plink --bfile 1kg_pruned \
+plink --bfile 1kg_pruned \
   --recode A --out 1kg_recoded
 ```
 
