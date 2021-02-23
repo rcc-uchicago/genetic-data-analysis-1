@@ -23,8 +23,8 @@ human genetics, starting with the **"raw" source data**, and ending
 with a **visualization of population structure** estimated from the
 genetic data.
 
-2. Understand how large genetic data sets are commonly represented in
-computer files.
+2. Get acquainted with standard file formats for storing large genetic
+data sets.
 
 3. Use command-line tools to manipulate genetic data.
 
@@ -61,11 +61,17 @@ human genetics studies.
 
 2. We would like to uncover population structure in this sample.
 
-3. We will use the most common statistical technique---principal
-components analysis (PCA)---to investigate population structure from
-the genetic data.
+3. We will use the most commonly used statistical
+technique---principal components analysis (PCA)---to investigate
+population structure from the genetic data.
 
-We will use the data from the "1000 Genomes" study.
+We will use the data from the "1000 Genomes" study (Abecasis et al,
+*Nature*, 2012), which is publicly available on the Web.
+
+Our research task
+=================
+
+![PCA plot](docs/pca.png)
 
 Outline of workshop
 ===================
@@ -221,21 +227,20 @@ Install PLINK (optional)
  installed PLINK, run:
 
 ```{bash load-plink, eval=FALSE}
-module load plink
+module load plink/1.90b6.9
 plink --version
 ```
 
-Alternatively, you may download an up-to-date version of PLINK in the
-same place as the other workshop materials.
+Alternatively, if you want to use the latest version of PLINK, you may
+download PLINK in the same place as the other workshop materials.
 
 + URL: www.cog-genomics.org/plink2
 
-On midway2, you can run these commands to download PLINK, and check
-the version:
+For example, on midway2, you may run these commands to download PLINK:
 
 ```{bash get-plink, eval=FALSE}
 cd $SCRATCH/genetic-data-analysis-1
-wget https://go.aws/38KfiAE -O plink.zip
+wget https://tinyurl.com/twseejly -O plink.zip
 unzip plink.zip
 ./plink --version
 ```
@@ -277,8 +282,8 @@ and 19 GB of memory:
 
 ```{bash connect-midway2, eval=FALSE}
 screen -S workshop
-sinteractive --partition=broadwl \
-  --reservation=workshop --cpus-per-task=8 \
+sinteractive -p broadwl -c 8 \
+  --reservation=gda1_workshop \
   --mem=19G --time=3:00:00
 echo $HOSTNAME
 ```
@@ -301,7 +306,7 @@ Check your R environment
 Check that you are running R 3.6.1:
 
 ```{r check-version}
-version$version
+version
 ```
 
 Check that you are starting with an empty environment:
@@ -325,9 +330,8 @@ Make sure you can display a plot in your current R session.
 
 ```{r plot-cars}
 library(ggplot2)
-library(cowplot)
 data(cars)
-quickplot(cars$dist,cars$speed)
+qplot(cars$dist,cars$speed)
 ```
 
 You should see a scatterplot.
@@ -399,7 +403,7 @@ for annotating these variants.
 
 + It is one of the most commonly used data formats in genetics.
 
-+ It is *not* an efficient way to store genotype data.
++ It is not an efficient way to store genotype data.
 
 + See also:
 
@@ -410,16 +414,14 @@ for annotating these variants.
 Convert VCF to PLINK
 ====================
 
-Run this command to convert the genotypes from VCF to the PLINK text
-format. This may take a few minutes.
+Run this command to convert the genotypes on chromosome 1 from VCF to
+the PLINK text format. This may take a few minutes.
 
-```{bash vcf2plink, eval=FALSE}
+```{bash vcf2ped, eval=FALSE}
 plink --vcf 1kg.vcf.gz --recode \
-  --chr 1-22 --allow-extra-chr \
-  --geno 0.01 --out 1kg
+  --chr 1 --allow-extra-chr \
+  --out 1kg
 ```
-
-**Note:** This step will require about 18 GB of free space.
 
 
 Explore PLINK files
@@ -452,19 +454,26 @@ PLINK files: concepts
 
 + See: www.cog-genomics.org/plink/1.9/formats#ped
 
-Convert to binary format, remove related samples
-================================================
+Convert to binary format
+========================
 
 To speed up the data processing steps, convert to binary PLINK
-format (then remove the large "ped" file).
+format. Note that this step may take several minutes to complete.
 
-```{bash ped2ped, eval=FALSE}
-plink --file 1kg --make-bed --out 1kg
+```{bash vcf2bed, eval=FALSE}
 rm 1kg.map 1kg.ped
+plink --vcf 1kg.vcf.gz --make-bed \
+  --chr 1-22 --allow-extra-chr \
+  --out 1kg
 ```
 
-Remove 29 of 31 related samples (because most population structure
-analyses are not designed to handle related samples):
+This command should create three new files. What are they?
+
+Remove related samples (optional)
+=================================
+
+Remove 29 of 31 related samples (many population structure analyses
+are not designed to handle related samples):
 
 ```{bash remove-related-samples, eval=FALSE}
 cut -f 1 20140625_related_individuals.txt \
@@ -477,16 +486,16 @@ plink --bfile 1kg --make-bed \
 Prune SNPs in LD
 ================
 
-Many basic population structure analyses (e.g., PCA) assume that the
-SNPs are independent. A common step is to "prune" SNPs that are
-strongly correlated with each other (*i.e.*, in linkage
-disequibilirium) to make analysis better supported.
+Many basic population structure analyses such as PCA assume (sometimes
+implicitly) that the SNPs are independent. A common step is to "prune"
+SNPs that are strongly correlated with each other (*i.e.*, in "linkage
+disequibilirium").
 
 ```{bash ld-prune-plink, eval=FALSE}
-plink --bfile 1kg_unrelated \
+plink --bfile 1kg \
   --indep-pairwise 1000 500 0.08
-plink --bfile 1kg_unrelated \
-  --make-bed --extract plink.prune.in \
+plink --bfile 1kg --make-bed \
+  --extract plink.prune.in \
   --out 1kg_pruned
 ```
 
@@ -501,7 +510,7 @@ Data preparation: take-home points
 + Data processing is important---careless data processing can lead to
   a poor quality analysis.
 
-+ It is helpful to record your data processing steps.
++ It is helpful to keep track of the data processing steps you took.
 
 Outline of workshop
 ===================
