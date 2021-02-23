@@ -483,7 +483,7 @@ format. Note that this step may take several minutes to complete.
 rm 1kg.map 1kg.ped
 plink --vcf 1kg.vcf.gz --make-bed \
   --chr 1-22 --allow-extra-chr \
-  --out 1kg
+  --geno 0.01 --out 1kg
 ```
 
 This command should create three new files. What are they?
@@ -574,6 +574,9 @@ plink --bfile 1kg_pruned \
   --recode A --out 1kg_recoded
 ```
 
+> Instructor notes: For those who haven't made it this far, they can
+> get a copy of the "recoded" data from ~pcarbo/share/1kg_recoded.raw.gz.
+
 Import genotypes into R
 =======================
 
@@ -583,8 +586,8 @@ Start up an interactive R session:
 R
 ```
 
-I wrote a function to import the genotypes into a matrix. It uses
-`fread` from the `data.table` package.
+I wrote a function to import the genotypes into a matrix. It uses the
+`fread` function from the `data.table` package.
 
 ```{r load-data-table-pkg}
 library(data.table)
@@ -606,7 +609,7 @@ Run a few commands to examine the genotype matrix:
 class(geno)
 nrow(geno)
 ncol(geno)
-geno[1:3,1:10]
+geno[1:4,1:4]
 ```
 
 Fill in missing genotypes
@@ -619,8 +622,8 @@ mean(is.na(geno))
 ```
 
 To run PCA, we need to fill in these missing genotypes. In this
-particular case, we can set these missing entries to the mean
-genotype:
+particular case, we can set these missing entries to the *mean
+genotype*:
 
 ```{r fill-missing-genotypes}
 p <- ncol(geno)
@@ -642,14 +645,14 @@ sum(is.na(geno))
 Compute PCs
 ===========
 
-Use the "rpca" function from the rsvd package to compute the first 10
-PCs---that is, the 10 components that explain the most variation in
+Use the "rpca" function from the rsvd package to compute the first 4
+PCs---that is, the 4 components that explain the most variation in
 the genotypes:
 
 ```{r run-rpca}
 library(rsvd)
-out.pca <- rpca(geno,k = 10,center = TRUE,
-                scale = FALSE,retx = TRUE)
+pca <- rpca(geno,k = 4,center = TRUE,
+            scale = FALSE,retx = TRUE)
 ```
 
 Compute PCs
@@ -658,23 +661,25 @@ Compute PCs
 Take a quick look at the PCA results:
 
 ```{r inspect-pca}
-summary(out.pca)
+summary(pca)
 ```
 
-Get the projection of the genotype samples onto the 10 PCs:
+The "x" PCA output gives the projection of the genotype samples onto the
+4 PCs:
 
 ```{r get-pcs}
-pcs           <- out.pca$x
-colnames(pcs) <- paste0("PC",1:10)
-head(pcs)
+head(pca$x)
 ```
 
 Before moving on, let's save our results:
 
 ```{r save-pca}
 save(file = "1kg_pca.RData",
-     list = c("out.pca","pcs"))
+     list = "pca")
 ```
+
+> Instructor notes: For those who weren't able to compute the PCA
+> results, they can get a copy from ~pcarbo/share/1kg_pca.RData.
 
 PCA analysis: take-home points
 ==============================
@@ -727,6 +732,7 @@ the PCA plots.
 ```{r load-ggplot-pkg}
 library(ggplot2)
 library(cowplot)
+library(rsvd)
 source("functions.R")
 ```
 
@@ -743,9 +749,10 @@ Use function `basic.pc.plot` to plot all the samples projected onto
 the first 2 PCs:
 
 ```{r pc-plot-1}
-p <- basic.pc.plot(pcs,x = "PC1",y = "PC2",
-                   size = 2)
-print(p)
+colnames(pca$x) <- paste0("PC",1:4)
+p1 <- basic.pc.plot(pca,x = "PC1",y = "PC2",
+                    size = 2)
+print(p1)
 ```
 
 You may want to adjust the "size" argument.
@@ -763,17 +770,8 @@ population labels. They are stored in `omni_samples.20141118.panel`.
 ```{r load-pop-labels}
 labels <-
   read.table("omni_samples.20141118.panel",
-             sep = " ",header = TRUE,as.is = "id")
-```
-
-Add the labels to the PCs matrix:
-
-```{r add-pop-labels}
-pcs    <- as.data.frame(pcs)
-ids    <- sapply(strsplit(rownames(pcs),"_"),"[",2)
-labels <- subset(labels,is.element(labels$id,ids))
-all(ids == labels$id)
-pcs$label <- factor(labels$pop)
+             sep = " ",header = TRUE,
+			 as.is = "id")
 ```
 
 Create a PC plot with population labels
@@ -782,8 +780,8 @@ Create a PC plot with population labels
 Create the PC plot with labels:
 
 ```{r pc-plot-2}
-p2 <- labeled.pc.plot(pcs,x = "PC1",y = "PC2",
-                      size = 2)
+p2 <- labeled.pc.plot(pca,labels$pop,x = "PC1",
+                      y = "PC2",size = 2)
 print(p2)
 ```
 
