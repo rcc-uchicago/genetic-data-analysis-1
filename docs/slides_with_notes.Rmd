@@ -637,7 +637,7 @@ sum(is.na(geno))
 Compute PCs
 ===========
 
-Use the "rpca" function from the rsvd package to compute the first 2
+Use the "rpca" function from the rsvd package to compute the top 2
 PCs---that is, the 2 components that explain the most variation in
 the genotypes. *This step may take a few minutes.*
 
@@ -657,7 +657,7 @@ summary(pca)
 ```
 
 The "x" PCA output gives the projection of the genotype samples onto the
-4 PCs:
+2 PCs:
 
 ```{r get-pcs}
 head(pca$x)
@@ -722,9 +722,9 @@ Load the plotting packages and some functions I defined for creating
 the PCA plots.
 
 ```{r load-ggplot-pkg}
+library(rsvd)
 library(ggplot2)
 library(cowplot)
-library(rsvd)
 source("functions.R")
 ```
 
@@ -738,10 +738,10 @@ Create a basic PC plot
 ======================
 
 Use function `basic.pc.plot` to plot all the samples projected onto
-the first 2 PCs:
+the top 2 PCs:
 
 ```{r pc-plot-1}
-colnames(pca$x) <- paste0("PC",1:4)
+colnames(pca$x) <- c("PC1","PC2")
 p1 <- basic.pc.plot(pca,x = "PC1",y = "PC2",
                     size = 2)
 print(p1)
@@ -790,7 +790,7 @@ print(p2)
 > + To gain additional insight, it might be helpful to zoom on the
 >   denser parts.
 >
-> + Optional exercise: Investigate demographic patterns exposed by
+> + Challenge exercise: Investigate demographic patterns exposed by
 >   PCs 3 and 4.
 >
 
