@@ -559,7 +559,7 @@ Convert genotype data to a matrix
 
 The input to PCA should be an $n \times p$ matrix, where $n$ is the
 number of samples and $p$ is the number of SNPs. The "recode" function
-in PLINK can be used to create such a matrix:
+in PLINK can be used to create such a matrix.
 
 ```{bash plink2matrix, eval=FALSE}
 plink --bfile 1kg_pruned \
@@ -579,14 +579,14 @@ R
 ```
 
 I wrote a function to import the genotypes into a matrix. It uses the
-`fread` function from the `data.table` package.
+`fread` function from the `data.table` package. 
 
 ```{r load-data-table-pkg}
 library(data.table)
 source("functions.R")
 ```
 
-Load the genotype matrix into R: 
+Load the genotype matrix into R. *This may take a minute or two.*
 
 ```{r load-geno}
 geno <- read.geno.raw("1kg_recoded.raw")
@@ -613,9 +613,9 @@ Fill in missing genotypes
 mean(is.na(geno))
 ```
 
-To run PCA, we need to fill in these missing genotypes. In this
-particular case, we can set these missing entries to the *mean
-genotype*:
+To run PCA, we need to "fill in" these missing genotypes. In this
+case, we can reasonaably set these missing entries to the mean
+genotype:
 
 ```{r fill-missing-genotypes}
 p <- ncol(geno)
@@ -637,13 +637,13 @@ sum(is.na(geno))
 Compute PCs
 ===========
 
-Use the "rpca" function from the rsvd package to compute the first 4
-PCs---that is, the 4 components that explain the most variation in
-the genotypes:
+Use the "rpca" function from the rsvd package to compute the first 2
+PCs---that is, the 2 components that explain the most variation in
+the genotypes. *This step may take a few minutes.*
 
 ```{r run-rpca}
 library(rsvd)
-pca <- rpca(geno,k = 4,center = TRUE,
+pca <- rpca(geno,k = 2,center = TRUE,
             scale = FALSE,retx = TRUE)
 ```
 
@@ -663,7 +663,7 @@ The "x" PCA output gives the projection of the genotype samples onto the
 head(pca$x)
 ```
 
-Before moving on, let's save our results:
+Let's save our results:
 
 ```{r save-pca}
 save(file = "1kg_pca.RData",
@@ -681,7 +681,7 @@ PCA analysis: take-home points
 + Other software deals more elegantly with missing data. Here it does
 not matter much.
 
-+ We glossed over some details about encoding genotypes as a matrix.
++ We skipped over some details about encoding genotypes as a matrix.
 
 + See file "pca.sbatch" for an example of automating the PCA analysis
 using Slurm.

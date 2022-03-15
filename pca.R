@@ -17,8 +17,8 @@ for (j in 1:p) {
   geno[i,j] <- mean(geno[,j],na.rm = TRUE)
 }
 
-# Compute PCs using rsvd package.
-pca <- rpca(geno,k = 4,center = TRUE,scale = FALSE,retx = TRUE)
+# Compute top two PCs using rsvd package.
+pca <- rpca(geno,k = 2,center = TRUE,scale = FALSE,retx = TRUE)
 
 # Save PCA results.
 save(file = "1kg_pca.RData",list = "pca")
