@@ -26,13 +26,16 @@ genetic data.
 2. Get acquainted with standard file formats for storing large genetic
 data sets.
 
-3. Use command-line tools to manipulate genetic data.
+3. Use command-line tools to inspect and manipulate genetic data.
+
+4. Get experience running a genetic data analysis on the RCC
+cluster.
 
 Workshop aims
 =============
 
 + This is a *hands-on workshop*---you will get the most out of this
-  workshop if you work through the exercises on your computer.
+  workshop if you work through the examples on your computer.
 
 + All the examples are intended to run on the RCC cluster.
 
@@ -47,9 +50,9 @@ Software tools we will use today
 
 2. R
 
-3. Several R packages: data.table, rsvd, ggplot2 and cowplot.
+3. Several R packages such as ggplot2.
 
-4. Basic shell commands such as "cp" and "less".
+4. Some basic shell commands.
 
 Our research task
 =================
@@ -211,8 +214,8 @@ Download workshop packet
 ========================
 
 Once you have connected to a midway2 login node, download the workshop
-packet to your scratch directory on the cluster (**note there are no
-spaces in the URL below**):
+packet to your *scratch directory* on the cluster (note there are no
+spaces in the URL below):
 
 ```{bash download-packet, eval=FALSE}
 cd $SCRATCH
@@ -227,23 +230,15 @@ Install PLINK (optional)
  installed PLINK, run:
 
 ```{bash load-plink, eval=FALSE}
-module load plink/1.90b6.9
+module load plink/1.90b6.25
 plink --version
 ```
 
 Alternatively, if you want to use the latest version of PLINK, you may
-download PLINK in the same place as the other workshop materials.
+download and install PLINK in the same place as the other workshop
+materials.
 
 + URL: www.cog-genomics.org/plink2
-
-For example, on midway2, you may run these commands to download PLINK:
-
-```{bash get-plink, eval=FALSE}
-cd $SCRATCH/genetic-data-analysis-1
-wget https://tinyurl.com/twseejly -O plink.zip
-unzip plink.zip
-./plink --version
-```
 
 Download 1000 Genomes data
 ==========================
@@ -270,9 +265,6 @@ downloaded files.*
          20140818.snps.genotypes.vcf.gz`
 
     + Rename it as `1kg.vcf.gz`.
-
-    + *Make sure to copy the file to same location as the other
-      workshop materials.*
 
 Connect to a midway2 compute node
 =================================
@@ -326,7 +318,7 @@ getwd()
 Set up R for plotting
 =====================
 
-Make sure you can display a plot in your current R session.
+Make sure you can load ggplot2, and create a plot.
 
 ```{r plot-cars}
 library(ggplot2)
@@ -414,8 +406,8 @@ for annotating these variants.
 Convert VCF to PLINK
 ====================
 
-Run this command to convert the genotypes on chromosome 1 from VCF to
-the PLINK text format. This may take a few minutes.
+Run this command to convert the genotypes on *chromosome 1 only* from
+VCF to the PLINK text format. *This may take a few minutes.*
 
 ```{bash vcf2ped, eval=FALSE}
 plink --vcf 1kg.vcf.gz --recode \
@@ -454,11 +446,11 @@ PLINK files: concepts
 
 + See: www.cog-genomics.org/plink/1.9/formats#ped
 
-Convert to binary format
-========================
+Convert to binary ("bed") format
+================================
 
 To speed up the data processing steps, convert to binary PLINK
-format. Note that this step may take several minutes to complete.
+format. *This step may take several minutes to complete.*
 
 ```{bash vcf2bed, eval=FALSE}
 rm 1kg.map 1kg.ped
@@ -467,7 +459,7 @@ plink --vcf 1kg.vcf.gz --make-bed \
   --geno 0.01 --out 1kg
 ```
 
-This command should create three new files. What are they?
+This command should create *three* new files. What are they?
 
 Remove related samples (optional)
 =================================
@@ -489,7 +481,7 @@ Prune SNPs in LD
 Many basic population structure analyses such as PCA assume (sometimes
 implicitly) that the SNPs are independent. A common step is to "prune"
 SNPs that are strongly correlated with each other (*i.e.*, in "linkage
-disequibilirium").
+disequibilirium"). *This step may take a few minutes.*
 
 ```{bash ld-prune-plink, eval=FALSE}
 plink --bfile 1kg \
@@ -504,13 +496,13 @@ Data preparation: take-home points
 
 + VCFtools and PLINK have *many* commands for manipulating genotype data.
 
-+ For more specialized manipulations, you can go far with basic shell
-  commands (e.g., awk, cut, head, cat, paste).
++ You can also do a lot with basic shell commands (e.g., awk, grep, cut,
+  head, cat, paste).
 
 + Data processing is important---careless data processing can lead to
   a poor quality analysis.
 
-+ It is helpful to keep track of the data processing steps you took.
++ It is helpful to record the data processing steps you took.
 
 Outline of workshop
 ===================
