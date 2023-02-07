@@ -716,7 +716,7 @@ Create a PC plot with population labels
 =======================================
 
 To create a plot with labels, we first need to load the 1000 Genomes
-population labels. They are stored in `omni_samples.20141118.panel`.
+population labels. They are stored in omni_samples.20141118.panel.
 
 ```{r load-pop-labels}
 labels <-
@@ -728,13 +728,25 @@ labels <-
 Create a PC plot with population labels
 =======================================
 
-Create the PC plot with labels:
+Align the rows of the "labels" data frame with the rows of the PC
+matrix:
 
 ```{r pc-plot-2}
+ids <- sapply(strsplit(rownames(pca$x),"_"),"[[",1)
+rows <- match(ids,labels$id)
+labels <- labels[rows,]
+```
+
+Create the PC plot with labels:
+
+```{r pc-plot-3}
 p2 <- labeled.pc.plot(pca,labels$pop,x = "PC1",
                       y = "PC2",size = 2)
 print(p2)
 ```
+
+Compare to Supplementary Figure 4 of the 1000 Genomes paper
+(`doi:10.1038/nature11632`).
 
 
 Save the labeled PC plot
@@ -747,8 +759,8 @@ package:
 ggsave("1kg_pca.pdf",p2)
 ```
 
-Visualizing and interpreting PCA results: take-home points
-==========================================================
+Visualizing and interpreting PCA results
+========================================
 
 + PCA is the most commonly used approach to infer population structure
   from genotype data.
@@ -762,13 +774,15 @@ Visualizing and interpreting PCA results: take-home points
 Recap
 =====
 
-Some genetic data analysis techniques we used today:
+Some data analysis techniques we used today:
 
-+ Using PLINK and basic shell commands to process and reformat
++ Using PLINK and basic shell commands to inspect and process
   genotype data.
 
 + Importing genotype data into R.
 
-+ Running PCA on a genotype matrix in R.
++ Analyzing genotype data in R.
 
 + Using ggplot2 to visualize the results of the PCA analysis.
+
++ Following Best Practices on an HPC cluster.
