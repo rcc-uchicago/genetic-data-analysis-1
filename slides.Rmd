@@ -255,7 +255,8 @@ and 19 GB of memory:
 ```{bash connect-midway3, eval=FALSE}
 screen -S workshop
 sinteractive -p caslake -c 8 \
-  --reservation=gda1_workshop \
+--reservation=gda1_workshop \
+  --account=rcc-guest \
   --mem=19G --time=3:00:00
 echo $HOSTNAME
 ```
