@@ -363,7 +363,7 @@ ls -lh 1kg.vcf.gz
 zcat 1kg.vcf.gz | less -S
 ```
 
-+ Reference: www.cog-genomics.org/plink2/formats#vcf
++ Reference: `www.cog-genomics.org/plink2/formats#vcf`
 
 What is a VCF file?
 ===================
@@ -374,12 +374,12 @@ for annotating these variants.
 
 + It is one of the most commonly used data formats in genetics.
 
-+ It is not an efficient way to store genotype data.
++ It is not the most efficient way to store genotype data.
 
 + See also:
 
-    - vcftools.github.io 
-    - samtools.github.io/hts-specs 
+    - `vcftools.github.io`
+    - `samtools.github.io/hts-specs`
     - doi:10.1093/bioinformatics/btr330
 
 Convert VCF to PLINK
@@ -423,7 +423,7 @@ PLINK files: concepts
 + Use PLINK binary (.bed) format for faster processing and more
   efficient storage. However, it is not "human readable".
 
-+ See: www.cog-genomics.org/plink/1.9/formats#ped
++ See: `www.cog-genomics.org/plink/1.9/formats#ped`
 
 Convert to binary ("bed") format
 ================================
