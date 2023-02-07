@@ -184,6 +184,7 @@ packet to your *scratch directory* on the cluster (note there are no
 spaces in the URL below):
 
 ```{bash download-packet, eval=FALSE}
+cd /scratch/midway3/cnetid
 git clone https://github.com/rcc-uchicago/
   genetic-data-analysis-1.git
 ```
@@ -459,8 +460,8 @@ plink --vcf 1kg.vcf.gz --make-bed \
 
 This command should create *three* new files. What are they?
 
-Remove related samples (optional)
-=================================
+Remove related samples
+======================
 
 Remove 29 of 31 related samples (many population structure analyses
 are not designed to handle related samples):
@@ -482,9 +483,9 @@ SNPs that are strongly correlated with each other (*i.e.*, in "linkage
 disequibilirium"). *This step may take a few minutes.*
 
 ```{bash ld-prune-plink, eval=FALSE}
-plink --bfile 1kg \
+plink --bfile 1kg_unrelated \
   --indep-pairwise 1000 500 0.08
-plink --bfile 1kg --make-bed \
+plink --bfile 1kg_unrelated --make-bed \
   --extract plink.prune.in \
   --out 1kg_pruned
 ```
@@ -543,10 +544,15 @@ in PLINK can be used to create such a matrix.
 ```{bash plink2matrix, eval=FALSE}
 plink --bfile 1kg_pruned \
   --recode A --out 1kg_recoded
+gzip 1kg_recoded.raw
 ```
 
-> Instructor notes: For those who haven't made it this far, they can
-> get a copy of the "recoded" data from ~pcarbo/share/1kg_recoded.raw.gz.
+Note: For those who were unable to follow all the processing steps, I
+have made a copy of the processed data available here:
+
+```
+~pcarbo/share/1kg_recoded.raw.gz
+```
 
 Import genotypes into R
 =======================
@@ -565,10 +571,10 @@ library(data.table)
 source("functions.R")
 ```
 
-Load the genotype matrix into R. *This may take a minute or two.*
+Load the genotype matrix into R. This may take a minute or two.
 
 ```{r load-geno}
-geno <- read.geno.raw("1kg_recoded.raw")
+geno <- read.geno.raw("1kg_recoded.raw.gz")
 ```
 
 Examine genotypes
@@ -586,14 +592,14 @@ geno[1:4,1:4]
 Fill in missing genotypes
 =========================
 
-*Problem:* A small fraction (<1%) of the genotypes are missing:
+Problem: A small fraction (<1%) of the genotypes are missing:
 
 ```{r missing-genotypes}
 mean(is.na(geno))
 ```
 
 To run PCA, we need to "fill in" these missing genotypes. In this
-case, we can reasonaably set these missing entries to the mean
+case, we can reasonably set these missing entries to the mean
 genotype:
 
 ```{r fill-missing-genotypes}
@@ -604,7 +610,7 @@ for (j in 1:p) {
 }
 ```
 
-Double-check that there are no more missing genotypes:
+Now check that there are no more missing genotypes:
 
 ```{r check-missing-genotypes}
 sum(is.na(geno))
