@@ -31,6 +31,8 @@ data sets.
 4. Get experience running a genetic data analysis on the RCC
 cluster.
 
+5. Follow Best Practices for data analysis on a HPC cluster.
+
 Workshop aims
 =============
 
@@ -41,7 +43,7 @@ Workshop aims
 
 + You may try to run the examples on your laptop. *However, I cannot
   guarantee all examples will work the same on your laptop. My
-  instructions will assume you are using midway2.*
+  instructions will assume you are using midway3.*
 
 Software tools we will use today
 ================================
@@ -100,11 +102,7 @@ Preliminaries
 
 + Reading what I type.
 
-+ Pace & questions (e.g., keyboard shortcuts).
-
-+ Yubikeys.
-
-+ What to do if you get stuck.
++ Pace, questions, and what to do if you get stuck.
 
 Preliminaries
 =============
@@ -156,7 +154,7 @@ Challenge #1: Set up your HPC environment
 
 + Steps:
 
-    1. Connect to midway2.
+    1. Connect to midway3.
 
     2. Download workshop packet.
  
@@ -164,73 +162,51 @@ Challenge #1: Set up your HPC environment
 
     4. Download 1000 Genomes data.
 
-    5. Connect to a midway2 compute node.
+    5. Connect to a midway3 compute node.
 
     6. Launch R, and check your R environment.
 
     7. Set up R for plotting.
 
-Connect to midway2
+Connect to midway3
 ==================
 
 + **If you have an RCC account:** I'm assuming you already know how to
-  connect to midway2. *ThinLinc is recommended if you do not know how
+  connect to midway3. *ThinLinc is recommended if you do not know how
   activate X11 forwarding in SSH.* See:
   rcc.uchicago.edu/docs/connecting
-
-+ **If you do not have an RCC account:** I can provide you with a
-  Yubikey. This will give you guest access to the RCC cluster (see the
-  next slide).
-
-Using the Yubikeys
-==================
-
-+ Prerequisites:
-
-    1. SSH client (for Windows, please use **MobaXterm**)
-
-    2. USB-A port
-
-+ Steps:
-
-    1. Insert Yubikey into USB port.
-
-    2. Note your userid: `rccguestXXXX`, where `XXXX` is the
-       last four digits shown on Yubikey.
-
-    3. Follow instructions to connect to midway2 via SSH, replacing
-       the cnetid with your `rccguestXXXX` user name:
-       rcc.uchicago.edu/docs/connecting
-
-    4. When prompted for password, press lightly on metal disc.
-
-+ Important notes:
-
-    - Yubikeys do not work with ThinLinc.
-
-    - *Please return the Yubikey at the end of the workshop.*
 
 Download workshop packet
 ========================
 
-Once you have connected to a midway2 login node, download the workshop
+Once you have connected to a midway3 login node, download the workshop
 packet to your *scratch directory* on the cluster (note there are no
 spaces in the URL below):
 
 ```{bash download-packet, eval=FALSE}
-cd $SCRATCH
 git clone https://github.com/rcc-uchicago/
   genetic-data-analysis-1.git
+```
+
+Alternatively, download the packet as a ZIP file (note there are no
+spaces in the URL):
+
+```{bash download-packet-2, eval=FALSE}
+wget https://codeload.github.com/rcc-uchicago/
+  genetic-data-analysis-1/zip/refs/heads/master
+unzip master
+mv genetic-data-analysis-1-master
+  genetic-data-analysis-1
 ```
 
 Install PLINK (optional)
 ========================
 
-*PLINK is already installed on midway2.* To use the previously
+*PLINK is already installed on midway3.* To use the previously
  installed PLINK, run:
 
 ```{bash load-plink, eval=FALSE}
-module load plink/1.90b6.25
+module load plink/1.90b6.21
 plink --version
 ```
 
@@ -251,13 +227,16 @@ downloaded files.*
 + Copy previously downloaded data:
 
     ```{bash get-1kg-data, eval=FALSE}
-    cd $SCRATCH/genetic-data-analysis-1
+    cd genetic-data-analysis-1
     cp ~pcarbo/share/1kg.vcf.gz .
     ```
 
 + Or download the data from EBI:
 
-    + Short URL: bit.ly/2G7ZWYu
+    + FTP: `ftp.1000genomes.ebi.ac.uk`
+
+    + Directory: `vol1/ftp/release/20130502/
+    supporting/hd_genotype_chip`
   
     + Download this file:
 
@@ -266,15 +245,15 @@ downloaded files.*
 
     + Rename it as `1kg.vcf.gz`.
 
-Connect to a midway2 compute node
+Connect to a midway3 compute node
 =================================
 
-Set up an interactive session on a midway2 compute node with 8 CPUs
+Set up an interactive session on a midway3 compute node with 8 CPUs
 and 19 GB of memory:
 
-```{bash connect-midway2, eval=FALSE}
+```{bash connect-midway3, eval=FALSE}
 screen -S workshop
-sinteractive -p broadwl -c 8 \
+sinteractive -p caslake -c 8 \
   --reservation=gda1_workshop \
   --mem=19G --time=3:00:00
 echo $HOSTNAME
@@ -286,8 +265,8 @@ Launch R
 Start up an interactive R session:
 
 ```{bash start-R, eval=FALSE}
-cd $SCRATCH/genetic-data-analysis-1
-module load R/3.6.1
+cd genetic-data-analysis-1
+module load R/4.2.0
 which R
 R
 ```
@@ -295,7 +274,7 @@ R
 Check your R environment
 ========================
 
-Check that you are running R 3.6.1:
+Check that you are running R 4.2.0:
 
 ```{r check-version}
 version
@@ -381,7 +360,7 @@ Run a few shell commands to inspect the genotype data stored in the
 VCF file.
 
 ```{bash inspect-1kg-vcf, eval=FALSE}
-cd $SCRATCH/genetic-data-analysis-1
+cd genetic-data-analysis-1
 ls -lh 1kg.vcf.gz
 zcat 1kg.vcf.gz | less -S
 ```
